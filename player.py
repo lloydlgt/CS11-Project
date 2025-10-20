@@ -16,9 +16,9 @@ class player:
             self.x_coords -= 1
         elif direction == "d":
             self.x_coords += 1
-        elif direction in ("menu", "m", "me", "men"):
+        elif direction in {"menu", "m", "me", "men"}:
             main_menu()
-        elif direction in ("controls", "c", "co", "con", "cont", "contr", "contro", "control"):
+        elif direction in {"controls", "c", "co", "con", "cont", "contr", "contro", "control"}:
             control_menu()
         else:
             return self.move()

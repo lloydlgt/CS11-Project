@@ -1,6 +1,5 @@
 import os
-
-
+import tiles
 class map_converter():
     
     def __init__(self, path):
@@ -14,32 +13,18 @@ class map_converter():
 
     
     def convert(self):
-        self.emoji ={
-        "L":"\N{adult}",
-        "T": "\N{evergreen tree}",
-        "+": "\N{mushroom}",
-        "R": "\N{rock} ",
-        "~": "\N{large blue square}",
-        "_": "\N{white medium square}",
-        ".": "  ",
-        "x": "\N{Axe}",
-        "*": "\N{fire}"
-        }
+        self.emoji = tiles.translate_tiles
         newlist = []
         for rows in self.listed_file:
             newlist.append(list(self.emoji.get(y) for y in rows))
         return newlist
     
     def change(self, loc: tuple[int, int]):
-        if self.maplist[loc[1]][loc[0]] == "  ":
+        if "can_move_to" in tiles.tile[tiles.tiles_translate[self.maplist[loc[1]][loc[0]]]]:
             self.maplist[loc[1]][loc[0]] = "\N{adult}"
             self.maplist[self.lloyd[1]][self.lloyd[0]] = "  "
             self.lloyd = loc
-        elif self.maplist[loc[1]][loc[0]] in ("\N{Axe}", "\N{Fire}"):
-            self.grab_item(loc)
-            self.maplist[loc[1]][loc[0]] = "\N{adult}"
-            self.maplist[self.lloyd[1]][self.lloyd[0]] = "  "
-            self.lloyd = loc
+
             
     
     def grab_item(self, loc: tuple[int, int]):
