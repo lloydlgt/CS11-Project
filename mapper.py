@@ -19,7 +19,7 @@ class map_converter():
             newlist.append(list(self.emoji.get(y) for y in rows))
         return newlist
 
-    def change(self, loc: tuple[int, int]):
+    def move(self, loc: tuple[int, int]):
         if "can_move_to" in tiles.tile_tags[tiles.tiles_translate[self.maplist[loc[1]][loc[0]]]]:
                 self.maplist[self.curr_loc[1]][self.curr_loc[0]] = self.current_tile
                 self.current_tile = self.maplist[loc[1]][loc[0]]
@@ -40,16 +40,14 @@ class map_converter():
         else:
             print("invalid input")
             self.grab_item()
-        
-
-
-
-
-
 
 
 if __name__ == "__main__":
-    ...
+    mapstr = ""
+    lvl1 = map_converter("est.txt")
+    for row in lvl1.maplist:
+        mapstr += "".join(row) + "\n"
+    print(mapstr)
 
 
 

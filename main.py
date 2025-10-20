@@ -30,7 +30,7 @@ while True:
         # movement inputs
         if x.lower() in controls.movement_keybinds: #and map isnt cleared
             movement = getattr(char, "move_" + controls.movement_keybinds[x.lower()])
-            rech = map_1.change(movement())
+            rech = map_1.move(movement())
             char.rewind(rech)
 
         elif x.lower() in controls.ui_keybinds:
