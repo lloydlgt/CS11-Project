@@ -4,10 +4,15 @@ import time
 from menu import main_menu, control_menu
 from mapper import map_converter
 from player import player
-from booter import launch
+#dfrom booter import launch
+import controls
 main_menu()
-map_1 = map_converter("D:\Programs\game_project\bigmap.txt")
-char = player(map_1.lloyd, {})
+map_1 = map_converter("est.txt")
+
+#make this a comprehension for multiple player characters
+char = player(map_1.curr_loc, {}, (len(map_1.maplist[0]), len(map_1.maplist)))
+
+
 while True:
     os.system("cls" if os.name == "nt" else "clear")
     #print map balls
@@ -15,12 +20,22 @@ while True:
     for row in map_1.maplist:
         mapstr += "".join(row) + "\n"
     print(mapstr)
+
+    #for loop this later for every character
     #move player
     for x in input("> "):
         time.sleep(0.3)
         os.system("cls" if os.name == "nt" else "clear")
-        char.move(x)
-        map_1.change(char.coords)
+
+        # movement inputs
+        if x.lower() in controls.movement_keybinds: #and map isnt cleared
+            movement = getattr(char, "move_" + controls.movement_keybinds[x.lower()])
+            rech = map_1.change(movement())
+            char.rewind(rech)
+
+        elif x.lower() in controls.ui_keybinds:
+            ...
+            
         mapstr = ""
         for row in map_1.maplist:
             mapstr += "".join(row) + "\n"

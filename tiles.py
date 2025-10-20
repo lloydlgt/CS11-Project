@@ -1,4 +1,4 @@
-tile = {
+tile_tags = {
     #tiles
     "L" : {"you"},
     "." : {"can_move_to"},
