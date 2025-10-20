@@ -10,7 +10,7 @@ map_1 = map_converter("D:\Programs\game_project\shit.txt")
 char = player(map_1.lloyd, {})
 while True:
     os.system("cls" if os.name == "nt" else "clear")
-    
+    print("gonna fuck lloyd tonight")
     #print map
     mapstr = ""
     for row in map_1.maplist:
