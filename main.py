@@ -16,7 +16,7 @@ while True:
     for row in map_1.maplist:
         mapstr += "".join(row) + "\n"
     print(mapstr)
-
+    print("hiiiiiiiii")
     #move player
     for x in input("> "):
         time.sleep(0.3)
