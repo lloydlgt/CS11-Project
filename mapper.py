@@ -20,16 +20,20 @@ class map_converter():
         return newlist
 
     def change(self, loc: tuple[int, int]):
-        if "can_move_to" in tiles.tile_tags[tiles.tiles_translate[self.maplist[loc[1]][loc[0]]]]:
-                self.maplist[self.curr_loc[1]][self.curr_loc[0]] = self.current_tile
-                self.current_tile = self.maplist[loc[1]][loc[0]]
-                self.maplist[loc[1]][loc[0]] = "\N{adult}"
-                self.curr_loc = loc
-                # item logic goes here
-                return False
+        if not loc:
+            return False
+        if 0 <= loc[0] < len(self.maplist[0]) and 0 <= loc[1] < len(self.maplist):
+            if "can_move_to" in tiles.tile_tags[tiles.tiles_translate[self.maplist[loc[1]][loc[0]]]]:
+                    self.maplist[self.curr_loc[1]][self.curr_loc[0]] = self.current_tile
+                    self.current_tile = self.maplist[loc[1]][loc[0]]
+                    self.maplist[loc[1]][loc[0]] = "\N{adult}"
+                    self.curr_loc = loc
+                    # item logic goes here
+                    return False
+            else:
+                return True
         else:
             return True
-        
     
     def grab_item(self, loc: tuple[int, int]):
         ans = input("grab item(yes or no)? ").lower()

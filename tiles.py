@@ -4,7 +4,7 @@ tile_tags = {
     "." : {"can_move_to"},
     "T" : {"burnable","choppable"},
     "R" : {"pushable", "cover"},
-    "~" : {"coverable"},
+    "~" : {"coverable", "death_on_touch"},
     "_" : {"can_move_to"},
 
     #items
@@ -20,7 +20,7 @@ translate_tiles = {
     "T": "\N{evergreen tree}",
     "R": "\N{rock} ",
     "~": "\N{large blue square}",
-    "_": "\N{white medium square}",
+    "_": "\N{White Large Square}",
     
     #items
     "+": "\N{mushroom}",
