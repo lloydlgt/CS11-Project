@@ -42,9 +42,10 @@ while True:
       key = getattr(menu, controls.ui_keybinds[indiv_inputs.lower()])
       key()
       break
-    elif indiv_inputs in controls.player_action_keybinds and "manual_pickup" in tiles.tile_tags[tiles.tiles_translate[characters[0].curr_tile]]:
-      char.items = tiles.tiles_translate[characters[0].curr_tile]
-      char.curr_tile = "  "
+    elif indiv_inputs in controls.player_action_keybinds:
+      if "manual_pickup" in tiles.tile_tags[tiles.tiles_translate[characters[0].curr_tile]]:
+        char.items = tiles.tiles_translate[characters[0].curr_tile]
+        char.curr_tile = "  "
 
     mapstr = ""
     for row in map_1.maplist:

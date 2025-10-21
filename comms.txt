@@ -5,3 +5,6 @@ yung ginawa ni lloyd. Also the control menu is not finished, if nag controls ka 
 enter magsstart na kaagad game
 
 Lloyd: added items sa player object, added item picking up, added chopping, added burning
+
+JV: Made it so that the pickup prompt is the same prompt for normal actions, since yung original if ndi ipipickup ng player yung
+item kailangan niya gawin yung action twice in order to move. this wont work for multiplayer though. Also added win.
