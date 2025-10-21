@@ -1,4 +1,3 @@
-from menu import main_menu, control_menu
 import tiles
 from mapper import map_converter 
 
@@ -14,7 +13,7 @@ class player:
         self.map_1 = map_1
     
     def move_up(self):
-        """ # move up
+        """ #move up
         move up
         """
         if self.y_coords - 1 >= 0:
@@ -58,9 +57,9 @@ class player:
                 ...
 
             if "can_move_to" in tags:
-                    self.map_1.maplist[self.prev_coords[1]][self.prev_coords[0]] = self.curr_tile
-                    self.curr_tile = self.map_1.maplist[loc[1]][loc[0]]
-                    self.map_1.maplist[loc[1]][loc[0]] = "\N{adult}"
+                    self.map_1.maplist[self.prev_coords[1]][self.prev_coords[0]] = self.curr_tile #places back the tile of the idex that we are moving out of
+                    self.curr_tile = self.map_1.maplist[loc[1]][loc[0]] #stores the tile of the index we are moving to
+                    self.map_1.maplist[loc[1]][loc[0]] = "\N{adult}" #places the player
                     self.x_coords, self.y_coords = loc
                     # item logic goes here
                     return False
@@ -68,16 +67,4 @@ class player:
             return True
         else:
             return True
-        
 
-    def mover(self, direction: str, next_tile: str):
-        if tiles.tile[next_tile]:
-            ...
-        if direction in {"menu", "m", "me", "men"}:
-            main_menu()
-        elif direction in {"controls", "c", "co", "con", "cont", "contr", "contro", "control"}:
-            control_menu()
-        else:
-            return self.move()
-        
-        self.coords = self.x_coords, self.y_coords

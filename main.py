@@ -1,12 +1,15 @@
 import os
 import sys
 import time
-from menu import main_menu, control_menu
+from menu import Menu
 from mapper import map_converter
 from player import player
 #from booter import launch
 import controls
-main_menu()
+
+
+menu = Menu()
+menu.main_menu()
 map_1 = map_converter("level.txt")
 
 #make this a comprehension for multiple player characters
@@ -38,8 +41,8 @@ while True:
                 char.rewind(rech)
 
         elif x.lower() in controls.ui_keybinds:
-            
-                ...
+            key = getattr(menu, controls.ui_keybinds[x.lower()])
+            key()
 
         mapstr = ""
         for row in map_1.maplist:

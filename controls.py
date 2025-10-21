@@ -26,7 +26,7 @@ player_action_keybinds = {
 }
 
 ui_keybinds = {
-    #reset
-    "!" : ",",
+    "m": "main",
+    "c": "control",
 }
 
