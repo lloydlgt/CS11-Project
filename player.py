@@ -78,7 +78,7 @@ class player:
 
                     return False
             
-            if "choppable" or "burnable" in tags:
+            if "choppable" in tags or "burnable" in tags:
                     if self.items in {"x"}:
                         self.map_1.maplist[self.prev_coords[1]][self.prev_coords[0]] = self.curr_tile
                         self.curr_tile = "  "

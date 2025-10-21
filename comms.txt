@@ -8,4 +8,6 @@ Lloyd: added items sa player object, added item picking up, added chopping, adde
 
 JV: Made it so that the pickup prompt is the same prompt for normal actions, since yung original if ndi ipipickup ng player yung
 item kailangan niya gawin yung action twice in order to move. this wont work for multiplayer though. Also added win. Also Also,
-the items also burns non trees lmao, IDK why I promise I did not change the actual logic of the chopping and burning
+the items also burns non trees lmao, IDK why I promise I did not change the actual logic of the chopping and burning.
+
+JV: last update, I fixed it, lloyd ""choppable" or "burnable" in tags" dont work gng, should be ""choppable" in tags or "burnable" in tags"
