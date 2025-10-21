@@ -3,3 +3,5 @@ For Communication Purposes(katamad buksan discord):
 JV: yo tinanggal ko na yung reset sa ui keybinds, I think para doon when "!" yung input reboot nalang natin yung stage gamit
 yung ginawa ni lloyd. Also the control menu is not finished, if nag controls ka habang nasa main menu at the start, after pressing
 enter magsstart na kaagad game
+
+Lloyd: added items sa player object, added item picking up, added chopping, added burning

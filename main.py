@@ -15,11 +15,11 @@ map_1 = map_converter("level.txt")
 #make this a comprehension for multiple player characters
 characters = []
 for char_loc in map_1.curr_locs:
-    characters.append(player(char_loc[0], (map_1.x, map_1.y), char_loc[1], map_1))
+    characters.append(player(char_loc[0], (map_1.x, map_1.y), char_loc[1], map_1, "Empty"))
 
 
 while True:
-    os.system("cls" if os.name == "nt" else "clear")
+    # os.system("cls" if os.name == "nt" else "clear")
     #print map balls
     mapstr = ""
     for row in map_1.maplist:
@@ -30,10 +30,10 @@ while True:
     #move player
     for indiv_inputs in input("> "):
         time.sleep(0.1)
-        os.system("cls" if os.name == "nt" else "clear")
-
+        # os.system("cls" if os.name == "nt" else "clear")
         if indiv_inputs.lower() in controls.movement_keybinds : #and map isnt cleared
             for char in characters:
+                print(getattr(char, "x_coords"), getattr(char, "y_coords"))
                 movement = getattr(char, "move_" + controls.movement_keybinds[indiv_inputs.lower()])
                 rech = char.move(movement())
                 char.rewind(rech)
