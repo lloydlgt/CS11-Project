@@ -4,7 +4,10 @@ class map_converter():
     def __init__(self, path):
         self.path = path
         self.file = open(self.path, "r")
-        self.listed_file = list(x.rstrip() for x in self.file.readlines())
+        self.read_lines = self.file.readlines()
+        self.y, self.x = (int(num) for num in self.read_lines[0].split(" "))
+        print(self.x+ self.y)
+        self.listed_file = list(x.rstrip() for x in self.read_lines[1:])
         self.maplist = self.convert()
         for y in range(len(self.maplist)):
             # change this to accomodate for multiple player characters
@@ -15,7 +18,7 @@ class map_converter():
     def convert(self):
         self.emoji = tiles.translate_tiles
         newlist = []
-        for rows in self.listed_file:
+        for rows in self.listed_file[1:]:
             newlist.append(list(self.emoji.get(y) for y in rows))
         return newlist
 

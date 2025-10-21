@@ -10,7 +10,7 @@ main_menu()
 map_1 = map_converter("est.txt")
 
 #make this a comprehension for multiple player characters
-char = player(map_1.curr_loc, {}, (len(map_1.maplist[0]), len(map_1.maplist)))
+char = player(map_1.curr_loc, {}, (map_1.x, map_1.y))
 
 
 while True:
@@ -25,6 +25,7 @@ while True:
     #move player
     for x in input("> "):
         time.sleep(0.1)
+        #for player in players:
         os.system("cls" if os.name == "nt" else "clear")
 
         # movement inputs
