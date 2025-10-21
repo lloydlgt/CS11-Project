@@ -26,6 +26,7 @@ player_action_keybinds = {
 }
 
 ui_keybinds = {
+    #for menus
     "m": "main",
     "c": "control",
 }

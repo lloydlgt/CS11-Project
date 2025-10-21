@@ -3,10 +3,11 @@ import sys
 screen_width = 100
 
 class Menu:
-    def __init__(self):
+    def __init__(self, prev_screen):
         self.main = self.main_menu
         self.control = self.control_menu
         self.map_select = self.map_selection
+        self.prev = prev_screen
     
     def main_menu(self):
         os.system("cls" if os.name == "nt" else "clear")
@@ -47,8 +48,11 @@ class Menu:
         .                                .
         ..................................
         """)
-        input("Press Enter to go back to the main menu...")
-        
+        input("Press Enter to go back...")
+        if self.prev == "main":
+            self.prev = "main"
+            self.main_menu()
+
 
     def map_selection(self):
         print("""
@@ -64,11 +68,11 @@ class Menu:
         .                                .
         ..................................
         """)
-        theInput = input("type yo map name or else: ")
         os.system("dir /b /a-d *.txt")
+        theInput = input("type yo map name or else: ")
         #mapList = os.system("dir /b /a-d *.txt")
 
 if __name__ == "__main__":
-    menu = Menu()
+    menu = Menu("main")
     x = getattr(menu, "main")
     x()

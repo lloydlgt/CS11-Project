@@ -8,7 +8,7 @@ from player import player
 import controls
 
 
-menu = Menu()
+menu = Menu("main")
 menu.main_menu()
 map_1 = map_converter("level.txt")
 
@@ -25,24 +25,23 @@ while True:
     for row in map_1.maplist:
         mapstr += "".join(row) + "\n"
     print(mapstr)
-
+    menu.prev = "in_game"
     #for loop this later for every character
     #move player
-    for x in input("> "):
+    for indiv_inputs in input("> "):
         time.sleep(0.1)
         os.system("cls" if os.name == "nt" else "clear")
 
-        if x.lower() in controls.movement_keybinds: #and map isnt cleared
-
+        if indiv_inputs.lower() in controls.movement_keybinds : #and map isnt cleared
             for char in characters:
-
-                movement = getattr(char, "move_" + controls.movement_keybinds[x.lower()])
+                movement = getattr(char, "move_" + controls.movement_keybinds[indiv_inputs.lower()])
                 rech = char.move(movement())
                 char.rewind(rech)
 
-        elif x.lower() in controls.ui_keybinds:
-            key = getattr(menu, controls.ui_keybinds[x.lower()])
+        elif indiv_inputs.lower() in controls.ui_keybinds:
+            key = getattr(menu, controls.ui_keybinds[indiv_inputs.lower()])
             key()
+            break
 
         mapstr = ""
         for row in map_1.maplist:
