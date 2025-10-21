@@ -8,7 +8,7 @@ tile_tags = {
     "_" : {"can_move_to"},
 
     #items
-    "+" : {"can_move_to", "auto_pickup"},
+    "+" : {"can_move_to", "auto_pickup", "win_condition"},
     "x" : {"can_move_to", "manual_pickup"},
     "*" : {"can_move_to", "manual_pickup"}
 }

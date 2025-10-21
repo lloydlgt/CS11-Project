@@ -10,7 +10,7 @@ class Menu:
         self.prev = prev_screen
     
     def main_menu(self):
-        # os.system("cls" if os.name == "nt" else "clear")
+        os.system("cls" if os.name == "nt" else "clear")
         print(f"""
         ----------------------------------------
         |                                      |
@@ -24,7 +24,7 @@ class Menu:
         """)
         self.player_input = input("> ").lower()
         if self.player_input in ("play", "p", "pl", "pla"):
-            # os.system("cls" if os.name == "nt" else "clear")
+            os.system("cls" if os.name == "nt" else "clear")
             self.map_selection()
         elif self.player_input in ("controls", "c", "co", "con", "cont", "contr", "contro", "control"):
             self.control_menu()
@@ -34,7 +34,7 @@ class Menu:
             self.main_menu()
 
     def control_menu(self):
-        # os.system("cls" if os.name == "nt" else "clear")
+        os.system("cls" if os.name == "nt" else "clear")
         print("""
         ..................................
         .            Controls:           .

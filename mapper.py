@@ -8,6 +8,7 @@ class map_converter():
         self.y, self.x = (int(num) for num in self.read_lines[0].split(" "))
         print(self.x, self.y)
         self.listed_file = list(x.rstrip() for x in self.read_lines[1:])
+        self.indiv_char = list(char for strings in self.listed_file for char in strings)
         self.maplist = self.convert()
 
         self.curr_locs = []
@@ -41,7 +42,7 @@ if __name__ == "__main__":
     lvl1 = map_converter("level.txt")
     for row in lvl1.maplist:
         mapstr += "".join(row) + "\n"
-    print(mapstr)
+    print(lvl1.indiv_char)
 
 
 

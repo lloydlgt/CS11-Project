@@ -2,7 +2,7 @@ import tiles
 from mapper import map_converter 
 
 class player:
-    def __init__(self, location: tuple[int, int], bounds: tuple[int,int], curr_tile: str, map_1: map_converter, items: str):
+    def __init__(self, location: tuple[int, int], bounds: tuple[int,int], curr_tile: str, map_1: map_converter, items: str, score: int):
         self.x_coords = location[0]
         self.y_coords = location[1]
         self.coords = self.x_coords, self.y_coords
@@ -12,6 +12,7 @@ class player:
         self.curr_tile = curr_tile
         self.map_1 = map_1
         self.items = items
+        self.score = score
     
     def move_up(self):
         """ #move up
@@ -58,7 +59,7 @@ class player:
                 ...
 
             if "can_move_to" in tags:
-                    self.map_1.maplist[self.prev_coords[1]][self.prev_coords[0]] = self.curr_tile # If you move away from current tile, this is the tile under you previously 
+                    self.map_1.maplist[self.prev_coords[1]][self.prev_coords[0]] = self.curr_tile # If you move away from current tile, this is the tile you are in before moving 
                     self.curr_tile = self.map_1.maplist[loc[1]][loc[0]] # The tile you're currently on
                     self.map_1.maplist[loc[1]][loc[0]] = "\N{adult}" # Sets the tile you moved to into the player (Adult)
                     self.x_coords, self.y_coords = loc # The location of the current adult
@@ -71,6 +72,11 @@ class player:
                         if pick_up_prompt in {'P', 'p'}:
                             self.items = tiles.tiles_translate[self.curr_tile]
                             self.curr_tile = "  "
+                    if "win_condition" in tags:
+                        self.curr_tile = "  "
+                        self.score += 1
+                        
+
                     return False
             
             if "choppable" or "burnable" in tags:
@@ -101,7 +107,7 @@ class player:
                         self.map_1.maplist[loc[1]][loc[0]] = "\N{adult}"
                         self.x_coords, self.y_coords = loc
                         self.items = "Empty"
-                        return False    
+                        return False  
 
             return True
         else:

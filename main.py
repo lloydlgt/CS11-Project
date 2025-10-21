@@ -15,12 +15,11 @@ map_1 = map_converter("level.txt")
 #make this a comprehension for multiple player characters
 characters = []
 for char_loc in map_1.curr_locs:
-    characters.append(player(char_loc[0], (map_1.x, map_1.y), char_loc[1], map_1, "Empty"))
+    characters.append(player(char_loc[0], (map_1.x, map_1.y), char_loc[1], map_1, "Empty", 0))
 
 
 while True:
-    # os.system("cls" if os.name == "nt" else "clear")
-    #print map balls
+    os.system("cls" if os.name == "nt" else "clear")
     mapstr = ""
     for row in map_1.maplist:
         mapstr += "".join(row) + "\n"
@@ -30,13 +29,13 @@ while True:
     #move player
     for indiv_inputs in input("> "):
         time.sleep(0.1)
-        # os.system("cls" if os.name == "nt" else "clear")
+        os.system("cls" if os.name == "nt" else "clear")
         if indiv_inputs.lower() in controls.movement_keybinds : #and map isnt cleared
             for char in characters:
-                print(getattr(char, "x_coords"), getattr(char, "y_coords"))
                 movement = getattr(char, "move_" + controls.movement_keybinds[indiv_inputs.lower()])
                 rech = char.move(movement())
                 char.rewind(rech)
+                
 
         elif indiv_inputs.lower() in controls.ui_keybinds:
             key = getattr(menu, controls.ui_keybinds[indiv_inputs.lower()])
@@ -103,3 +102,27 @@ while True:
                              ░░░░░░░░▒▒▒▒▒▒▒▒░              ░▒▒▒▒▒▒▒▒▒▒▒▒░▒░                        )
     time.sleep(12)
     """
+    if characters[0].score >= map_1.indiv_char.count("+"):
+      print("Congrats, you've finished the game! have a cake :)")
+      print("""                  
+            /M/              .,-=;//;-
+       .:/= ;MH/,    ,=/+%$XH@MM#@:
+      -$##@+$###@H@MMM#######H:.    -/H#
+ .,H@H@ X######@ -H#####@+-     -+H###@X
+  .,@##H;      +XM##M/,     =%@###@X;-
+X%-  :M##########$.    .:%M###@%:
+M##H,   +H@@@$/-.  ,;$M###@%,          -
+M####M=,,---,.-HHH####M$:          ,+@##
+@##################@/.         :%H##@$-
+M###############H,         ;HM##M$=
+#################.    .=$M##M$=
+################H..;XM##M$=          .:+
+M###################@%=           =+@MH%
+@#################M/.         =+H#X%=
+=+M###############M,      ,/X#H+:,
+  .;XM###########H=   ,/X#H+:;
+     .=+HM#######M+/+HM@+=.
+         ,:/XMM####H/.
+              ,.:=-.
+""")
+      break
