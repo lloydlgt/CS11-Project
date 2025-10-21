@@ -63,15 +63,14 @@ class player:
                     self.curr_tile = self.map_1.maplist[loc[1]][loc[0]] # The tile you're currently on
                     self.map_1.maplist[loc[1]][loc[0]] = "\N{adult}" # Sets the tile you moved to into the player (Adult)
                     self.x_coords, self.y_coords = loc # The location of the current adult
-                    if "manual_pickup" in tags and self.items in {"Empty"}:
+                    """if "manual_pickup" in tags and self.items in {"Empty"}:
                         mapstr = ""
                         for row in self.map_1.maplist:
                             mapstr += "".join(row) + "\n"
                         print(mapstr)
-                        pick_up_prompt = input("Press [P] to pick up item: ")
                         if pick_up_prompt in {'P', 'p'}:
                             self.items = tiles.tiles_translate[self.curr_tile]
-                            self.curr_tile = "  "
+                            self.curr_tile = """
                     if "win_condition" in tags:
                         self.curr_tile = "  "
                         self.score += 1
