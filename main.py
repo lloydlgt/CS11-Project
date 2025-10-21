@@ -10,7 +10,9 @@ main_menu()
 map_1 = map_converter("est.txt")
 
 #make this a comprehension for multiple player characters
-char = player(map_1.curr_loc, {}, (map_1.x, map_1.y))
+characters = []
+for char_loc in map_1.curr_locs:
+    characters.append(player(char_loc[0], (map_1.x, map_1.y), char_loc[1], map_1))
 
 
 while True:
@@ -25,18 +27,19 @@ while True:
     #move player
     for x in input("> "):
         time.sleep(0.1)
-        #for player in players:
         os.system("cls" if os.name == "nt" else "clear")
 
-        # movement inputs
         if x.lower() in controls.movement_keybinds: #and map isnt cleared
-            movement = getattr(char, "move_" + controls.movement_keybinds[x.lower()])
-            rech = map_1.change(movement())
-            char.rewind(rech)
+
+            for char in characters:
+
+                movement = getattr(char, "move_" + controls.movement_keybinds[x.lower()])
+                rech = char.move(movement())
+                char.rewind(rech)
 
         elif x.lower() in controls.ui_keybinds:
-          
-            ...
+            
+                ...
 
         mapstr = ""
         for row in map_1.maplist:
