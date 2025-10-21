@@ -38,7 +38,7 @@ class map_converter():
 
 if __name__ == "__main__":
     mapstr = ""
-    lvl1 = map_converter("est.txt")
+    lvl1 = map_converter("level.txt")
     for row in lvl1.maplist:
         mapstr += "".join(row) + "\n"
     print(mapstr)

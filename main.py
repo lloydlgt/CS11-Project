@@ -1,13 +1,13 @@
-import os # tite
+import os
 import sys
 import time
 from menu import main_menu, control_menu
 from mapper import map_converter
 from player import player
-#dfrom booter import launch
+#from booter import launch
 import controls
 main_menu()
-map_1 = map_converter("est.txt")
+map_1 = map_converter("level.txt")
 
 #make this a comprehension for multiple player characters
 characters = []
