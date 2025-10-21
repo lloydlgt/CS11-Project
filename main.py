@@ -24,7 +24,7 @@ while True:
     #for loop this later for every character
     #move player
     for x in input("> "):
-        time.sleep(0.3)
+        time.sleep(0.1)
         os.system("cls" if os.name == "nt" else "clear")
 
         # movement inputs

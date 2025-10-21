@@ -30,9 +30,14 @@ class map_converter():
                     self.curr_loc = loc
                     # item logic goes here
                     return False
+            elif "pushable" in tiles.tile_tags[tiles.tiles_translate[self.maplist[loc[1]][loc[0]]]]:
+                #make dict of coords
+                #check if rock moved loc is in rock loc dict
+                #if that then move the rock then put in the saved tile in dict
+                # also account for player curr tile :) 
+                ...
             else:
                 return True
-
         else:
             return True
     
