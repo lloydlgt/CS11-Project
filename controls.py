@@ -21,7 +21,7 @@ movement_keybinds = {
 
 player_action_keybinds = {
     #pickup
-    "p" : ",",
+    "p" : "pickup",
     
 }
 
