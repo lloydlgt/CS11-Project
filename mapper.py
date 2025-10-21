@@ -32,6 +32,7 @@ class map_converter():
                     return False
             else:
                 return True
+
         else:
             return True
     
@@ -46,14 +47,12 @@ class map_converter():
             self.grab_item()
         
 
-
-
-
-
-
-
 if __name__ == "__main__":
-    ...
+    mapstr = ""
+    lvl1 = map_converter("est.txt")
+    for row in lvl1.maplist:
+        mapstr += "".join(row) + "\n"
+    print(mapstr)
 
 
 
