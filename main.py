@@ -11,7 +11,7 @@ import controls
 #testticles
 menu = Menu("main")
 menu.main_menu()
-map_1 = map_converter("level.txt")
+map_1 = map_converter("maps/map_1.txt")
 
 #make this a comprehension for multiple player characters
 characters = []
