@@ -8,7 +8,7 @@ from player import player
 #from booter import launch
 import controls
 
-
+#testticles
 menu = Menu("main")
 menu.main_menu()
 map_1 = map_converter("level.txt")
@@ -26,6 +26,7 @@ while True:
     mapstr += "".join(row) + "\n"
   print(mapstr)
   menu.prev = "in_game"
+  print(f"\N{mushroom}: {characters[0].score}")
   if "manual_pickup" in tiles.tile_tags[tiles.tiles_translate[characters[0].curr_tile]]:
     print("Press P to pick up item:")
   #for loop this later for every character
@@ -51,6 +52,7 @@ while True:
     for row in map_1.maplist:
       mapstr += "".join(row) + "\n"
     print(mapstr)
+    print(f"\N{mushroom}: {characters[0].score}")
     """time.sleep(1)
     os.system("cls" if os.name == "nt" else "clear")
     print(
