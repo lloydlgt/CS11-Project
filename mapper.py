@@ -1,6 +1,8 @@
 import os
 import tiles
-class map_converter():
+class stage():
+    score = 0
+    
     def __init__(self, path):
         self.path = path
         self.file = open(self.path, "r")
@@ -39,7 +41,7 @@ class map_converter():
 
 if __name__ == "__main__":
     mapstr = ""
-    lvl1 = map_converter("level.txt")
+    lvl1 = stage("level.txt")
     for row in lvl1.maplist:
         mapstr += "".join(row) + "\n"
     print(lvl1.indiv_char)
