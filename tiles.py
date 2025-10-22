@@ -2,9 +2,9 @@ tile_tags = {
     #tiles
     "L" : {"you"},
     "." : {"can_move_to"},
-    "T" : {"burnable","choppable"},
-    "R" : {"pushable", "cover"},
-    "~" : {"coverable", "death_on_touch"},
+    "T" : {"interactable", "burnable","choppable"},
+    "R" : {"interactable", "pushable", "cover"},
+    "~" : {"interactable", "coverable", "death_on_touch"},
     "_" : {"can_move_to"},
 
     #items

@@ -8,10 +8,10 @@ from player import player
 #from booter import launch
 import controls
 
-
+#testticles
 menu = Menu("main")
 menu.main_menu()
-curr_stage = stage("est.txt")
+curr_stage = stage("rocks.txt")
 
 #make this a comprehension for multiple player characters
 characters = []
@@ -39,7 +39,7 @@ while True:
         if indiv_inputs in controls.movement_keybinds: #and map isnt cleared
             for char in characters:
                 movement = getattr(char, "move_" + controls.movement_keybinds[indiv_inputs.lower()])
-                rech = char.move(movement())
+                rech = char.move(movement(), controls.movement_keybinds[indiv_inputs.lower()])
                 char.rewind(rech)
 
         #ui
@@ -50,9 +50,10 @@ while True:
 
         #player actions
         elif indiv_inputs in controls.player_action_keybinds:
-            if "manual_pickup" in tiles.tile_tags[tiles.tiles_translate[characters[0].curr_tile]]:
-                char.items = tiles.tiles_translate[characters[0].curr_tile]
-                char.curr_tile = "  "
+            for char in characters:
+                if "manual_pickup" in tiles.tile_tags[tiles.tiles_translate[char.curr_tile]]:
+                    curr_stage.inventory = tiles.tiles_translate[char.curr_tile]
+                    char.curr_tile = "  "
 
         mapstr = ""
         for row in curr_stage.maplist:
@@ -137,6 +138,6 @@ time.sleep(12)
     .;XM###########H=   ,/X#H+:;
         .=+HM#######M+/+HM@+=.
             ,:/XMM####H/.
-                ,.:=-.
+                ,.:=-.p
     """)
         break
