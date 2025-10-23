@@ -14,8 +14,8 @@ tile_object_tags = {
 
     #items
     "+" : {"can_move_to", "auto_pickup", "win_condition", "item"},
-    "x" : {"can_move_to", "item"},
-    "*" : {"can_move_to", "item"}
+    "x" : {"can_move_to", "manual_pickup", "item"},
+    "*" : {"can_move_to", "manual_pickup", "item"}
     
 }
 
