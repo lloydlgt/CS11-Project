@@ -8,7 +8,7 @@ from player import player
 #from booter import launch
 import controls
 
-#testticles
+
 menu = Menu("main")
 menu.main_menu()
 curr_stage = stage("est2.txt")
@@ -66,16 +66,17 @@ while True:
                     curr_stage.inventory = tiles.tiles_translate[char.curr_tile]
                     char.curr_tile = None
 
-    mapstr = ""
-    for objlist in curr_stage.object_list:
-        for obj in objlist:
-            if obj.tile_object != None:
-                mapstr += obj.tile_object
-            else:
-                mapstr += obj.tile_floor
-        mapstr += "\n"
-    print(mapstr)
-    print(f"\N{mushroom}: {curr_stage.score}")
+        mapstr = ""
+        for objlist in curr_stage.object_list:
+            for obj in objlist:
+                if obj.tile_object != None:
+                    mapstr += obj.tile_object
+                else:
+                    mapstr += obj.tile_floor
+            mapstr += "\n"
+        print(mapstr)
+        print(f"\N{mushroom}: {curr_stage.score}")
+        time.sleep(0.1)
     menu.prev = "in_game"
     """time.sleep(1)
     os.system("cls" if os.name == "nt" else "clear")
