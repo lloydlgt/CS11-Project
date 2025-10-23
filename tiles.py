@@ -1,16 +1,26 @@
-tile_tags = {
-    #tiles
-    "L" : {"you"},
-    "." : {"can_move_to"},
-    "T" : {"interactable", "burnable","choppable"},
-    "R" : {"interactable", "pushable", "cover"},
-    "~" : {"interactable", "coverable", "death_on_touch"},
-    "_" : {"can_move_to"},
+tile_floor_tags = {
+    #floor tiles
+    "." : {"can_move_to", "floor"},
+    "~" : {"interactable", "death_on_touch", "can_move_to", "floor", "reactive"},
+    "_" : {"can_move_to", "floor"},
+}
+
+#add reactive
+tile_object_tags = {
+    #obj
+    "L" : {"you", "object"},
+    "T" : {"interactable", "burnable","choppable", "object"},
+    "R" : {"interactable", "pushable", "object"},
 
     #items
-    "+" : {"can_move_to", "auto_pickup", "win_condition"},
-    "x" : {"can_move_to", "manual_pickup"},
-    "*" : {"can_move_to", "manual_pickup"}
+    "+" : {"can_move_to", "auto_pickup", "win_condition", "item"},
+    "x" : {"can_move_to", "item"},
+    "*" : {"can_move_to", "item"}
+    
+}
+
+tile_reactions = {
+    ("R","~") : "_"
 }
 
 translate_tiles = {

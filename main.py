@@ -11,8 +11,9 @@ import controls
 #testticles
 menu = Menu("main")
 menu.main_menu()
-curr_stage = stage("rocks.txt")
-
+curr_stage = stage("est2.txt")
+print(sys.getsizeof(curr_stage))
+#time.sleep(5)
 #make this a comprehension for multiple player characters
 characters = []
 for char_loc in curr_stage.curr_locs:
@@ -22,13 +23,20 @@ for char_loc in curr_stage.curr_locs:
 while True:
     os.system("cls" if os.name == "nt" else "clear")
     mapstr = ""
-    for row in curr_stage.maplist:
-        mapstr += "".join(row) + "\n"
+    for objlist in curr_stage.object_list:
+        for obj in objlist:
+            if obj.tile_object:
+                mapstr += obj.tile_object
+            else:
+                mapstr += obj.tile_floor
+        mapstr += "\n"
     print(mapstr)
     print(f"\N{mushroom}: {curr_stage.score}")
     menu.prev = "in_game"
-    if "manual_pickup" in tiles.tile_tags[tiles.tiles_translate[characters[0].curr_tile]]:
-        print("Press P to pick up item:")
+    for char in characters:
+        if char.curr_tile != None and "manual_pickup" in tiles.tile_object_tags[tiles.tiles_translate[char.curr_tile]]:
+            print("Press P to pick up item:")
+            break
     #for loop this later for every character
     #move player
     for indiv_inputs in input("> ").lower():
@@ -37,10 +45,13 @@ while True:
 
         #movement
         if indiv_inputs in controls.movement_keybinds: #and map isnt cleared
+            #print("passed if moving")
+            #time.sleep(2)
             for char in characters:
+                #print("moving shit")
+                #time.sleep(2)
                 movement = getattr(char, "move_" + controls.movement_keybinds[indiv_inputs.lower()])
-                rech = char.move(movement(), controls.movement_keybinds[indiv_inputs.lower()])
-                char.rewind(rech)
+                char.move(movement(), controls.movement_keybinds[indiv_inputs.lower()])
 
         #ui
         elif indiv_inputs in controls.ui_keybinds:
@@ -51,15 +62,21 @@ while True:
         #player actions
         elif indiv_inputs in controls.player_action_keybinds:
             for char in characters:
-                if "manual_pickup" in tiles.tile_tags[tiles.tiles_translate[char.curr_tile]]:
+                if char.curr_tile != None and "manual_pickup" in tiles.tile_object_tags[tiles.tiles_translate[char.curr_tile]]:
                     curr_stage.inventory = tiles.tiles_translate[char.curr_tile]
-                    char.curr_tile = "  "
+                    char.curr_tile = None
 
-        mapstr = ""
-        for row in curr_stage.maplist:
-            mapstr += "".join(row) + "\n"
-        print(mapstr)
-        print(f"\N{mushroom}: {curr_stage.score}")
+    mapstr = ""
+    for objlist in curr_stage.object_list:
+        for obj in objlist:
+            if obj.tile_object != None:
+                mapstr += obj.tile_object
+            else:
+                mapstr += obj.tile_floor
+        mapstr += "\n"
+    print(mapstr)
+    print(f"\N{mushroom}: {curr_stage.score}")
+    menu.prev = "in_game"
     """time.sleep(1)
     os.system("cls" if os.name == "nt" else "clear")
     print(
@@ -116,7 +133,7 @@ while True:
                           ░░░░░░░░▒▒▒▒▒▒▒▒░              ░▒▒▒▒▒▒▒▒▒▒▒▒░▒░                        )
 time.sleep(12)
 """
-    if curr_stage.score >= curr_stage.indiv_char.count("+"):
+    if curr_stage.score >= curr_stage.score_req:
         os.system("cls" if os.name == "nt" else "clear")
         print("Congrats, you've finished the game! have a cake :)")
         print("""                  
