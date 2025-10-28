@@ -11,7 +11,8 @@ import controls
 
 menu = Menu("main")
 menu.main_menu()
-curr_stage = stage("est2.txt")
+
+curr_stage = stage(menu.chosenmap) # Make "stage of" string file chosen which redirects to the file the player chooses
 print(sys.getsizeof(curr_stage))
 #time.sleep(5)
 #make this a comprehension for multiple player characters
@@ -21,7 +22,7 @@ for char_loc in curr_stage.curr_locs:
 
 
 while True:
-    os.system("cls" if os.name == "nt" else "clear")
+    os.system("cls" if os.name == "nt" else "clear")  
     mapstr = ""
     for objlist in curr_stage.object_list:
         for obj in objlist:

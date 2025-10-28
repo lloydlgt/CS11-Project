@@ -60,16 +60,16 @@ class Menu:
         .                                .
         .                                .
         .                                .
-        .          type you map          .
+        .      Please type your map      .
         .                                .
         .                                .
-        .                                .
-        .                                .
+        .      Make sure file is in      .
+        .          Maps folder           .
         .                                .
         ..................................
         """)
-        os.system("dir /b /a-d *.txt")
-        theInput = input("type yo map name or else: ")
+        os.system("dir /b /a-d maps\*.txt") # Prints all the files in the maps subfolder
+        self.chosenmap = input("Please type your map: ")
         #mapList = os.system("dir /b /a-d *.txt")
 
 if __name__ == "__main__":

@@ -5,7 +5,11 @@ import time
 class stage():
     def __init__(self, path):
         self.path = path
-        self.file = open(self.path, "r")
+        try:
+            self.file = open(self.path, "r")
+        except FileNotFoundError:
+            print(f"Error: Stage file {self.path} not found.")
+            quit()
         self.read_lines = self.file.readlines()
         self.y, self.x = (int(num) for num in self.read_lines[0].split(" "))
         #print(self.x, self.y)
