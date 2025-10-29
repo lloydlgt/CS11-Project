@@ -1,3 +1,4 @@
+import os
 import tiles
 from mapper import stage 
 import time
@@ -55,21 +56,45 @@ class player:
                             self.curr_stage.inventory = "Empty"
 
                         if self.curr_stage.inventory in {"*"}:
-
-
-                            ...
-                            #self.burn = {(movement[0], movement[1])}
-                            #self.directions = ((0, 1), (0, -1), (1, 0), (-1, 0))
-                            #while self.burn:
-                            #    self.temp_burn = self.burn.copy()
-                            #    for self.trees in self.burn:
-                            #        self.curr_stage.object_list[self.trees[1]][self.trees[0]].tile_object = None
-                            #    for self.trees in self.temp_burn:
-                            #        for self.direction in self.directions:
-                            #            if 0 <= self.trees[0] + self.direction[0] < self.x_bound and 0 <= self.trees[1] + self.direction[1] < self.y_bound:
-                            #                if self.curr_stage.object_list[self.trees[1] + self.direction[1]][self.trees[0] + self.direction[0]].tile_object != None and "burnable" in tiles.tile_object_tags[tiles.tiles_translate[self.curr_stage.object_list[self.trees[1] + self.direction[1]][self.trees[0] + self.direction[0]].tile_object]]:
-                            #                    self.burn.add((self.trees[0] + self.direction[0], self.trees[1] + self.direction[1]))
-                            #self.curr_stage.inventory = "EMPTY"
+                            self.burn = {(movement[0], movement[1])}
+                            self.directions = ((0, 1), (0, -1), (1, 0), (-1, 0))
+                            while self.burn:
+                                self.temp_burn = self.burn.copy()
+                                os.system("cls" if os.name == "nt" else "clear")  
+                                for self.trees in self.burn:
+                                    self.curr_stage.object_list[self.trees[1]][self.trees[0]].tile_object = '\N{fire}'
+                                    mapstr = ""
+                                for objlist in self.curr_stage.object_list:
+                                    for obj in objlist:
+                                        if obj.tile_object:
+                                            mapstr += obj.tile_object
+                                        else:
+                                            mapstr += obj.tile_floor
+                                    mapstr += "\n"
+                                print(mapstr)
+                                print(f"\N{mushroom}: {self.curr_stage.score}")
+                                time.sleep(0.5)
+                                os.system("cls" if os.name == "nt" else "clear")  
+                                for self.trees in self.burn:
+                                    self.curr_stage.object_list[self.trees[1]][self.trees[0]].tile_object = None
+                                    mapstr = ""
+                                for objlist in self.curr_stage.object_list:
+                                    for obj in objlist:
+                                        if obj.tile_object:
+                                            mapstr += obj.tile_object
+                                        else:
+                                            mapstr += obj.tile_floor
+                                    mapstr += "\n"
+                                print(mapstr)
+                                print(f"\N{mushroom}: {self.curr_stage.score}")
+                                self.burn.clear() 
+                                for self.trees in self.temp_burn:
+                                    for self.direction in self.directions:
+                                        if 0 <= self.trees[0] + self.direction[0] < self.x_bound and 0 <= self.trees[1] + self.direction[1] < self.y_bound:
+                                            if self.curr_stage.object_list[self.trees[1] + self.direction[1]][self.trees[0] + self.direction[0]].tile_object != None and "burnable" in tiles.tile_object_tags[tiles.tiles_translate[self.curr_stage.object_list[self.trees[1] + self.direction[1]][self.trees[0] + self.direction[0]].tile_object]]:
+                                               self.burn.add((self.trees[0] + self.direction[0], self.trees[1] + self.direction[1]))
+                                time.sleep(1)
+                            self.curr_stage.inventory = "EMPTY"
             #
             next_tile = self.curr_stage.object_list[movement[1]][movement[0]]
             next_tile_floor_tags = tiles.tile_floor_tags[tiles.tiles_translate[next_tile.tile_floor]]

@@ -57,19 +57,19 @@ class Menu:
     def map_selection(self):
         print("""
         ..................................
-        .                                .
-        .                                .
-        .                                .
-        .      Please type your map      .
-        .                                .
-        .                                .
-        .      Make sure file is in      .
-        .          Maps folder           .
-        .                                .
+        |                                |
+        |      Please type your map      |
+        |                                |
+        |      Make sure file is in      |
+        |          Maps folder           |
+        |                                |
+        |          Press Enter           |
+        |        for default map         |
+        |                                |
         ..................................
         """)
         os.system("dir /b /a-d maps\*.txt") # Prints all the files in the maps subfolder
-        self.chosenmap = input("Please type your map: ")
+        self.chosenmap = input("Please type your map: ") 
         #mapList = os.system("dir /b /a-d *.txt")
 
 if __name__ == "__main__":

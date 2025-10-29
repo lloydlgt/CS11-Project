@@ -6,15 +6,21 @@ class stage():
     def __init__(self, path):
         self.path = path
         try:
-            self.file = open(self.path, "r")
+            if not self.path:
+                self.file = open("default.txt", "r")
+            else:
+                self.file = open(f"maps/{self.path}", "r")
         except FileNotFoundError:
             print(f"Error: Stage file {self.path} not found.")
-            quit()
+            exit()
         self.read_lines = self.file.readlines()
         self.y, self.x = (int(num) for num in self.read_lines[0].split(" "))
         #print(self.x, self.y)
         #time.sleep(3)
         self.listed_file = list(x.rstrip() for x in self.read_lines[1:])
+        if any((self.y != len(self.listed_file), self.x != len(self.listed_file[0]))): # Insurance for grid dimensions
+            print(f"Error: Initialized forest dimension {self.y}, {self.x} does not match actual forest dimension {len(self.listed_file)}, {len(self.listed_file[0])}.")
+            exit()
         self.score = 0
         self.score_req = 0
         self.inventory = ""
