@@ -59,7 +59,7 @@ class player:
                             self.burn = {(movement[0], movement[1])}
                             self.animation = set()
                             self.directions = ((0, 1), (0, -1), (1, 0), (-1, 0))
-                            while self.burn:
+                            while self.burn or self.animation:
                                 os.system("cls" if os.name == "nt" else "clear") 
 
                                 # Creates fire and makes a copy for adjacent trees
@@ -82,7 +82,8 @@ class player:
                                 # Takes care of animation
                                 for self.trees in self.animation:
                                     self.curr_stage.object_list[self.trees[1]][self.trees[0]].tile_object = None
-                                
+                                self.animation.clear()
+
                                 # Checks adjacent cells for trees
                                 self.burn.clear() 
                                 for self.trees in self.temp_burn:
@@ -91,10 +92,7 @@ class player:
                                         if 0 <= self.trees[0] + self.direction[0] < self.x_bound and 0 <= self.trees[1] + self.direction[1] < self.y_bound:
                                             if self.curr_stage.object_list[self.trees[1] + self.direction[1]][self.trees[0] + self.direction[0]].tile_object != None and "burnable" in tiles.tile_object_tags[tiles.tiles_translate[self.curr_stage.object_list[self.trees[1] + self.direction[1]][self.trees[0] + self.direction[0]].tile_object]]:
                                                self.burn.add((self.trees[0] + self.direction[0], self.trees[1] + self.direction[1]))
-                                time.sleep(0.5)
-                            if self.animation:
-                                for self.trees in self.animation:
-                                    self.curr_stage.object_list[self.trees[1]][self.trees[0]].tile_object = None
+                                time.sleep(1.5)
                             self.curr_stage.inventory = "EMPTY"
             #
             next_tile = self.curr_stage.object_list[movement[1]][movement[0]]
