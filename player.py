@@ -2,6 +2,8 @@ import os
 import tiles
 from mapper import stage 
 import time
+from menu import death_screen
+
 class player:
     def __init__(self, location: tuple[int, int], bounds: tuple[int,int], curr_tile: str, curr_stage: stage):
         self.x_coords = location[0]
@@ -67,7 +69,6 @@ class player:
                                 for self.trees in self.burn:
                                     self.curr_stage.object_list[self.trees[1]][self.trees[0]].tile_object = '\N{fire}'
                                     mapstr = ""
-
                                 # Prints map
                                 for objlist in self.curr_stage.object_list:
                                     for obj in objlist:
@@ -92,9 +93,8 @@ class player:
                                         if 0 <= self.trees[0] + self.direction[0] < self.x_bound and 0 <= self.trees[1] + self.direction[1] < self.y_bound:
                                             if self.curr_stage.object_list[self.trees[1] + self.direction[1]][self.trees[0] + self.direction[0]].tile_object != None and "burnable" in tiles.tile_object_tags[tiles.tiles_translate[self.curr_stage.object_list[self.trees[1] + self.direction[1]][self.trees[0] + self.direction[0]].tile_object]]:
                                                self.burn.add((self.trees[0] + self.direction[0], self.trees[1] + self.direction[1]))
-                                time.sleep(1.5)
-                            self.curr_stage.inventory = "EMPTY"
-            #
+                                time.sleep(0.5)
+                            self.curr_stage.inventory = "EMPTY"            
             next_tile = self.curr_stage.object_list[movement[1]][movement[0]]
             next_tile_floor_tags = tiles.tile_floor_tags[tiles.tiles_translate[next_tile.tile_floor]]
             if next_tile.tile_object != None:
@@ -106,14 +106,13 @@ class player:
                 if next_tile.tile_object == None:
                     #print("moving")
                     #time.sleep(2)
-                    if next_tile.tile_floor == "\N{large blue square}":
-                        #run it here
-                        ...
-                    else:
-                        next_tile.tile_object = "\N{adult}"
-                        self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
-                        self.curr_tile = None
-                        self.x_coords, self.y_coords = movement[0], movement[1]
+                    next_tile.tile_object = "\N{adult}"
+                    self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
+                    self.curr_tile = None
+                    self.x_coords, self.y_coords = movement
+                    if "death_on_touch" in next_tile_floor_tags:
+                        death_screen()
+
                 elif "item" in next_tile_object_tags:
                     if "auto_pickup" in next_tile_object_tags:
                         if "win_condition" in next_tile_object_tags:
@@ -122,13 +121,13 @@ class player:
                             next_tile.tile_object = "\N{adult}"
                             self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
                             self.curr_tile = None
-                            self.x_coords, self.y_coords = movement[0], movement[1]
+                            self.x_coords, self.y_coords = movement
                     else:
                         temp = next_tile.tile_object
                         next_tile.tile_object = "\N{adult}"
                         self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
                         self.curr_tile = temp
-                        self.x_coords, self.y_coords = movement[0], movement[1]
+                        self.x_coords, self.y_coords = movement
         #print("done")
         #time.sleep(2)
 if __name__ == "__main__":

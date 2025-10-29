@@ -2,7 +2,7 @@ import os
 import sys
 import time
 import tiles
-from menu import Menu
+from menu import Menu, win_screen
 from mapper import stage
 from player import player
 #from booter import launch
@@ -136,27 +136,5 @@ while True:
 time.sleep(12)
 """
     if curr_stage.score >= curr_stage.score_req:
-        os.system("cls" if os.name == "nt" else "clear")
-        print("Congrats, you've finished the game! have a cake :)")
-        print("""                  
-            /M/              .,-=;//;-
-        .:/= ;MH/,    ,=/+%$XH@MM#@:
-        -$##@+$###@H@MMM#######H:.    -/H#H
-    .,H@H@ X######@ -H#####@+-     -+H###@X
-    .,@##H;      +XM##M/,     =%@###@X;-
-    X%-  :M##########$.    .:%M###@%:
-    M##H,   +H@@@$/-.  ,;$M###@%,          --
-    M####M=,,---,.-HHH####M$:          ,+@##
-    @##################@/.         :%H##@$-
-    M###############H,         ;HM##M$=
-    #################.    .=$M##M$=
-    ################H..;XM##M$=          .:++
-    M###################@%=           =+@MH%
-    @#################M/.         =+H#X%=
-    =+M###############M,      ,/X#H+:,
-    .;XM###########H=   ,/X#H+:;
-        .=+HM#######M+/+HM@+=.
-            ,:/XMM####H/.
-                ,.:=-.p
-    """)
-        break
+        win_screen()
+        
