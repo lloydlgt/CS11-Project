@@ -5,22 +5,24 @@ import tiles
 from menu import Menu, win_screen
 from mapper import stage
 from player import player
-#from booter import launch
 import controls
 
-
 menu = Menu("main")
-menu.main_menu()
 
-curr_stage = stage(menu.chosenmap) # Make "stage of" string file chosen which redirects to the file the player chooses
-print(sys.getsizeof(curr_stage))
-#time.sleep(5)
-#make this a comprehension for multiple player characters
-characters = []
+args = len(sys.argv)
+if args == 1:
+    menu.main_menu()
+    curr_stage = stage(menu.chosenmap)
+if args == 2:
+    curr_stage = stage(sys.argv[1])
+if args == 3:
+    curr_stage = stage(sys.argv[1])
+    # Perform the string of moves
+    # After the string of moves, output the state of the map in a text file with the first line saying "CLEAR" or "NO CLEAR"
+
+characters = [] # Make this a comprehension for multiple player characters
 for char_loc in curr_stage.curr_locs:
     characters.append(player(char_loc[0], (curr_stage.x, curr_stage.y), char_loc[1], curr_stage))
-
-
 while True:
     os.system("cls" if os.name == "nt" else "clear")  
     mapstr = ""

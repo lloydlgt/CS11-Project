@@ -2,30 +2,38 @@ import os
 import tiles
 import time
 
+
 class stage():
     def __init__(self, path):
         self.path = path
+
+        if self.path == "": # If user enters without input, open the default map
+            self.path = "default.txt"
         try:
-            if not self.path:
-                self.file = open("default.txt", "r")
-            else:
-                self.file = open(f"maps/{self.path}", "r")
+            try:
+                self.file = open(f"maps/{self.path}", "r") # Elif, check the maps folder first if map is there
+            except FileNotFoundError:
+                self.file = open(f"{self.path}", "r") # Elif, check the main folder
         except FileNotFoundError:
-            print(f"Error: Stage file {self.path} not found.")
+            print(f"Error: Stage file {self.path} not found.") # Else, the txt file cannot be found
             exit()
+        except PermissionError:
+            print(f"Error: Stage file {self.path} not found.") # Else, the txt file cannot be found
+            exit()
+
         self.read_lines = self.file.readlines()
         self.y, self.x = (int(num) for num in self.read_lines[0].split(" "))
-        #print(self.x, self.y)
-        #time.sleep(3)
         self.listed_file = list(x.rstrip() for x in self.read_lines[1:])
         if any((self.y != len(self.listed_file), self.x != len(self.listed_file[0]))): # Insurance for grid dimensions
             print(f"Error: Initialized forest dimension {self.y}, {self.x} does not match actual forest dimension {len(self.listed_file)}, {len(self.listed_file[0])}.")
             exit()
+
         self.score = 0
         self.score_req = 0
         self.inventory = ""
         self.object_list = list([0,] * self.x for y in range(self.y))
         self.curr_locs = []
+
         for y in range(self.y):
             for x in range(self.x):
                 print(x,y)
@@ -44,8 +52,6 @@ class stage():
     def convert(self, obj: str):
         return tiles.translate_tiles[obj]
     
-        
-
 
 class stage_tile:
     __slots__ = ("tile_object", "tile_floor", "x_coords", "y_coords", "x_bound", "y_bound", "curr_stage")
