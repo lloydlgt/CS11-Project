@@ -35,7 +35,12 @@ translate_tiles = {
     #items
     "+": "\N{mushroom}",
     "x": "\N{Axe}",
-    "*": "\N{fire}"
+    "*": "\N{fire}",
+
+    #DLC tiles
+    "@": "\N{fire}",
+    #DLC items
+
 }
 
 tiles_translate = dict((j,v) for v, j in translate_tiles.items())

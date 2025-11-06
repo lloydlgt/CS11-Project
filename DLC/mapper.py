@@ -1,7 +1,7 @@
 import os
 import tiles
 import time
-
+from player import character
 
 class stage():
     def __init__(self, path):
@@ -30,6 +30,7 @@ class stage():
         self.inventory = None
         self.object_list = list([0,] * self.x for y in range(self.y))
         self.curr_locs = []
+        self.characters = []
 
         for y in range(self.y):
             for x in range(self.x):
@@ -40,14 +41,14 @@ class stage():
                     #print(([x,y], "  ", "player found"))
                     #time.sleep(2)
                     self.curr_locs.append(([x,y], None))
-                self.object_list[y][x] = stage_tile(None, "  ", (x,y), self)
+                self.object_list[y][x] = stage_tile(None, ".", (x,y), self)
                 if self.listed_file[y][x] in tiles.tile_object_tags:
-                    self.object_list[y][x].tile_object = self.convert(self.listed_file[y][x])
+                    self.object_list[y][x].tile_object = self.listed_file[y][x]
                 elif self.listed_file[y][x] in tiles.tile_floor_tags:
-                    self.object_list[y][x].tile_floor = self.convert(self.listed_file[y][x])
+                    self.object_list[y][x].tile_floor = self.listed_file[y][x]
 
-    def convert(self, obj: str):
-        return tiles.translate_tiles[obj]
+        for char_loc in self.curr_locs:
+            self.characters.append(character(char_loc[0], (self.x, self.y), char_loc[1], self))
     
 
 class stage_tile:
@@ -80,15 +81,32 @@ class stage_tile:
     def move(self, movement: tuple[int,int]):
         if movement:
         #if "can_move_to" in tiles.tile_object_tags[tiles.tiles_translate[self.curr_stage[movement[1]][movement[0]].tile_object]]:
-            if "reactive" in tiles.tile_floor_tags[tiles.tiles_translate[self.curr_stage.object_list[movement[1]][movement[0]].tile_floor]]:
-                self.curr_stage.object_list[movement[1]][movement[0]].tile_floor = tiles.translate_tiles[tiles.tile_reactions[(tiles.tiles_translate[self.tile_object], tiles.tiles_translate[self.curr_stage.object_list[movement[1]][movement[0]].tile_floor])]]
+            if "reactive" in tiles.tile_floor_tags[self.curr_stage.object_list[movement[1]][movement[0]].tile_floor]:
+                self.curr_stage.object_list[movement[1]][movement[0]].tile_floor = tiles.tile_reactions[(self.tile_object,self.curr_stage.object_list[movement[1]][movement[0]].tile_floor)]
                 self.tile_object = None
             elif self.curr_stage.object_list[movement[1]][movement[0]].tile_object == None:
                 self.curr_stage.object_list[movement[1]][movement[0]].tile_object = self.tile_object
                 self.tile_object = None
-            elif "reactive" in tiles.tile_object_tags[tiles.tiles_translate[self.curr_stage.object_list[movement[1]][movement[0]].tile_object]]:
+            elif "reactive" in tiles.tile_object_tags[self.curr_stage.object_list[movement[1]][movement[0]].tile_object]:
                 ...
             
+def display(curr_stage: stage, ASCII:bool):
+    mapstr = ""
+    for objlist in curr_stage.object_list:
+            for obj in objlist:
+                if obj.tile_object:
+                    if ASCII == True:
+                        mapstr += obj.tile_object
+                    else:
+                        mapstr += tiles.translate_tiles[obj.tile_object]
+                else:
+                    if ASCII == True:
+                        mapstr += obj.tile_floor
+                    else:
+                        mapstr += tiles.translate_tiles[obj.tile_floor]
+            mapstr += "\n"
+    return mapstr
+
 
 if __name__ == "__main__":
     mapstr = ""
