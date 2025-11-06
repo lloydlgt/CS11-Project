@@ -55,7 +55,7 @@ class player:
                 elif "choppable" in next_tile_object_tags or "burnable" in next_tile_object_tags:
                         if self.curr_stage.inventory in {"x"}:
                             self.curr_stage.object_list[movement[1]][movement[0]].tile_object = None
-                            self.curr_stage.inventory = "Empty"
+                            self.curr_stage.inventory = None
 
                         if self.curr_stage.inventory in {"*"}:
                             self.burn = {(movement[0], movement[1])}
@@ -97,7 +97,7 @@ class player:
                                                self.burn.add((self.trees[0] + self.direction[0], self.trees[1] + self.direction[1]))
                                 time.sleep(0.5)
                             os.system("cls" if os.name == "nt" else "clear")
-                            self.curr_stage.inventory = "EMPTY"            
+                            self.curr_stage.inventory = None            
             next_tile = self.curr_stage.object_list[movement[1]][movement[0]]
             next_tile_floor_tags = tiles.tile_floor_tags[tiles.tiles_translate[next_tile.tile_floor]]
             if next_tile.tile_object != None:

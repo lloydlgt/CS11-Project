@@ -27,13 +27,13 @@ class stage():
 
         self.score = 0
         self.score_req = 0
-        self.inventory = ""
+        self.inventory = None
         self.object_list = list([0,] * self.x for y in range(self.y))
         self.curr_locs = []
 
         for y in range(self.y):
             for x in range(self.x):
-                print(x,y)
+                #print(x,y)
                 if self.listed_file[y][x] == "+":
                     self.score_req += 1
                 if self.listed_file[y][x] == "L":
