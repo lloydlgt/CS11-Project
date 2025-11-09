@@ -75,7 +75,7 @@ class Menu:
 
 
 def death_screen():
-    print("bitch you cant swim")
+    print("bitch you died")
     sys.exit()
 
 def win_screen():

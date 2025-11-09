@@ -81,13 +81,14 @@ class stage_tile:
     def move(self, movement: tuple[int,int]):
         if movement:
         #if "can_move_to" in tiles.tile_object_tags[tiles.tiles_translate[self.curr_stage[movement[1]][movement[0]].tile_object]]:
-            if "reactive" in tiles.tile_floor_tags[self.curr_stage.object_list[movement[1]][movement[0]].tile_floor]:
-                self.curr_stage.object_list[movement[1]][movement[0]].tile_floor = tiles.tile_reactions[(self.tile_object,self.curr_stage.object_list[movement[1]][movement[0]].tile_floor)]
+            move_tile = self.curr_stage.object_list[movement[1]][movement[0]]
+            if "reactive" in tiles.tile_floor_tags[move_tile.tile_floor]:
+                move_tile.tile_floor = tiles.tile_reactions[(self.tile_object, move_tile.tile_floor)]
                 self.tile_object = None
-            elif self.curr_stage.object_list[movement[1]][movement[0]].tile_object == None:
-                self.curr_stage.object_list[movement[1]][movement[0]].tile_object = self.tile_object
+            elif move_tile.tile_object == None:
+                move_tile.tile_object = self.tile_object
                 self.tile_object = None
-            elif "reactive" in tiles.tile_object_tags[self.curr_stage.object_list[movement[1]][movement[0]].tile_object]:
+            elif "reactive" in tiles.tile_object_tags[move_tile.tile_object]:
                 ...
             
 def display(curr_stage: stage, ASCII:bool):

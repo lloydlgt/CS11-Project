@@ -6,8 +6,8 @@ T...R.T.T
 T.T..TT.T
 T.x...*.T
 T.......T
-T.......T
-TTTTTTTTT
+T..!!...T
+TTTRRTTTT
 TTTTTTTTT
 TTTTTTTTT
 TTTTTTTTT

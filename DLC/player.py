@@ -34,7 +34,7 @@ class character:
        
         if not movement:
             return
-        
+
         if 0 <= movement[0] < self.curr_stage.x and 0 <= movement[1] < self.curr_stage.y:
 
             next_tile = self.curr_stage.object_list[movement[1]][movement[0]]
@@ -98,14 +98,16 @@ class character:
                 next_tile_object_tags = {}
 
             if "can_move_to" in next_tile_floor_tags:
-
-                if next_tile.tile_object == None:
+                if not next_tile_object_tags:
                     next_tile.tile_object = "L"
                     self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
                     self.curr_tile = None
                     self.x_coords, self.y_coords = movement
                     if "death_on_touch" in next_tile_floor_tags:
                         death_screen()
+                    if "brittle" in next_tile_floor_tags:
+                        self.curr_stage.object_list[self.y_coords][self.x_coords].tile_floor = "%"
+
 
                 elif "item" in next_tile_object_tags:
                     if "auto_pickup" in next_tile_object_tags:

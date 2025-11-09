@@ -3,6 +3,8 @@ tile_floor_tags = {
     "." : {"can_move_to", "floor"},
     "~" : {"interactable", "death_on_touch", "can_move_to", "floor", "reactive"},
     "_" : {"can_move_to", "floor"},
+    "!" : {"can_move_to", "brittle", "interactable"},
+    "%" : {"can_move_to", "death_on_touch"}
 }
 
 #add reactive
@@ -31,6 +33,8 @@ translate_tiles = {
     "R": "\N{rock} ",
     "~": "\N{large blue square}",
     "_": "\N{White Large Square}",
+    "!": "\N{Broken Heart}",
+    "%": "\N{Wilted Flower}",
     
     #items
     "+": "\N{mushroom}",
