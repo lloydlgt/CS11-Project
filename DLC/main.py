@@ -3,7 +3,7 @@ import sys
 import time
 import tiles
 from menu import Menu, win_screen
-from mapper import stage, display
+from mapper import stage, display, animate
 from player import character
 import controls
 
@@ -14,8 +14,7 @@ def run_input(indiv_input: str):
     #movement
     if indiv_input in controls.movement_keybinds:
         for char in curr_stage.characters:
-            movement = getattr(char, "move_" + controls.movement_keybinds[indiv_input.lower()])
-            char.move(movement(), controls.movement_keybinds[indiv_input.lower()])
+            char.move(controls.movement_keybinds[indiv_input.lower()])
 
     #ui
     elif indiv_input in controls.ui_keybinds:
@@ -28,6 +27,8 @@ def run_input(indiv_input: str):
             if not curr_stage.inventory and char.curr_tile != None and "manual_pickup" in tiles.tile_object_tags[char.curr_tile]:
                 curr_stage.inventory = char.curr_tile
                 char.curr_tile = None
+
+
 
 menu = Menu("main")
 
@@ -74,17 +75,16 @@ while True:
         print("Currently holding NOTHING")
         for char in curr_stage.characters:
             if char.curr_tile and "manual_pickup" in tiles.tile_object_tags[char.curr_tile]:
-                print(f"Press P to pick up [{tiles.translate_tiles[char.curr_tile]}]:")
+                print(f"Press P to pick up [{tiles.translate_tiles[char.curr_tile]}]")
                 break
     else:
         print(f"Currently holding [{tiles.translate_tiles[curr_stage.inventory]}]")
 
     #move player
     for indiv_input in input("> ").lower():
-        time.sleep(0.1)
         clear()
         run_input(indiv_input)
-        print(display(curr_stage, False))
+        animate(curr_stage, 0.1)
         print(f"\N{mushroom}: {curr_stage.score}")
         
     menu.prev = "in_game"

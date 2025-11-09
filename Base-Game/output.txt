@@ -1,0 +1,11 @@
+CLEAR
+9 9
+TTTTTTTTT
+T...L...T
+T..._...T
+T.......T
+T.T.....T
+T.x.....T
+T.......T
+T.......T
+TTTTTTTTT

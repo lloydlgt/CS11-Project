@@ -13,120 +13,147 @@ class character:
         self.bounds = self.x_bound, self.y_bound
         self.curr_tile = curr_tile
         self.curr_stage = curr_stage
-    
-    def move_up(self):
-        if self.y_coords - 1 >= 0:
-            return self.x_coords, self.y_coords - 1
 
-    def move_down(self):
-        if self.y_coords + 1 < self.y_bound:
-            return self.x_coords, self.y_coords + 1
-        
-    def move_left(self):
-        if self.x_coords - 1 >= 0:
-            return self.x_coords - 1, self.y_coords
-        
-    def move_right(self):
-        if self.x_coords + 1 < self.x_bound:
-            return self.x_coords + 1, self.y_coords
+    #updates next_tile variable to the real next tile
+    def update_next_tile(self, x: int, y: int):
+        self.next_tile = self.curr_stage.object_list[y][x]
+        self.next_tile_floor_tags = tiles.tile_floor_tags[self.next_tile.tile_floor]
+        if self.next_tile.tile_object != None:
+            self.next_tile_object_tags = tiles.tile_object_tags[self.next_tile.tile_object]
+        else:
+            self.next_tile_object_tags = {}
 
-    def move(self, movement: tuple[int,int], direction: str):
-       
-        if not movement:
+    #moves player without directly influencing the tile youre moving to (e.g. no pushing)
+    def shift(self, movement: tuple[int,int]):
+        if not (0 <= self.y_coords + movement[1] < self.y_bound and 0 <= self.x_coords + movement[0] < self.x_bound):
             return
+        new_x, new_y = self.x_coords + movement[0], self.y_coords + movement[1]
+        self.update_next_tile(new_x, new_y)
 
-        if 0 <= movement[0] < self.curr_stage.x and 0 <= movement[1] < self.curr_stage.y:
+        #if object in next tile
+        if "can_move_to" in self.next_tile_object_tags:
 
-            next_tile = self.curr_stage.object_list[movement[1]][movement[0]]
-            next_tile_floor_tags = tiles.tile_floor_tags[next_tile.tile_floor]
-            if next_tile.tile_object != None:
-                next_tile_object_tags = tiles.tile_object_tags[next_tile.tile_object]
+            #pickup
+            if "auto_pickup" in self.next_tile_object_tags:
+                temp = None
+                if "win_condition" in self.next_tile_object_tags:
+                    self.curr_stage.score += 1
             else:
-                next_tile_object_tags = {}
+                temp = self.next_tile.tile_object
 
-            if "interactable" in next_tile_object_tags:
+            #moves the player
+            self.next_tile.tile_object = "L"
+            self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
+            self.curr_tile = temp
+            self.x_coords, self.y_coords = new_x, new_y
+    
+        if "can_move_to" in self.next_tile_floor_tags:
+            from mapper import animate
+            
+            #no object, just move
+            if not self.next_tile_object_tags:
+                self.next_tile.tile_object = "L"
+                self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
+                self.curr_tile = None
+                self.x_coords, self.y_coords = new_x, new_y
+            
+            #kill
+            if "death_on_touch" in self.next_tile_floor_tags:
+                death_screen()
 
-                if "pushable" in next_tile_object_tags:
-                    obj_direction = getattr(next_tile, "move_" + direction)
-                    next_tile.move(obj_direction())
-                            
-                if "choppable" in next_tile_object_tags:
-                    if self.curr_stage.inventory in {"x"}:
-                        self.curr_stage.object_list[movement[1]][movement[0]].tile_object = None
-                        self.curr_stage.inventory = None
+            #one way
+            if "brittle" in self.next_tile_floor_tags:
+                self.curr_tile = "%"
+                self.curr_stage.object_list[self.y_coords][self.x_coords].tile_floor = "."
 
-                if "burnable" in next_tile_object_tags:
-                    if self.curr_stage.inventory in {"*"}:
-                        self.burn = {(movement[0], movement[1])}
-                        self.animation = set()
-                        self.directions = ((0, 1), (0, -1), (1, 0), (-1, 0))
-                        while self.burn or self.animation:
-                            os.system("cls" if os.name == "nt" else "clear") 
-                            
-                            # Creates fire and makes a copy for adjacent trees
-                            self.temp_burn = self.burn.copy()
-                            for self.trees in self.burn:
-                                self.curr_stage.object_list[self.trees[1]][self.trees[0]].tile_object = "@"
-                            
-                            
-                            # Prints map
-                            from mapper import display
-                            print(display(self.curr_stage, False))
+            #ice
+            if "slippery" in self.next_tile_floor_tags:
+                animate(self.curr_stage, 0.0625)    
+                self.shift(movement)
+        
+    def move(self, movement: tuple[int,int]):
+        if not (0 <= self.y_coords + movement[1] < self.y_bound and 0 <= self.x_coords + movement[0] < self.x_bound):
+            return
+        else:
+            from mapper import animate
+        new_x,new_y = self.x_coords + movement[0], self.y_coords + movement[1]
 
-                            # Takes care of animation
-                            for self.trees in self.animation:
-                                self.curr_stage.object_list[self.trees[1]][self.trees[0]].tile_object = None
-                            self.animation.clear()
+        self.update_next_tile(new_x,new_y)
+        
+        if "interactable" in self.next_tile_object_tags:
 
-                            # Checks adjacent cells for trees
-                            self.burn.clear() 
-                            for self.trees in self.temp_burn:
-                                self.animation.add((self.trees[0], self.trees[1]))
-                                for self.direction in self.directions:
-                                    if 0 <= self.trees[0] + self.direction[0] < self.x_bound and 0 <= self.trees[1] + self.direction[1] < self.y_bound:
-                                        if self.curr_stage.object_list[self.trees[1] + self.direction[1]][self.trees[0] + self.direction[0]].tile_object != None and "burnable" in tiles.tile_object_tags[self.curr_stage.object_list[self.trees[1] + self.direction[1]][self.trees[0] + self.direction[0]].tile_object]:
-                                            self.burn.add((self.trees[0] + self.direction[0], self.trees[1] + self.direction[1]))
-                            time.sleep(0.5)
-                        os.system("cls" if os.name == "nt" else "clear")
-                        self.curr_stage.inventory = None            
+            #push
+            if "pushable" in self.next_tile_object_tags:
+                self.next_tile.move(movement)
 
-            next_tile = self.curr_stage.object_list[movement[1]][movement[0]]
-            next_tile_floor_tags = tiles.tile_floor_tags[next_tile.tile_floor]
-            if next_tile.tile_object != None:
-                next_tile_object_tags = tiles.tile_object_tags[next_tile.tile_object]
-            else:
-                next_tile_object_tags = {}
+            #chop
+            if "choppable" in self.next_tile_object_tags:
+                if self.curr_stage.inventory in {"x"}:
+                    self.curr_stage.object_list[new_y][new_x].tile_object = None
+                    self.curr_stage.inventory = None
 
-            if "can_move_to" in next_tile_floor_tags:
-                if not next_tile_object_tags:
-                    next_tile.tile_object = "L"
-                    self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
-                    self.curr_tile = None
-                    self.x_coords, self.y_coords = movement
-                    if "death_on_touch" in next_tile_floor_tags:
-                        death_screen()
-                    if "brittle" in next_tile_floor_tags:
-                        self.curr_stage.object_list[self.y_coords][self.x_coords].tile_floor = "%"
+            #burn
+            if "burnable" in self.next_tile_object_tags:
+                if self.curr_stage.inventory in {"*"}:
+                    self.burn = {(new_x, new_y)}
+                    self.animation = set()
+                    self.directions = ((0, 1), (0, -1), (1, 0), (-1, 0))
+                    while self.burn or self.animation:
+                        
+                        # Creates fire and makes a copy for adjacent trees
+                        self.temp_burn = self.burn.copy()
+                        for trees in self.burn:
+                            self.curr_stage.object_list[trees[1]][trees[0]].tile_object = "@"
+                        
+                        # Takes care of animation
+                        for trees in self.animation:
+                            self.curr_stage.object_list[trees[1]][trees[0]].tile_object = None
+                        self.animation.clear()
 
+                        # Checks adjacent cells for trees
+                        self.burn.clear() 
+                        for trees in self.temp_burn:
+                            self.animation.add((trees[0], trees[1]))
+                            for direction in self.directions:
+                                if 0 <= trees[0] + direction[0] < self.x_bound and 0 <= trees[1] + direction[1] < self.y_bound:
+                                    if self.curr_stage.object_list[trees[1] + direction[1]][trees[0] + direction[0]].tile_object and "burnable" in tiles.tile_object_tags[self.curr_stage.object_list[trees[1] + direction[1]][trees[0] + direction[0]].tile_object]:
+                                        self.burn.add((trees[0] + direction[0], trees[1] + direction[1]))
+                        animate(self.curr_stage, 0.125)  
+                        
+                    os.system("cls" if os.name == "nt" else "clear")
+                    self.curr_stage.inventory = None            
 
-                elif "item" in next_tile_object_tags:
-                    if "auto_pickup" in next_tile_object_tags:
-                        if "win_condition" in next_tile_object_tags:
-                            next_tile.tile_object = None
-                            self.curr_stage.score += 1
-                            next_tile.tile_object = "L"
-                            self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
-                            self.curr_tile = None
-                            self.x_coords, self.y_coords = movement
+        self.update_next_tile(new_x,new_y)
 
-                    else:
-                        temp = next_tile.tile_object
-                        next_tile.tile_object = "L"
-                        self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
-                        self.curr_tile = temp
-                        self.x_coords, self.y_coords = movement
+        if "can_move_to" in self.next_tile_floor_tags:
+            self.shift(movement)
+
+            #conveyor
+            if "conveyor" in self.next_tile_floor_tags:
+                animate(self.curr_stage, 0.125)
+
+                #where conveyor goes
+                conveyor_dir = tiles.tile_special[self.next_tile.tile_floor]
+                
+                #if in bounds try to shift() player
+                if (0 <= self.y_coords + conveyor_dir[1] < self.y_bound and 0 <= self.x_coords + conveyor_dir[0] < self.x_bound):
+                    self.shift(conveyor_dir)
+
+            if "portal" in self.next_tile_floor_tags:
+                animate(self.curr_stage, 0.125)
+                #destination portal coords from the dictionary in initialization part in mapper
+                destination_portal = self.curr_stage.floor_interactions[self.next_tile.tile_floor][(self.x_coords,self.y_coords)]
+                self.update_next_tile(*destination_portal,)
+
+                #if destination has object, swap you and object, else just tp there
+                if self.next_tile.tile_object:
+                    self.curr_tile = self.next_tile.tile_object
+                    self.next_tile.tile_object = None
+                self.shift((destination_portal[0] - self.x_coords, destination_portal[1] - self.y_coords))
+
         #print("done")
         #time.sleep(2)
+
 if __name__ == "__main__":
     for i in range(100):
         print("WRONG FILE LMAO           " * 3)

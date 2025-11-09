@@ -3,11 +3,6 @@ import tiles
 import time
 from player import character
 
-def animate(curr_stage, animation_time):
-    os.system("cls" if os.name == "nt" else "clear") 
-    print(display(curr_stage, False))
-    time.sleep(animation_time)
-
 class stage():
     def __init__(self, path):
         self.path = path
@@ -36,40 +31,21 @@ class stage():
         self.object_list = list([0,] * self.x for y in range(self.y))
         self.curr_locs = []
         self.characters = []
-        self.floor_interactions = {}
 
         for y in range(self.y):
             for x in range(self.x):
-                tile_being_loaded = self.listed_file[y][x]
-
-                if tile_being_loaded == "+":
+                #print(x,y)
+                if self.listed_file[y][x] == "+":
                     self.score_req += 1
-            
-                if tile_being_loaded == "L":
+                if self.listed_file[y][x] == "L":
+                    #print(([x,y], "  ", "player found"))
+                    #time.sleep(2)
                     self.curr_locs.append(([x,y], None))
-
                 self.object_list[y][x] = stage_tile(None, ".", (x,y), self)
-
-                if tile_being_loaded in tiles.tile_object_tags:
-                    self.object_list[y][x].tile_object = tile_being_loaded
-
-                elif tile_being_loaded in tiles.tile_floor_tags:
-                    self.object_list[y][x].tile_floor = tile_being_loaded
-
-                    #initializes portals
-                    if "portal" in tiles.tile_floor_tags[tile_being_loaded]:
-
-                        #try to link the second portal to first portal, but if first portal doesnt exist in the dictionary, just make add it to the dictionary to be linked
-                        try:
-                            self.floor_interactions[tile_being_loaded][(x,y)] = self.floor_interactions[tile_being_loaded][()]
-                            self.floor_interactions[tile_being_loaded][self.floor_interactions[tile_being_loaded][()]] = (x,y)
-                            del self.floor_interactions[tile_being_loaded][()]
-                            #print("paired")
-                        except KeyError:
-                            self.floor_interactions[tile_being_loaded] = {(x,y): (), () : (x,y)}
-                            #print("keyerr")
-        #print(self.floor_interactions)
-        #time.sleep(50)
+                if self.listed_file[y][x] in tiles.tile_object_tags:
+                    self.object_list[y][x].tile_object = self.listed_file[y][x]
+                elif self.listed_file[y][x] in tiles.tile_floor_tags:
+                    self.object_list[y][x].tile_floor = self.listed_file[y][x]
 
         for char_loc in self.curr_locs:
             self.characters.append(character(char_loc[0], (self.x, self.y), char_loc[1], self))
@@ -87,41 +63,23 @@ class stage_tile:
         
     def move(self, movement: tuple[int,int]):
         if (0 <= self.y_coords + movement[1] < self.y_bound and 0 <= self.x_coords + movement[0] < self.x_bound):
-            #update destination
             new_x,new_y = self.x_coords + movement[0], self.y_coords + movement[1]
+        #if "can_move_to" in tiles.tile_object_tags[tiles.tiles_translate[self.curr_stage[movement[1]][movement[0]].tile_object]]:
             move_tile = self.curr_stage.object_list[new_y][new_x]
             
-            #reaction e.g. paved tile
             if "reactive" in tiles.tile_floor_tags[move_tile.tile_floor]:
                 move_tile.tile_floor = tiles.tile_reactions[(self.tile_object, move_tile.tile_floor)]
                 self.tile_object = None
-
-            #portal
-            elif "portal" in tiles.tile_floor_tags[move_tile.tile_floor]:
-                animate(self.curr_stage, 0.125)
-
-                #sets portal destination
-                destination_portal = self.curr_stage.floor_interactions[move_tile.tile_floor][(new_x, new_y)]
-                move_tile = self.curr_stage.object_list[destination_portal[1]][destination_portal[0]]
-
-                #attempt to teleport
-                if move_tile.tile_object == None:
-                    move_tile.tile_object = self.tile_object
-                    self.tile_object = None
-
-            #just move
             elif move_tile.tile_object == None:
                 move_tile.tile_object = self.tile_object
                 self.tile_object = None
-
             elif "reactive" in tiles.tile_object_tags[move_tile.tile_object]:
                 ...
-
-            #ice
             if "slippery" in tiles.tile_floor_tags[move_tile.tile_floor]:
-                animate(self.curr_stage, 0.0625)
+                os.system("cls" if os.name == "nt" else "clear") 
+                print(display(self.curr_stage, False))
+                time.sleep(0.25)
                 move_tile.move(movement)
-            
 
 def display(curr_stage: stage, ASCII:bool):
     mapstr = ""
