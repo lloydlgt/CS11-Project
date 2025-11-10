@@ -18,6 +18,7 @@ def run_input(indiv_input: str):
             char.move(controls.movement_keybinds[indiv_input.lower()])
             if char.dead:
                 story.death_sec()
+                char.dead = False
                 menu.main_menu()
             
 

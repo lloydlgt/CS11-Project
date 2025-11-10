@@ -124,6 +124,7 @@ def Initialize():
 
 
 def open_sec():
+    "Opening Sequence that will only be seen when you first boot up the game"
     if story_state.opener:
         os.system("cls" if os.name == "nt" else "clear")
         booting_animation()
@@ -172,6 +173,7 @@ Welcome to eternal limbo.\33[0m\n"""
             state.writelines(data)
 
 def death_sec():
+    "death sequence(unique cinematic when first death)"
     os.system("cls" if os.name == "nt" else "clear")
     if story_state.death == 0:
         text_writer("SYSTEM NOTICE: Cognitive link unstable.", 0.03)
