@@ -91,24 +91,31 @@ class stage_tile:
             new_x,new_y = self.x_coords + movement[0], self.y_coords + movement[1]
             move_tile = self.curr_stage.object_list[new_y][new_x]
             
+            
             #reaction e.g. paved tile
             if "reactive" in tiles.tile_floor_tags[move_tile.tile_floor]:
                 move_tile.tile_floor = tiles.tile_reactions[(self.tile_object, move_tile.tile_floor)]
                 self.tile_object = None
 
+            #conveyor
+
+            elif "conveyor" in tiles.tile_floor_tags[move_tile.tile_floor]:
+
+                ...
             #portal
             elif "portal" in tiles.tile_floor_tags[move_tile.tile_floor]:
                 animate(self.curr_stage, 0.125)
 
                 #sets portal destination
                 destination_portal = self.curr_stage.floor_interactions[move_tile.tile_floor][(new_x, new_y)]
-                move_tile = self.curr_stage.object_list[destination_portal[1]][destination_portal[0]]
+                portal_destination = self.curr_stage.object_list[destination_portal[1]][destination_portal[0]]
 
-                #attempt to teleport
-                if move_tile.tile_object == None:
-                    move_tile.tile_object = self.tile_object
-                    self.tile_object = None
-
+                #switch places
+                move_tile.tile_object = portal_destination.tile_object
+                portal_destination.tile_object = self.tile_object
+                self.tile_object = None
+            
+            
             #just move
             elif move_tile.tile_object == None:
                 move_tile.tile_object = self.tile_object

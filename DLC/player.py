@@ -135,9 +135,8 @@ class character:
                 #where conveyor goes
                 conveyor_dir = tiles.tile_special[self.next_tile.tile_floor]
                 
-                #if in bounds try to shift() player
-                if (0 <= self.y_coords + conveyor_dir[1] < self.y_bound and 0 <= self.x_coords + conveyor_dir[0] < self.x_bound):
-                    self.shift(conveyor_dir)
+                #try to shift() player
+                self.shift(conveyor_dir)
 
             if "portal" in self.next_tile_floor_tags:
                 animate(self.curr_stage, 0.125)

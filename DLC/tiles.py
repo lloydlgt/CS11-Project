@@ -53,6 +53,9 @@ tile_object_tags = {
     "T" : {"interactable", "burnable","choppable", "object"},
     "R" : {"interactable", "pushable", "object"},
 
+    #2nd rock for testing
+    "r" : {"interactable", "pushable", "object"},
+
     #one way triggered
     "%" : {"interactable", "burnable", "object"},
 
@@ -98,6 +101,9 @@ translate_tiles = {
 
     #DLC tiles
     "@": "\N{fire}",
+
+        #2nd rock for testing
+    "r" : "🤑",
 
         #one way
     "!": "\N{Broken Heart}",
