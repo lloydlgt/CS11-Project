@@ -2,6 +2,13 @@ import time
 import os
 import sys
 
+def text_writer(text: str, delay: float):
+    """typing effect on strings"""
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(delay)
+
 
 def booting_animation():
     """Creates a booting animation for the start of the game"""
@@ -69,37 +76,6 @@ Welcome to eternal limbo.\033[0m"""
     temp = ("THERE IS NO ESCAPE " * 7 + "\n") * 67
     sys.stdout.write(f"\033[31m{temp}\033[0m")
     time.sleep(1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def text_writer(text: str, delay: float):
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(delay)
 
 
 

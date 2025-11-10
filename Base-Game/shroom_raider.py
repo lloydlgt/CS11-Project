@@ -28,7 +28,7 @@ def run_input(indiv_input: str):
 # Map booting
 args = len(sys.argv)
 if args == 1: # shroom_raider.py // Load default stage
-    curr_stage = stage("default.txt")
+    curr_stage = stage("Base-Game\default.txt")
 
 elif args == 2: # shroom_raider.py map.txt // Load map input stage
     curr_stage = stage(sys.argv[1])
