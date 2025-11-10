@@ -1,6 +1,8 @@
 import os
 import sys
+import time
 screen_width = 100
+
 
 class Menu:
     def __init__(self, prev_screen):
@@ -72,7 +74,6 @@ class Menu:
         self.chosenmap = input("Please type your map: ") 
         #mapList = os.system("dir /b /a-d *.txt")
     
-
 
 def death_screen():
     print("bitch you died")

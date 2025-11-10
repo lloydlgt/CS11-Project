@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import tiles
+import opening_sec
 from menu import Menu, win_screen
 from mapper import stage, display, animate
 from player import character
@@ -34,12 +35,16 @@ menu = Menu("main")
 
 args = len(sys.argv)
 if args == 1: # shroom_raider.py
+    os.system("cls" if os.name == "nt" else "clear")
+    opening_sec.open_sec()
     menu.main_menu()
     curr_stage = stage(menu.chosenmap)
+    
+
 
 elif args == 2: # shroom_raider.py map.txt
     curr_stage = stage(sys.argv[1])
-
+    
 elif args == 4: # shroom_raider.py map.txt "asdasd" output.txt
     curr_stage = stage(sys.argv[1])
 
