@@ -1,64 +1,39 @@
+# Tile, object, item tags
 tile_floor_tags = {
-    #floor tiles
+    # Floor tiles
     "." : {"can_move_to", "floor"},
     "~" : {"interactable", "death_on_touch", "can_move_to", "floor", "reactive"},
     "_" : {"can_move_to", "floor"},
-    "!" : {"can_move_to", "floor", "brittle", "interactable"},
-    "I" : {"can_move_to", "slippery", "floor"},
-    "^" : {"can_move_to", "conveyor"},
-    "v" : {"can_move_to", "conveyor"},
-    "<" : {"can_move_to", "conveyor"},
-    ">" : {"can_move_to", "conveyor"},
 }
 
-#add reactive
 tile_object_tags = {
-    #obj
+    # Objects
     "L" : {"you", "object"},
     "T" : {"interactable", "burnable","choppable", "object"},
     "R" : {"interactable", "pushable", "object"},
-    "%" : {"interactable", "burnable", "object"},
 
-    #items
+    # Items
     "+" : {"can_move_to", "auto_pickup", "win_condition", "item"},
     "x" : {"can_move_to", "manual_pickup", "item"},
-    "*" : {"can_move_to", "manual_pickup", "item"}
-    
+    "*" : {"can_move_to", "manual_pickup", "item"},
 }
 
 tile_reactions = {
     ("R","~") : "_"
 }
 
-tile_special = {
-
-}
-
+# Tile and item UI representations
 translate_tiles = {
-    #tiles
+    # Tiles
     "L":"\N{adult}",
     ".": "  ",
     "T": "\N{evergreen tree}",
     "R": "\N{rock} ",
     "~": "\N{large blue square}",
     "_": "\N{White Large Square}",
-    "!": "\N{Broken Heart}",
-    "%": "\N{Wilted Flower}",
-    "I": "\N{large blue diamond}",
-    "^" : "\N{up arrow}",
-    "v" : "\N{down arrow}",
-    "<" : "\N{left arrow}",
-    ">" : "\N{right arrow}",
-    #items
+
+    # Items
     "+": "\N{mushroom}",
     "x": "\N{Axe}",
     "*": "\N{fire}",
-
-    #DLC tiles
-    "@": "\N{fire}",
-    #DLC items
-
 }
-
-tiles_translate = dict((j,v) for v, j in translate_tiles.items())
-
