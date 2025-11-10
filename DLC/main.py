@@ -37,7 +37,6 @@ args = len(sys.argv)
 if args == 1: # shroom_raider.py
     os.system("cls" if os.name == "nt" else "clear")
     opening_sec.open_sec()
-    input()
     menu.main_menu()
     curr_stage = stage(menu.chosenmap)
     
