@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import tiles
+import story
 from menu import Menu, win_screen
 from mapper import stage, display, animate
 from player import character
@@ -34,8 +35,9 @@ menu = Menu("main")
 
 args = len(sys.argv)
 if args == 1: # shroom_raider.py
-    os.system("cls" if os.name == "nt" else "clear")
-    curr_stage = stage("Base-Game\default.txt")
+    story.open_sec()
+    menu.main_menu()
+    curr_stage = stage(menu.chosenmap)
     
 
 
