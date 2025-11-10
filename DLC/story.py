@@ -4,6 +4,7 @@ import sys
 import story_state
 import random
 
+
 def corrupt():
     logs = [
         """\33[95;1m!!! SYSTEM ALERT !!!\33[0m Cog###tive l!@#ink--u$%^nstable//
@@ -244,6 +245,8 @@ Projected duration: ∞\n\n""", 0.02)
         data[1] = "death = 1"
         with open('DLC\story_state.py','w',encoding='utf-8') as state:
             state.writelines(data)
+    else:
+        print("imma do this tomorrow")
 
 
 
