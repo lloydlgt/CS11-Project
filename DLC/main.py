@@ -16,6 +16,10 @@ def run_input(indiv_input: str):
     if indiv_input in controls.movement_keybinds:
         for char in curr_stage.characters:
             char.move(controls.movement_keybinds[indiv_input.lower()])
+            if char.dead:
+                story.death_sec()
+                menu.main_menu()
+            
 
     #ui
     elif indiv_input in controls.ui_keybinds:

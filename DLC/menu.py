@@ -1,6 +1,9 @@
 import os
 import sys
 import time
+from story import death_sec
+
+
 screen_width = 100
 
 
@@ -74,10 +77,10 @@ class Menu:
         self.chosenmap = input("Please type your map: ") 
         #mapList = os.system("dir /b /a-d *.txt")
     
-
-def death_screen():
-    print("bitch you died")
-    sys.exit()
+    def death_screen():
+        death_sec()
+        self.main_menu()
+    
 
 def win_screen():
     os.system("cls" if os.name == "nt" else "clear")
