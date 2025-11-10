@@ -1,2 +1,1 @@
-opener = False
-death = 1
+opener = Falsedeath = 0
