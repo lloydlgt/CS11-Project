@@ -8,6 +8,11 @@ from mapper import display, animate, stage
 from player import character
 import controls
 
+
+
+menu = Menu("main")
+
+
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
@@ -26,11 +31,11 @@ def run_input(indiv_input: str):
                 curr_stage = menu.curr_stage
                 
             
-
     #ui
     elif indiv_input in controls.ui_keybinds:
         key = getattr(menu, controls.ui_keybinds[indiv_input.lower()])
         key()
+        curr_stage = menu.curr_stage
 
     #player actions
     elif indiv_input in controls.player_action_keybinds:
@@ -38,10 +43,6 @@ def run_input(indiv_input: str):
             if not curr_stage.inventory and char.curr_tile != None and "manual_pickup" in tiles.tile_object_tags[char.curr_tile]:
                 curr_stage.inventory = char.curr_tile
                 char.curr_tile = None
-
-
-
-menu = Menu("main")
 
 args = len(sys.argv)
 if args == 1: # shroom_raider.py

@@ -29,5 +29,6 @@ ui_keybinds = {
     #for menus
     "m": "main",
     "c": "control",
+    "!": "reset"
 }
 
