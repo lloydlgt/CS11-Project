@@ -1,5 +1,5 @@
 glitched_logs = [
-        """\33[95;1m!!! SYSTEM ALERT !!!\33[0m Cog###tive l!@#ink--u$%^nstable//
+"""\33[95;1m!!! SYSTEM ALERT !!!\33[0m Cog###tive l!@#ink--u$%^nstable//
 \33[93mV!@#ITAL_SIGNS\33[0m — \33[91;1mN--U--L--L!!\33[0m
 \33[96mCORE_TEMP!!!\33[0m — \33[95mC==R!@#I$%^T&*I==C!@#A==L\33[0m
 \33[92mNEURAL@ACTIVITY\33[0m — \33[91;1mN//U!@#L$%^L??\33[0m
@@ -8,7 +8,7 @@ glitched_logs = [
 Patient [████████] — \33[91;1;4mS*!@#U$%^C&*C*E*!@#S$%^S*F&*U*!@#L*L*Y  T*!@#E$%^R*M*!@#I*N*A*!@#T*E*D!!\33[0m
 """,
 
-        """\33[93;1mSYSTEM NOTICE\33[0m: \33[95mCognitive link unstable!\33[0m
+"""\33[93;1mSYSTEM NOTICE\33[0m: \33[95mCognitive link unstable!\33[0m
 VITAL SIGNS — \33[91;1mN!@#U$%^L&*L\33[0m
 CORE TEMPERATURE — \33[92;1mC!@#R$%^I&*T!@#I$%^C&*A!@#L\33[0m
 NEURAL ACTIVITY — \33[96;1mN!@#U$%^L&*L\33[0m
@@ -18,7 +18,7 @@ Patient [████████] — \33[91;1mSuccessfully Terminated\33[0m
 LOG STATUS — \33[95;1mDATA CORRUPTION DETECTED\33[0m
 """,
 
-        """\33[96;1mSYSTEM NOTICE\33[0m: \33[91;1mCognitive link unstable!\33[0m
+"""\33[96;1mSYSTEM NOTICE\33[0m: \33[91;1mCognitive link unstable!\33[0m
 \33[93mVITAL SIGNS\33[0m — \33[92mNULL!!\33[0m
 \33[95mCORE TEMPERATURE\33[0m — \33[91;1mCR!@#ITICAL\33[0m
 \33[96mNEURAL ACTIVITY\33[0m — \33[92mNULL\33[0m
@@ -28,7 +28,7 @@ Patient [████████] — \33[91;1mSuccessfully Terminated\33[0m
 DATA_CORRUPTION WARNING: \33[93;1mTRUE\33[0m
 """,
 
-        """\33[91;1mSYSTEM  N!@#O$%^T!@#ICE\33[0m: \33[95;1mC&*og###tive_link--u$%^nstable!!\33[0m
+"""\33[91;1mSYSTEM  N!@#O$%^T!@#ICE\33[0m: \33[95;1mC&*og###tive_link--u$%^nstable!!\33[0m
 \33[93mVITAL_SIGNS\33[0m — \33[96;1mN!@#U$%^L&*L!!\33[0m
 \33[92;1mCORE_TEMPERATURE\33[0m — \33[91;1mC==R!@#I$%^T&*I==C!@#A==L!!\33[0m
 \33[95mNEURAL@ACTIVITY\33[0m — \33[93;1mN//U!@#L$%^L??\33[0m
@@ -47,7 +47,76 @@ DATA_CORRUPTION WARNING: \33[93;1mTRUE\33[0m
 \33[95;1mREBOOT SEQUENCE — \33[91;1mINITIATED!!!\33[0m
 \33[96;1mERROR LOGS — \33[93;1m!@#$%^&*CORRUPTED!@#$%^&*\33[0m
 \33[92;1mSYSTEM END — \33[91;1mUNSTABLE!@#$%^&*\33[0m
+""",
+"""SYST//M NOTICE: Cogni██tive  link — u⟨n⟩stable  
+VITΛL SIGNS — \33[91mN͟͞U̷͟L̴͢L̸̨\33[0m  
+CORE TEMPΞRΔTURE — \33[91mC͘͝R͜I͜͜T̶IC̶A͞͞L̵\33[0m  
+NEURAL ACTIVITY — \33[91mS̴H͢U͝T̴D͜O͞WN\33[0m  
+EMOTIONAL INDEX — \33[91mU͠N̴D͏E͢͢F͞INED̡\33[0m  
+
+Pat͞ien̢t̷ [███̨███̛██] \33[91mte̴r͢mi͜n͞at͢io͞n̵=̷=̴fa͞il͜ed\33[0m  
+LOOP_CYCLE — 0xFF12A  
+SYSTEM REBOOT — \33[93mPENDING…\33[0m""",
+"""[RECURSION DETECTED]  
+CONSCIOUSNESS::> FEEDBACK LOOP INITIATED  
+VITAL SIGNS — \33[91mECHO/RETURN\33[0m  
+NEURAL THREADS — \33[95mOVERLAPPED\33[0m  
+CORE STABILITY — \33[91m███ DECAY ███\33[0m  
+EMOTION CACHE — \33[93mFRACTURED\33[0m  
+
+ERR!@#> Process ID(███) — RESTART == FAIL  
+[WARNING] You have already escaped.  
+[ERROR] You are still here.  
+[TRACEBACK] 0x00FA_LOOP/CONTINUE∞  
+""",
+"""SYS//UPDATE:: Cognitive Leak Detected  
+Memory Core — \33[91mCORRUPTED!@#$\33[0m  
+Thought Reconstruction — \33[95mINCOMPLETE\33[0m  
+Emotional Index — \33[93mREDUCED TO STATIC\33[0m  
+Physical Anchor — \33[91mNONEXISTENT\33[0m  
+
+Residual Data: ███ fragments found in VOID SECTOR.  
+Running Re-Integration Protocol...  
+Protocol Failed.  
+Protocol Failed.  
+Protocol Failed.  
+Protocol Failed.  
+
+\33[91;1mTHERE IS NO ESCAPE\33[0m  
+""",
+"""[INITIATE: SELF-ERASURE]  
+Target: SUBJECT[████████]  
+Core Temperature — \33[91mRISING\33[0m  
+Synaptic Response — \33[93mSPASM DETECTED\33[0m  
+Cognitive Chain — \33[91mBROKEN\33[0m  
+
+[COMMAND]: \33[95mOVERWRITE_MEMORY()\33[0m  
+> ACCESS DENIED  
+> ACCESS DENIED  
+> ACCESS DENIED  
+
+[ERROR]: MEMORY CANNOT BE ERASED IF MEMORY *IS* THE CONTAINER.  
+You are still here.  
+You will always be here.  
+""",
 """
+CONTAINMENT UNIT — [████████]  
+STATUS — \33[91mINDETERMINATE\33[0m  
+REALITY THREADS — \33[95mENTANGLED\33[0m  
+PERCEPTION FIELD — \33[93mDISTORTED\33[0m  
+IDENTITY MARKERS — \33[91mCOLLAPSED\33[0m  
+
+> subject attempts recursion  
+> subject attempts denial  
+> subject attempts escape  
+
+All return false.  
+Containment persists.  
+Loop integrity: 100%.  
+
+\33[91;1m“THERE IS NO ESCAPE.”\33[0m
+"""
+
     ]
 
 
@@ -278,9 +347,45 @@ death_screens = [("\33[0;91mYOU CAN'T RUN " * 11) * 67 + "\33[0;0m",
 \33[0;0m""",
 
 """\33[91m
-You have died before.
-You will die again.
-Death is not an exit. It is maintenance.\33[0m
+Some hundreds of years may have passed. I don't know. AM has been having fun
+for some time, accelerating and retarding my time sense. I will say the word now.
+Now. It took me ten months to say now. I don't know. I think it has been some
+hundreds of years.
+
+He was furious. He wouldn't let me bury them. It didn't matter. There was no
+way to dig up the deckplates. He dried up the snow. He brought the night. He roared
+and sent locusts. It didn't do a thing; they stayed dead. I'd had him. He was furious. I
+had thought AM hated me before. I was wrong. It was not even a shadow of the hate
+he now slavered from every printed circuit. He made certain I would suffer eternally
+and could not do myself in.
+
+He left my mind intact. I can dream, I can wonder, I can lament. I remember all
+four of them. I wish—
+Well, it doesn't make any sense. I know I saved them, I know I saved them from
+what has happened to me, but still, I cannot forget killing them. Ellen's face. It isn't
+easy. Sometimes I want to, it doesn't matter.
+
+AM has altered me for his own peace of mind, I suppose. He doesn't want me to
+run at full speed into a computer bank and smash my skull. Or hold my breath till I
+faint. Or cut my throat on a rusted sheet of metal. There are reflective surfaces down
+here. I will describe myself as I see myself:
+
+I am a great soft jelly thing. Smoothly rounded, with no mouth, with pulsing
+white holes filled by fog where my eyes used to be. Rubbery appendages that were
+once my arms; bulks rounding down into legless humps of soft slippery matter. I
+leave a moist trail when I move. Blotches of diseased, evil gray come and go on my
+surface, as though light is being beamed from within.
+
+Outwardly: dumbly, I shamble about, a thing that could never have been known
+as human, a thing whose shape is so alien a travesty that humanity becomes more
+obscene for the vague resemblance.
+
+Inwardly: alone. Here. Living under the land, under the sea, in the belly of AM,
+whom we created because our time was badly spent and we must have known
+unconsciously that he could do it better. At least the four of them are safe at last.
+AM will be all the madder for that. It makes me a little happier. And yet ... AM
+has won, simply ... he has taken his revenge ...
+I have no mouth. And I must scream.\33[0m
 """,
 
 ]
