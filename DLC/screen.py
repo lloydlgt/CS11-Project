@@ -213,7 +213,7 @@ death_screens = [("\33[0;91mYOU CAN'T RUN \33[0;0m" * 11) * 67,
                                     .=#@@@@@@@@@@@@@@@@@@@@@@@@@%=.                                      
                                             :-+#%@@@@@%#+=:.                                             
           MTF Psi-9: ABYSS GAZERS                                                                                                                                                                                            
-\33[0;0m"""
+\33[0;0m""",
 
 """\33[101;30m                                                                                    
                                                                                                          
@@ -323,7 +323,16 @@ death_screens = [("\33[0;91mYOU CAN'T RUN \33[0;0m" * 11) * 67,
                                     .-#@@@@@@@@@@@@@@@@@@@@@@@@@%+:                                      
                                            .:=+#%@@@@@%#+=:.                                             
                                                                                                          
-\33[0;0m"""
+\33[0;0m""",
+
+"""\33[91m
+You have died before.
+You will die again.
+Death is not an exit. It is maintenance.\33[0m
+""",
+
+
+
 
 ]
 

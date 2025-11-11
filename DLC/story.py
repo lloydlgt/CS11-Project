@@ -4,10 +4,11 @@ import story_state, screen
 import random
 import winsound
 
-def tone(note: tuple[int, int]):
-    for Hz, dur in note:
-        winsound(Hz, dur)
-        time.sleep(0.03)
+def tone(notes):
+    for note in notes:
+        for Hz, dur, delay in note:
+            winsound(Hz, dur)
+            time.sleep(delay)
 
 
 def text_writer(text: str, delay: float):
@@ -48,7 +49,6 @@ def booting_animation():
             time.sleep(durs[i])
     sys.stdout.write(f"\33[32m\rBoot Complete!     \n\33[0m")
     sys.stdout.flush()
-    time.sleep(0.5)
     os.system("cls" if os.name == "nt" else "clear")
 
 def general_bootup(start: str, end: str):
@@ -125,6 +125,9 @@ Welcome to eternal limbo.\33[0m\n"""
         os.system("cls" if os.name == "nt" else "clear")
         temp = ("THERE IS NO ESCAPE " * 7 + "\n") * 67
         sys.stdout.write(f"\33[91m{temp}\33[0m")
+        winsound.Beep(250, 1000)
+        winsound.Beep(150, 1000)
+        winsound.Beep(50, 1000)
         time.sleep(1)
         with open('story_state.py','r',encoding='utf-8') as state:
             data = state.readlines()
