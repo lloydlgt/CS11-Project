@@ -166,10 +166,10 @@ Welcome to eternal limbo.\33[0m\n"""
         temp = ("THERE IS NO ESCAPE " * 7 + "\n") * 67
         sys.stdout.write(f"\33[91m{temp}\33[0m")
         time.sleep(1)
-        with open('DLC\story_state.py','r',encoding='utf-8') as state:
+        with open('story_state.py','r',encoding='utf-8') as state:
             data = state.readlines()
         data[0] = "opener = False\n"
-        with open('DLC\story_state.py','w',encoding='utf-8') as state:
+        with open('story_state.py','w',encoding='utf-8') as state:
             state.writelines(data)
 
 def death_sec():
@@ -242,10 +242,10 @@ Projected duration: ∞\n\n""", 0.02)
         text_writer("There is no recovery.\33[0m\n", 0.04)
         time.sleep(0.5)
 
-        with open('DLC\story_state.py','r',encoding='utf-8') as state:
+        with open('story_state.py','r',encoding='utf-8') as state:
             data = state.readlines()
         data[1] = "death = 1\n"
-        with open('DLC\story_state.py','w',encoding='utf-8') as state:
+        with open('story_state.py','w',encoding='utf-8') as state:
             state.writelines(data)
     else:
         print("imma do this tomorrow")
