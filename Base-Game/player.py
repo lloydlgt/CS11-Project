@@ -104,6 +104,7 @@ class character:
                 self.curr_tile = None
                 self.x_coords, self.y_coords = new_x, new_y
                 if "death_on_touch" in next_tile_floor_tags:
+                    self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
                     clear()
                     print(mapper.display(self.curr_stage, False))
                     print(f"\N{mushroom} collected: {self.curr_stage.score}")
