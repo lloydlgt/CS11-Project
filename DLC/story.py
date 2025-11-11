@@ -1,9 +1,21 @@
 import time
-import os
-import sys
-import story_state
+import os, sys
+import story_state, screen
 import random
-import screen
+import winsound
+
+def tone(note: tuple[int, int]):
+    for Hz, dur in note:
+        winsound(Hz, dur)
+        time.sleep(0.03)
+
+
+def text_writer(text: str, delay: float):
+    """typing effect on strings"""
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(delay)
 
 
 def corrupt():
@@ -21,14 +33,9 @@ def corrupt():
         
 def death_loop():
     death_logs = screen.death_screens
-
-
-def text_writer(text: str, delay: float):
-    """typing effect on strings"""
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(delay)
+    os.system("cls" if os.name == "nt" else "clear")
+    sys.stdout.write(random.choice(death_logs) + "\n")
+    time.sleep(1)
 
 
 def booting_animation():
@@ -201,7 +208,7 @@ Projected duration: ∞\n\n""", 0.02)
         with open('story_state.py','w',encoding='utf-8') as state:
             state.writelines(data)
     else:
-        print("imma do this tomorrow")
+        death_loop()
 
 
 
