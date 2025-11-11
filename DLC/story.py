@@ -1,62 +1,28 @@
 import time
-import os
-import sys
-import story_state
+import os, sys
+import story_state, screen
 import random
+import winsound
+
+death_count = story_state.death
+
+def tone(notes, delay=0):
+    for note in notes:
+        for Hz, dur in note:
+            winsound(Hz, dur)
+            time.sleep(delay)
+
+
+def text_writer(text: str, delay: float):
+    """typing effect on strings"""
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(delay)
 
 
 def corrupt():
-    logs = [
-        """\33[95;1m!!! SYSTEM ALERT !!!\33[0m Cog###tive l!@#ink--u$%^nstable//
-\33[93mV!@#ITAL_SIGNS\33[0m — \33[91;1mN--U--L--L!!\33[0m
-\33[96mCORE_TEMP!!!\33[0m — \33[95mC==R!@#I$%^T&*I==C!@#A==L\33[0m
-\33[92mNEURAL@ACTIVITY\33[0m — \33[91;1mN//U!@#L$%^L??\33[0m
-\33[97mEMO_INDEX>>> \33[0m\33[93mU--N!@#D$%^E--F&*I--N==E!@#D\33[0m
-
-Patient [████████] — \33[91;1;4mS*!@#U$%^C&*C*E*!@#S$%^S*F&*U*!@#L*L*Y  T*!@#E$%^R*M*!@#I*N*A*!@#T*E*D!!\33[0m
-""",
-
-        """\33[93;1mSYSTEM NOTICE\33[0m: \33[95mCognitive link unstable!\33[0m
-VITAL SIGNS — \33[91;1mN!@#U$%^L&*L\33[0m
-CORE TEMPERATURE — \33[92;1mC!@#R$%^I&*T!@#I$%^C&*A!@#L\33[0m
-NEURAL ACTIVITY — \33[96;1mN!@#U$%^L&*L\33[0m
-EMOTIONAL INDEX — \33[93;1mU!@#N$%^D&*E!@#F$%^I&*N!@#E\33[0m
-
-Patient [████████] — \33[91;1mSuccessfully Terminated\33[0m
-LOG STATUS — \33[95;1mDATA CORRUPTION DETECTED\33[0m
-""",
-
-        """\33[96;1mSYSTEM NOTICE\33[0m: \33[91;1mCognitive link unstable!\33[0m
-\33[93mVITAL SIGNS\33[0m — \33[92mNULL!!\33[0m
-\33[95mCORE TEMPERATURE\33[0m — \33[91;1mCR!@#ITICAL\33[0m
-\33[96mNEURAL ACTIVITY\33[0m — \33[92mNULL\33[0m
-\33[93mEMOTIONAL INDEX\33[0m — \33[95mUNDEFINED\33[0m
-
-Patient [████████] — \33[91;1mSuccessfully Terminated\33[0m
-DATA_CORRUPTION WARNING: \33[93;1mTRUE\33[0m
-""",
-
-        """\33[91;1mSYSTEM  N!@#O$%^T!@#ICE\33[0m: \33[95;1mC&*og###tive_link--u$%^nstable!!\33[0m
-\33[93mVITAL_SIGNS\33[0m — \33[96;1mN!@#U$%^L&*L!!\33[0m
-\33[92;1mCORE_TEMPERATURE\33[0m — \33[91;1mC==R!@#I$%^T&*I==C!@#A==L!!\33[0m
-\33[95mNEURAL@ACTIVITY\33[0m — \33[93;1mN//U!@#L$%^L??\33[0m
-\33[96;1mEMOTIONAL_INDEX\33[0m — \33[92;1mU--N!@#D$%^E--F&*I--N==E!@#D\33[0m
-
-\33[91;1;4mPatient [████████] — S*!@#U$%^C&*C*E*!@#S$%^S*F&*U*!@#L*L*Y  T*!@#E$%^R*M*!@#I*N*A*!@#T*E*D!!\33[0m
-\33[93;1mLOG::D!@#ATA_CORRUPTION>>>T!@#RUE!!!\33[0m
-\33[95;1;4mTRACE::0xFF1A_REBOOT_SEQUENCE_PENDING...\33[0m
-\33[96;1mWARNING: MEMORY LEAK DETECTED — \33[91;1m!@#$%^&*!!\33[0m
-\33[92;1mERROR::STABILITY COMPROMI$%^&*SED!!!\33[0m
-\33[95;1mSYNAPTIC COHERENCE — \33[91;1m!!@#%^&*--DISRUPTED!!\33[0m
-\33[96;1mCORTEX SIGNALS — \33[93;1mFRAGMENTS DETECTED!@#\33[0m
-\33[91;1mLINK STABILITY — \33[95;1m***FAILURE***\33[0m
-\33[92;1mCONSCIOUSNESS LOOP — \33[91;1;4mACTIVE!@#$%^&*\33[0m
-\33[93;1mPATIENT STATUS — \33[96;1m!@#NULL!@#\33[0m
-\33[95;1mREBOOT SEQUENCE — \33[91;1mINITIATED!!!\33[0m
-\33[96;1mERROR LOGS — \33[93;1m!@#$%^&*CORRUPTED!@#$%^&*\33[0m
-\33[92;1mSYSTEM END — \33[91;1mUNSTABLE!@#$%^&*\33[0m
-"""
-    ]
+    logs = screen.glitched_logs
     for x in range(25):
         if x < 19:
             log = random.choice(logs)
@@ -68,14 +34,12 @@ DATA_CORRUPTION WARNING: \33[93;1mTRUE\33[0m
         sys.stdout.write(log + "\n")
         time.sleep(0.04)
         
-    
-
-def text_writer(text: str, delay: float):
-    """typing effect on strings"""
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(delay)
+def death_loop():
+    death_logs = screen.death_screens
+    os.system("cls" if os.name == "nt" else "clear")
+    sys.stdout.write(random.choice(death_logs))
+    sys.stdout.write("\n")
+    time.sleep(1)
 
 
 def booting_animation():
@@ -88,7 +52,6 @@ def booting_animation():
             time.sleep(durs[i])
     sys.stdout.write(f"\33[32m\rBoot Complete!     \n\33[0m")
     sys.stdout.flush()
-    time.sleep(0.5)
     os.system("cls" if os.name == "nt" else "clear")
 
 def general_bootup(start: str, end: str):
@@ -165,17 +128,21 @@ Welcome to eternal limbo.\33[0m\n"""
         os.system("cls" if os.name == "nt" else "clear")
         temp = ("THERE IS NO ESCAPE " * 7 + "\n") * 67
         sys.stdout.write(f"\33[91m{temp}\33[0m")
+        winsound.Beep(250, 1000)
+        winsound.Beep(150, 1000)
+        winsound.Beep(50, 1000)
         time.sleep(1)
-        with open('DLC\story_state.py','r',encoding='utf-8') as state:
+        with open('story_state.py','r',encoding='utf-8') as state:
             data = state.readlines()
         data[0] = "opener = False\n"
-        with open('DLC\story_state.py','w',encoding='utf-8') as state:
+        with open('story_state.py','w',encoding='utf-8') as state:
             state.writelines(data)
 
 def death_sec():
+    global death_count
     "death sequence(unique cinematic when first death)"
     os.system("cls" if os.name == "nt" else "clear")
-    if story_state.death == 0:
+    if death_count == 0:
         text_writer("SYSTEM NOTICE: Cognitive link unstable.", 0.03)
         sys.stdout.write("\n")
         time.sleep(0.5)
@@ -242,13 +209,14 @@ Projected duration: ∞\n\n""", 0.02)
         text_writer("There is no recovery.\33[0m\n", 0.04)
         time.sleep(0.5)
 
-        with open('DLC\story_state.py','r',encoding='utf-8') as state:
+        death_count += 1
+        with open('story_state.py','r',encoding='utf-8') as state:
             data = state.readlines()
-        data[1] = "death = 1\n"
-        with open('DLC\story_state.py','w',encoding='utf-8') as state:
+        data[1] = f"death = {death_count}\n"
+        with open('story_state.py','w',encoding='utf-8') as state:
             state.writelines(data)
     else:
-        print("imma do this tomorrow")
+        death_loop()
 
 
 
