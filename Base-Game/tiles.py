@@ -28,7 +28,7 @@ translate_tiles = {
     "L":"\N{adult}",
     ".": "  ",
     "T": "\N{evergreen tree}",
-    "R": "\N{rock} ",
+    "R": "\N{rock}",
     "~": "\N{large blue square}",
     "_": "\N{White Large Square}",
 
