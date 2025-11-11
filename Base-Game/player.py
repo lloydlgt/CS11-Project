@@ -1,6 +1,7 @@
 import os
 import tiles
 import time
+import mapper
 
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
@@ -103,7 +104,12 @@ class character:
                 self.curr_tile = None
                 self.x_coords, self.y_coords = new_x, new_y
                 if "death_on_touch" in next_tile_floor_tags:
+                    self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
+                    clear()
+                    print(mapper.display(self.curr_stage, False))
+                    print(f"\N{mushroom} collected: {self.curr_stage.score}")
                     death_screen()
+                    exit()
 
             elif "item" in next_tile_object_tags:
                 if "auto_pickup" in next_tile_object_tags:

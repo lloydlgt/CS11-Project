@@ -79,12 +79,12 @@ def display(curr_stage: stage, ASCII:bool):
     for objlist in curr_stage.object_list:
             for obj in objlist:
                 if obj.tile_object:
-                    if ASCII == True:
+                    if ASCII:
                         mapstr += obj.tile_object
                     else:
                         mapstr += tiles.translate_tiles[obj.tile_object]
                 else:
-                    if ASCII == True:
+                    if ASCII:
                         mapstr += obj.tile_floor
                     else:
                         mapstr += tiles.translate_tiles[obj.tile_floor]
