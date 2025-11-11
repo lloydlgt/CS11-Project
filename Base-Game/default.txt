@@ -1,8 +1,8 @@
 11 12
 TTTTTTTTTTTT
-T~R.~T+~.*+T
-Tx~.TRTRT~.T
-T.TTx~.RTTRT
+T.R.~T+~.*+T
+Tx~.TRTTR~.T
+T..Tx~.RTTRT
 T~TTT.T..xTT
 T..RT.RTT..T
 TTT.T....T.T
