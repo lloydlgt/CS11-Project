@@ -168,7 +168,7 @@ Welcome to eternal limbo.\33[0m\n"""
         time.sleep(1)
         with open('DLC\story_state.py','r',encoding='utf-8') as state:
             data = state.readlines()
-        data[0] = "opener = False"
+        data[0] = "opener = False\n"
         with open('DLC\story_state.py','w',encoding='utf-8') as state:
             state.writelines(data)
 
@@ -244,7 +244,7 @@ Projected duration: ∞\n\n""", 0.02)
 
         with open('DLC\story_state.py','r',encoding='utf-8') as state:
             data = state.readlines()
-        data[1] = "death = 1"
+        data[1] = "death = 1\n"
         with open('DLC\story_state.py','w',encoding='utf-8') as state:
             state.writelines(data)
     else:
