@@ -9,10 +9,9 @@ from player import character
 import controls
 
 
-
 menu = Menu("main")
 
-
+moves = ""
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
@@ -29,7 +28,6 @@ def run_input(indiv_input: str):
                 menu.prev = "main"
                 menu.main_menu()
                 curr_stage = menu.curr_stage
-                
             
     #ui
     elif indiv_input in controls.ui_keybinds:
@@ -79,7 +77,7 @@ elif args == 4: # shroom_raider.py map.txt "asdasd" output.txt
     except FileNotFoundError:
         print(f"Error: Output file {sys.argv[3]} not found.") 
     exit()
-    # After the string of moves, output the state of the map in a text file with the first line saying "CLEAR" or "NO CLEAR"
+    
 
 
 while True:
@@ -99,13 +97,17 @@ while True:
 
     #move player
     for indiv_input in input("> ").lower():
+        moves += indiv_input
         clear()
         run_input(indiv_input)
         animate(curr_stage, 0.1)
         print(f"\N{mushroom}: {curr_stage.score}")
         if curr_stage.score >= curr_stage.score_req:
+            print(moves)
+            time.sleep(10)
             win_screen()
         curr_stage.update()
+        
 
     menu.prev = "in_game"
     

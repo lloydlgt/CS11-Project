@@ -116,7 +116,7 @@ tile_special = {
 translate_tiles = {
     #tiles
     "L":"\N{adult}",
-    ".": "  ",
+    ".": "\u3000",
     "T": "\N{evergreen tree}",
     "R": "\N{rock}",
     "~": "\N{large blue square}",
