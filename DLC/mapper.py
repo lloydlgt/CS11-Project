@@ -11,14 +11,14 @@ def animate(curr_stage, animation_time):
 
 class stage():
     def __init__(self, path):
-        self.path = f"maps\{path}"
+        self.path = f"maps/{path}"
 
         if path == "": # If user enters without input, open the default map
             print("no map")
-            self.path = "maps\default.txt"
+            self.path = "maps/default.txt"
         try:
             try:
-                self.file = open(f"maps\{self.path}", "r") # Elif, check the maps folder first if map is there
+                self.file = open(f"maps/{self.path}", "r") # Elif, check the maps folder first if map is there
             except FileNotFoundError:
                 self.file = open(f"{self.path}", "r") # Elif, check the main folder
         except FileNotFoundError:
@@ -40,6 +40,7 @@ class stage():
         self.curr_locs = []
         self.characters = []
         self.interactions = {}
+        self.gates = {}
 
         for y in range(self.y):
             for x in range(self.x):
@@ -60,9 +61,9 @@ class stage():
 
                     if "gate" in tile_initialized_object_tags:
                         try:
-                            self.interactions[tiles.tile_special[tile_being_loaded][0]].add((x,y))
+                            self.gates[tiles.tile_special[tile_being_loaded][0]].add((x,y))
                         except KeyError:
-                            self.interactions[tiles.tile_special[tile_being_loaded][0]] = {(x,y),}
+                            self.gates[tiles.tile_special[tile_being_loaded][0]] = {(x,y),}
                         self.object_list[y][x].tile_floor = tiles.tile_special[tile_being_loaded][1]
                         self.object_list[y][x].state = True
                     
@@ -85,9 +86,9 @@ class stage():
 
                     if "door_floor" in tile_initialized_floor_tags:
                         try:
-                            self.interactions[tiles.tile_special[tile_being_loaded]].add((x,y))
+                            self.gates[tiles.tile_special[tile_being_loaded]].add((x,y))
                         except KeyError:
-                            self.interactions[tiles.tile_special[tile_being_loaded]] = {(x,y),}
+                            self.gates[tiles.tile_special[tile_being_loaded]] = {(x,y),}
 
         #print(self.interactions)
         #time.sleep(50)
@@ -95,22 +96,28 @@ class stage():
         for char_loc in self.curr_locs:
             self.characters.append(character(char_loc[0], (self.x, self.y), char_loc[1], self))
 
+    def update(self):
+        for gate in self.gates:
+            for gate_x, gate_y in self.gates[gate]:
+                curr_gate = self.object_list[gate_y][gate_x]
+                #if gate is supposed to be up, attempt to bring the wall up
+                if curr_gate.state == True:
+                    if not curr_gate.tile_object:
+                        curr_gate.tile_object = tiles.tile_special[gate]
+                    ...
+                #bring the wall down
+                elif curr_gate.state == False:
+                    if curr_gate.tile_object == tiles.tile_special[gate]:
+                        curr_gate.tile_object = None
+
     def update_gates(self, key: str):
-        for gate_x, gate_y in self.interactions[key.lower()]:
+        for gate_x, gate_y in self.gates[key.lower()]:
             curr_gate = self.object_list[gate_y][gate_x]
 
             #reverses state
             curr_gate.state = not curr_gate.state
             
-            #if gate is supposed to be up, attempt to bring the wall up
-            if curr_gate.state == True:
-                if not curr_gate.tile_object:
-                    curr_gate.tile_object = tiles.tile_special[key]
-                ...
-            #bring the wall down
-            elif curr_gate.state == False:
-                if curr_gate.tile_object == tiles.tile_special[key]:
-                    curr_gate.tile_object = None
+            
 
 class stage_tile:
     __slots__ = ("tile_object", "tile_floor", "x_coords", "y_coords", "x_bound", "y_bound", "curr_stage", "state")
@@ -135,6 +142,15 @@ class stage_tile:
         move_tile.tile_object = self.tile_object
         self.tile_object = None
 
+        if "button" in tiles.tile_floor_tags[self.tile_floor]:
+            self.curr_stage.update_gates(self.tile_floor)
+
+        if "button" in tiles.tile_floor_tags[move_tile.tile_floor]:
+            self.curr_stage.update_gates(move_tile.tile_floor)
+
+        if "lever" in tiles.tile_floor_tags[move_tile.tile_floor]:
+            self.curr_stage.update_gates(move_tile.tile_floor)
+ 
         #ice
         if "slippery" in tiles.tile_floor_tags[move_tile.tile_floor]:
             animate(self.curr_stage, 0.0625)

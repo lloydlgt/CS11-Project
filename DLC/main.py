@@ -105,6 +105,7 @@ while True:
         print(f"\N{mushroom}: {curr_stage.score}")
         if curr_stage.score >= curr_stage.score_req:
             win_screen()
+        curr_stage.update()
 
     menu.prev = "in_game"
     
