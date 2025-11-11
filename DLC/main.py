@@ -55,7 +55,9 @@ elif args == 2: # shroom_raider.py map.txt
     curr_stage = menu.curr_stage
     
 elif args == 4: # shroom_raider.py map.txt "asdasd" output.txt
-    curr_stage = stage(sys.argv[1])
+    menu.curr_stage = stage(sys.argv[1])
+    menu.curr_stage.start()
+    curr_stage = menu.curr_stage
 
     won = False
     for indiv_input in sys.argv[2].lower():

@@ -1,0 +1,15 @@
+NO CLEAR
+13 9
+TTTTTTTTT
+T...+...T
+T...~...T
+T...R.T.T
+T.T.TTT.T
+T.x..T*.T
+T.*.TL..T
+TL.TTTT.T
+T....T..T
+T...T...T
+T.TTTT..T
+T..*T...T
+TTTTTTTTT
