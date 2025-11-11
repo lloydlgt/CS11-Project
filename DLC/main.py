@@ -4,23 +4,38 @@ import time
 import tiles
 import story
 from menu import Menu, win_screen
-from mapper import stage, display, animate
+from mapper import display, animate, stage
 from player import character
 import controls
+
+
+
+menu = Menu("main")
+
 
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
 def run_input(indiv_input: str):
+    "handles the inputs of player"
+    global curr_stage
     #movement
     if indiv_input in controls.movement_keybinds:
         for char in curr_stage.characters:
             char.move(controls.movement_keybinds[indiv_input.lower()])
-
+            if char.dead:
+                story.death_sec()
+                char.dead = False
+                menu.prev = "main"
+                menu.main_menu()
+                curr_stage = menu.curr_stage
+                
+            
     #ui
     elif indiv_input in controls.ui_keybinds:
         key = getattr(menu, controls.ui_keybinds[indiv_input.lower()])
         key()
+        curr_stage = menu.curr_stage
 
     #player actions
     elif indiv_input in controls.player_action_keybinds:
@@ -29,23 +44,21 @@ def run_input(indiv_input: str):
                 curr_stage.inventory = char.curr_tile
                 char.curr_tile = None
 
-
-
-menu = Menu("main")
-
 args = len(sys.argv)
 if args == 1: # shroom_raider.py
     story.open_sec()
     menu.main_menu()
-    curr_stage = stage(menu.chosenmap)
-    
-
+    curr_stage = menu.curr_stage
 
 elif args == 2: # shroom_raider.py map.txt
-    curr_stage = stage(sys.argv[1])
+    menu.curr_stage = stage(sys.argv[1])
+    menu.curr_stage.start()
+    curr_stage = menu.curr_stage
     
 elif args == 4: # shroom_raider.py map.txt "asdasd" output.txt
-    curr_stage = stage(sys.argv[1])
+    menu.curr_stage = stage(sys.argv[1])
+    menu.curr_stage.start()
+    curr_stage = menu.curr_stage
 
     won = False
     for indiv_input in sys.argv[2].lower():
@@ -92,6 +105,7 @@ while True:
         print(f"\N{mushroom}: {curr_stage.score}")
         
     menu.prev = "in_game"
+    
     """time.sleep(1)
     os.system("cls" if os.name == "nt" else "clear")
     print(

@@ -7,6 +7,7 @@ def animate(curr_stage, animation_time):
     os.system("cls" if os.name == "nt" else "clear") 
     print(display(curr_stage, False))
     time.sleep(animation_time)
+    
 
 class stage():
     def __init__(self, path):
@@ -16,13 +17,14 @@ class stage():
             self.path = "DLC\default.txt"
         try:
             try:
-                self.file = open(f"maps/{self.path}", "r") # Elif, check the maps folder first if map is there
+                self.file = open(f"DLC\maps\{self.path}", "r") # Elif, check the maps folder first if map is there
             except FileNotFoundError:
                 self.file = open(f"{self.path}", "r") # Elif, check the main folder
         except FileNotFoundError:
             print(f"Error: Stage file {self.path} not found.") # Else, the txt file cannot be found
             exit()
 
+    def start(self):
         self.read_lines = self.file.readlines()
         self.y, self.x = (int(num) for num in self.read_lines[0].split(" "))
         self.listed_file = list(x.rstrip() for x in self.read_lines[1:])
@@ -73,7 +75,7 @@ class stage():
 
         for char_loc in self.curr_locs:
             self.characters.append(character(char_loc[0], (self.x, self.y), char_loc[1], self))
-    
+
 
 class stage_tile:
     __slots__ = ("tile_object", "tile_floor", "x_coords", "y_coords", "x_bound", "y_bound", "curr_stage")

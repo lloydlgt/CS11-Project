@@ -1,7 +1,7 @@
 import os
 import tiles
 import time
-from menu import death_screen
+import menu
 
 class character:
     def __init__(self, location: tuple[int, int], bounds: tuple[int,int], curr_tile: str, curr_stage):
@@ -13,6 +13,7 @@ class character:
         self.bounds = self.x_bound, self.y_bound
         self.curr_tile = curr_tile
         self.curr_stage = curr_stage
+        self.dead = False
 
     #updates next_tile variable to the real next tile
     def update_next_tile(self, x: int, y: int):
@@ -59,7 +60,9 @@ class character:
             
             #kill
             if "death_on_touch" in self.next_tile_floor_tags:
-                death_screen()
+                self.dead = True
+                
+
 
             #one way
             if "brittle" in self.next_tile_floor_tags:
@@ -127,7 +130,6 @@ class character:
 
         if "can_move_to" in self.next_tile_floor_tags:
             self.shift(movement)
-
             #conveyor
             if "conveyor" in self.next_tile_floor_tags:
                 animate(self.curr_stage, 0.125)

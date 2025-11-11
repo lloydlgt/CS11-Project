@@ -7,10 +7,13 @@ from mapper import stage, display
 from player import character
 import controls
 
+menu = Menu()
+
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
 def run_input(indiv_input: str):
+    global curr_stage
     # Player movement
     if indiv_input in controls.movement_keybinds:
         for char in curr_stage.characters:
@@ -22,19 +25,33 @@ def run_input(indiv_input: str):
             if not curr_stage.inventory and char.curr_tile and "manual_pickup" in tiles.tile_object_tags[char.curr_tile]:
                 curr_stage.inventory = char.curr_tile
                 char.curr_tile = None
-    else:
-        pass
+
+    elif indiv_input in controls.ui_keybinds:
+        key = getattr(menu, controls.ui_keybinds[indiv_input.lower()])
+        key()
+        curr_stage = menu.curr_stage
+
 
 # Map booting
 args = len(sys.argv)
 if args == 1: # shroom_raider.py // Load default stage
-    curr_stage = stage("Base-Game\default.txt")
+    menu.curr_stage = stage("default.txt")
+    menu.prev_map = "default.txt"
+    curr_stage = menu.curr_stage
+    menu.curr_stage.start()
+
 
 elif args == 2: # shroom_raider.py map.txt // Load map input stage
-    curr_stage = stage(sys.argv[1])
+    menu.curr_stage = stage(sys.argv[1])
+    menu.prev_map = sys.argv[1]
+    curr_stage = menu.curr_stage
+    menu.curr_stage.start()
 
 elif args == 4: # shroom_raider.py map.txt "wasd" output.txt // Load map input stage -> Run string of moves -> Write to output file
-    curr_stage = stage(sys.argv[1])
+    menu.curr_stage = stage(sys.argv[1])
+    menu.prev_map = sys.argv[1]
+    curr_stage = menu.curr_stage
+    menu.curr_stage.start()
 
     won = False
     for indiv_input in sys.argv[2].lower():
@@ -56,6 +73,7 @@ elif args == 4: # shroom_raider.py map.txt "wasd" output.txt // Load map input s
     exit()
 else:
     pass
+
 
 # "Main"
 while True:

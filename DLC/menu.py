@@ -1,15 +1,20 @@
 import os
 import sys
 import time
-screen_width = 100
+from mapper import stage
+import tiles
+
 
 
 class Menu:
     def __init__(self, prev_screen):
+        self.reset = self.reset_menu
         self.main = self.main_menu
         self.control = self.control_menu
         self.map_select = self.map_selection
         self.prev = prev_screen
+        self.prev_map = ""
+        self.curr_stage = None
     
     def main_menu(self):
         os.system("cls" if os.name == "nt" else "clear")
@@ -71,13 +76,25 @@ class Menu:
         ..................................
         """)
         os.system("dir /b /a-d DLC\maps\*.txt") # Prints all the files in the maps subfolder
-        self.chosenmap = input("Please type your map: ") 
+        self.chosenmap = input("Please type your map: ")
+        self.curr_stage = stage(self.chosenmap)
+        if not self.chosenmap:
+            self.prev_map = "default.txt"
+        else:
+            self.prev_map = self.chosenmap
+        self.curr_stage.start()
         #mapList = os.system("dir /b /a-d *.txt")
     
+    def reset_menu(self):
+        print(f"[DEBUG] Reset called | prev_map: {self.prev_map}")
+        if not self.prev_map:
+            print("No previous map to reset.")
+            return
+        self.curr_stage = stage(self.prev_map)
+        self.curr_stage.start()
 
-def death_screen():
-    print("bitch you died")
-    sys.exit()
+    
+    
 
 def win_screen():
     os.system("cls" if os.name == "nt" else "clear")
