@@ -20,7 +20,6 @@ class Menu:
     
 
 def win_screen():
-    os.system("cls" if os.name == "nt" else "clear")
     print("Congrats, you've finished the game! have a cake :)")
     print("""                  
             /M/              .,-=;//;-

@@ -1,6 +1,6 @@
 11 12
 TTTTTTTTTTTT
-T....T....+T
+T....T+...+T
 T.TTTTTTT..T
 T.*...T.TT.T
 T.TTT.T...TT

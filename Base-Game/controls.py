@@ -23,6 +23,6 @@ player_action_keybinds = {
 }
 
 ui_keybinds = {
-    #for menus
+    # For UI
     "!": "reset"
 }

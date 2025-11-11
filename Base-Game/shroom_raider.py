@@ -26,10 +26,13 @@ def run_input(indiv_input: str):
                 curr_stage.inventory = char.curr_tile
                 char.curr_tile = None
 
+    # Player UI
     elif indiv_input in controls.ui_keybinds:
         key = getattr(menu, controls.ui_keybinds[indiv_input.lower()])
         key()
         curr_stage = menu.curr_stage
+    else:
+        pass
 
 
 # Map booting
@@ -39,7 +42,6 @@ if args == 1: # shroom_raider.py // Load default stage
     menu.prev_map = "default.txt"
     curr_stage = menu.curr_stage
     menu.curr_stage.start()
-
 
 elif args == 2: # shroom_raider.py map.txt // Load map input stage
     menu.curr_stage = stage(sys.argv[1])
@@ -100,7 +102,11 @@ while True:
         run_input(indiv_input)
         print(display(curr_stage, False))
         print(f"\N{mushroom}: {curr_stage.score}")
-    
-    # Win condition
-    if curr_stage.score >= curr_stage.score_req:
-        win_screen()
+
+        # Win condition
+        if curr_stage.score >= curr_stage.score_req:
+            clear()
+            print(display(curr_stage, False))
+            print(f"\N{mushroom} collected: {curr_stage.score}")
+            win_screen()
+            exit()
