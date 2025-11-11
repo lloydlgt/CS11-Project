@@ -4,7 +4,7 @@ import time
 import tiles
 import story
 from menu import Menu, win_screen
-from mapper import display, animate
+from mapper import display, animate, stage
 from player import character
 import controls
 
@@ -21,8 +21,10 @@ def run_input(indiv_input: str):
             if char.dead:
                 story.death_sec()
                 char.dead = False
+                menu.prev = "main"
                 menu.main_menu()
                 curr_stage = menu.curr_stage
+                
             
 
     #ui
@@ -48,7 +50,9 @@ if args == 1: # shroom_raider.py
     curr_stage = menu.curr_stage
 
 elif args == 2: # shroom_raider.py map.txt
-    curr_stage = stage(sys.argv[1])
+    menu.curr_stage = stage(sys.argv[1])
+    menu.curr_stage.start()
+    curr_stage = menu.curr_stage
     
 elif args == 4: # shroom_raider.py map.txt "asdasd" output.txt
     curr_stage = stage(sys.argv[1])
