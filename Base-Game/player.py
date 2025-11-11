@@ -43,34 +43,20 @@ class character:
             if "burnable" in next_tile_object_tags:
                 if self.curr_stage.inventory in {"*"}:
                     self.burn = {(new_x, new_y)}
-                    self.animation = set()
                     self.directions = ((0, 1), (0, -1), (1, 0), (-1, 0))
-                    while self.burn or self.animation:
-                        clear()
-                        
+                    while self.burn:
                         # Creates fire and makes a copy for adjacent trees
                         self.temp_burn = self.burn.copy()
                         for trees in self.burn:
-                            self.curr_stage.object_list[trees[1]][trees[0]].tile_object = "*"
-                        
-                        # Prints map
-                        print(display(self.curr_stage, False))
-
-                        # Takes care of animation
-                        for trees in self.animation:
                             self.curr_stage.object_list[trees[1]][trees[0]].tile_object = None
-                        self.animation.clear()
 
                         # Checks adjacent cells for trees
                         self.burn.clear() 
                         for trees in self.temp_burn:
-                            self.animation.add((trees[0], trees[1]))
                             for direction in self.directions:
                                 if 0 <= trees[0] + direction[0] < self.x_bound and 0 <= trees[1] + direction[1] < self.y_bound:
                                     if self.curr_stage.object_list[trees[1] + direction[1]][trees[0] + direction[0]].tile_object and "burnable" in tiles.tile_object_tags[self.curr_stage.object_list[trees[1] + direction[1]][trees[0] + direction[0]].tile_object]:
                                         self.burn.add((trees[0] + direction[0], trees[1] + direction[1]))
-                        time.sleep(0.5)
-                    clear()
                     self.curr_stage.inventory = None            
 
         next_tile = self.curr_stage.object_list[new_y][new_x]

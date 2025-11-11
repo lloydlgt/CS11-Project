@@ -31,7 +31,7 @@ class stage():
         self.curr_locs = []
         self.characters = []
 
-        # "Load" up the map
+        # "Load" up the main map
         for y in range(self.y):
             for x in range(self.x):
                 if self.listed_file[y][x] == "+":
@@ -93,7 +93,7 @@ def display(curr_stage: stage, ASCII:bool):
 
 if __name__ == "__main__":
     mapstr = ""
-    lvl1 = stage("level.txt")
+    lvl1 = stage("default.txt")
     for row in lvl1.maplist:
         mapstr += "".join(row) + "\n"
     print(lvl1.listed_file)
