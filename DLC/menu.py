@@ -75,7 +75,7 @@ class Menu:
         |                                |
         ..................................
         """)
-        os.system("dir /b /a-d DLC\maps\*.txt") # Prints all the files in the maps subfolder
+        os.system("dir /b /a-d maps\*.txt") # Prints all the files in the maps subfolder
         self.chosenmap = input("Please type your map: ")
         self.curr_stage = stage(self.chosenmap)
         if not self.chosenmap:

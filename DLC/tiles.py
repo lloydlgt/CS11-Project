@@ -42,8 +42,12 @@ tile_floor_tags = {
     "J" : {"can_move_to", "lever"},
     "k" : {"can_move_to", "button"},
     "K" : {"can_move_to", "lever"},
-    "m" : {"can_move_to", "button"},
-    "M" : {"can_move_to", "lever"},
+
+    #gates/doors
+    "0" : {"can_move_to", "door_floor"},
+    "1" : {"can_move_to", "door_floor"},
+    "2" : {"can_move_to", "door_floor"},
+    "3" : {"can_move_to", "door_floor"},
 }
 
 #add reactive
@@ -60,11 +64,10 @@ tile_object_tags = {
     "%" : {"interactable", "burnable", "object"},
 
     #gates/doors
-    "0" : {"gate"},
-    "1" : {"gate"},
-    "2" : {"gate"},
-    "3" : {"gate"},
     "4" : {"gate"},
+    "5" : {"gate"},
+    "6" : {"gate"},
+    "7" : {"gate"},
 
     #items
     "+" : {"can_move_to", "auto_pickup", "win_condition", "item"},
@@ -79,10 +82,32 @@ tile_reactions = {
 
 #unique interactions i just cram here lol
 tile_special = {
+    #conveyors
     "^" : (0,-1),
     "v" : (0,1),
     "<" : (-1,0),
     ">" : (1,0),
+
+    "g" : "4",
+    "G" : "4",
+    "h" : "5",
+    "H" : "5",
+    "j" : "6",
+    "J" : "6",
+    "k" : "7",
+    "K" : "7",
+
+    "0" : "g",
+    "4" : ("g", "0"),
+
+    "1" : "h",
+    "5" : ("h", "1"),
+
+    "2" : "j",
+    "6" : ("j", "2"),
+
+    "3" : "k",
+    "7" : ("k", "3"),
 }
 
 translate_tiles = {
@@ -90,7 +115,7 @@ translate_tiles = {
     "L":"\N{adult}",
     ".": "  ",
     "T": "\N{evergreen tree}",
-    "R": "\N{rock} ",
+    "R": "\N{rock}",
     "~": "\N{large blue square}",
     "_": "\N{White Large Square}",
 
@@ -103,7 +128,7 @@ translate_tiles = {
     "@": "\N{fire}",
 
         #2nd rock for testing
-    "r" : "🤑",
+    "r" : "🗿",
 
         #one way
     "!": "\N{Broken Heart}",
@@ -133,27 +158,35 @@ translate_tiles = {
     "F" : "\N{Pisces}",
 
         #evil portal
-    "Z" : "\N{Ophiuchus}"
+    "Z" : "\N{Ophiuchus}",
 
         #supposedly buttons/levers/gates
-    #"g" :
-    #"G" :
-    #"h" :
-    #"H" :
-    #"j" :
-    #"J" :
-    #"k" :
-    #"K" :
-    #"m" :
-    #"M" :
-#
-    #"0" :
-    #"1" :
-    #"2" :
-    #"3" :
-    #"4" :
-    #DLC items
+    "g" : "\U00002660",
+    "G" : "\U00002716",
+
+    "h" : "\U00002665",
+    "H" : "\U00002795",
+
+    "j" : "\U00002666",
+    "J" : "\U00002796",
+
+    "k" : "\U00002663",
+    "K" : "\U00002797",
+
+    "0" : "\U0001F315",
+    "1" : "\U0001F316",
+    "2" : "\U0001F317",
+    "3" : "\U0001F314",
+
+    "4" : "\U0001F311",
+    "5" : "\U0001F312",
+    "6" : "\U0001F313",
+    "7" : "\U0001F318",
+    
+    #dlc items
 
 }
 
 tiles_translate = dict((j,v) for v, j in translate_tiles.items())
+
+print("\U00000030, \U0000FE0F, \U000020E3")

@@ -27,10 +27,12 @@ class character:
     #moves player without directly influencing the tile youre moving to (e.g. no pushing)
     def shift(self, movement: tuple[int,int]):
         if not (0 <= self.y_coords + movement[1] < self.y_bound and 0 <= self.x_coords + movement[0] < self.x_bound):
-            return
+            return False
         new_x, new_y = self.x_coords + movement[0], self.y_coords + movement[1]
         self.update_next_tile(new_x, new_y)
 
+        if not ("can_move_to" in self.next_tile_object_tags or "can_move_to" in self.next_tile_floor_tags):
+            return False
         #if object in next tile
         if "can_move_to" in self.next_tile_object_tags:
 
@@ -47,8 +49,9 @@ class character:
             self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
             self.curr_tile = temp
             self.x_coords, self.y_coords = new_x, new_y
-    
-        if "can_move_to" in self.next_tile_floor_tags:
+            return True
+            
+        elif "can_move_to" in self.next_tile_floor_tags and not "can_move_to" in self.next_tile_object_tags:
             from mapper import animate
             
             #no object, just move
@@ -56,24 +59,36 @@ class character:
                 self.next_tile.tile_object = "L"
                 self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
                 self.curr_tile = None
+                prev_x, prev_y = self.x_coords, self.y_coords
                 self.x_coords, self.y_coords = new_x, new_y
-            
             #kill
-            if "death_on_touch" in self.next_tile_floor_tags:
-                self.dead = True
+                if "death_on_touch" in self.next_tile_floor_tags:
+                    self.dead = True
+                    
+
+                if "button" in tiles.tile_floor_tags[self.curr_stage.object_list[prev_y][prev_x].tile_floor]:
+                    self.curr_stage.update_gates(self.curr_stage.object_list[prev_y][prev_x].tile_floor)
+
+                if "button" in self.next_tile_floor_tags:
+                    self.curr_stage.update_gates(self.next_tile.tile_floor)
+
+                if "lever" in self.next_tile_floor_tags:
+                    self.curr_stage.update_gates(self.next_tile.tile_floor)
+ 
+                #one way
+                if "brittle" in self.next_tile_floor_tags:
+                    self.curr_tile = "%"
+                    self.curr_stage.object_list[self.y_coords][self.x_coords].tile_floor = "."
+
+                #ice
+                if "slippery" in self.next_tile_floor_tags:
+                    animate(self.curr_stage, 0.0625)    
+                    return self.shift(movement)
                 
-
-
-            #one way
-            if "brittle" in self.next_tile_floor_tags:
-                self.curr_tile = "%"
-                self.curr_stage.object_list[self.y_coords][self.x_coords].tile_floor = "."
-
-            #ice
-            if "slippery" in self.next_tile_floor_tags:
-                animate(self.curr_stage, 0.0625)    
-                self.shift(movement)
+                return True
         
+        return False
+
     def move(self, movement: tuple[int,int]):
         if not (0 <= self.y_coords + movement[1] < self.y_bound and 0 <= self.x_coords + movement[0] < self.x_bound):
             return
@@ -129,7 +144,10 @@ class character:
         self.update_next_tile(new_x,new_y)
 
         if "can_move_to" in self.next_tile_floor_tags:
-            self.shift(movement)
+            moved = self.shift(movement)
+            
+            if not moved:
+                return
             #conveyor
             if "conveyor" in self.next_tile_floor_tags:
                 animate(self.curr_stage, 0.125)
@@ -143,7 +161,7 @@ class character:
             if "portal" in self.next_tile_floor_tags:
                 animate(self.curr_stage, 0.125)
                 #destination portal coords from the dictionary in initialization part in mapper
-                destination_portal = self.curr_stage.floor_interactions[self.next_tile.tile_floor][(self.x_coords,self.y_coords)]
+                destination_portal = self.curr_stage.interactions[self.next_tile.tile_floor][(self.x_coords,self.y_coords)]
                 self.update_next_tile(*destination_portal,)
 
                 #if destination has object, swap you and object, else just tp there
@@ -151,6 +169,7 @@ class character:
                     self.curr_tile = self.next_tile.tile_object
                     self.next_tile.tile_object = None
                 self.shift((destination_portal[0] - self.x_coords, destination_portal[1] - self.y_coords))
+
 
         #print("done")
         #time.sleep(2)

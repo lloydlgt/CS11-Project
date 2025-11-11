@@ -1,0 +1,12 @@
+11 10
+TTTTTTTTTT
+T.......+T
+T.0123.R.T
+T........T
+T.4567.R.T
+T........T
+T.ghjk.R.T
+T........T
+T.GHJK.R.T
+TL.......T
+TTTTTTTTTT

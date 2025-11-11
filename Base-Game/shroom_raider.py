@@ -100,7 +100,10 @@ while True:
         run_input(indiv_input)
         print(display(curr_stage, False))
         print(f"\N{mushroom}: {curr_stage.score}")
+
+        # Win condition
+        if curr_stage.score >= curr_stage.score_req:
+            win_screen()
     
-    # Win condition
-    if curr_stage.score >= curr_stage.score_req:
-        win_screen()
+    
+    

@@ -103,7 +103,9 @@ while True:
         run_input(indiv_input)
         animate(curr_stage, 0.1)
         print(f"\N{mushroom}: {curr_stage.score}")
-        
+        if curr_stage.score >= curr_stage.score_req:
+            win_screen()
+
     menu.prev = "in_game"
     
     """time.sleep(1)
@@ -162,6 +164,5 @@ while True:
                           ░░░░░░░░▒▒▒▒▒▒▒▒░              ░▒▒▒▒▒▒▒▒▒▒▒▒░▒░                        )
 time.sleep(12)
 """
-    if curr_stage.score >= curr_stage.score_req:
-        win_screen()
+    
         
