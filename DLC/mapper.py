@@ -11,13 +11,13 @@ def animate(curr_stage, animation_time):
 
 class stage():
     def __init__(self, path):
-        self.path = f"DLC\maps\{path}"
+        self.path = f"maps\{path}"
 
         if path == "": # If user enters without input, open the default map
-            self.path = "DLC\default.txt"
+            self.path = "default.txt"
         try:
             try:
-                self.file = open(f"DLC\maps\{self.path}", "r") # Elif, check the maps folder first if map is there
+                self.file = open(f"maps\{self.path}", "r") # Elif, check the maps folder first if map is there
             except FileNotFoundError:
                 self.file = open(f"{self.path}", "r") # Elif, check the main folder
         except FileNotFoundError:
