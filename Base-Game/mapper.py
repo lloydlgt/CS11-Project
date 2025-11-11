@@ -7,6 +7,7 @@ class stage():
     def __init__(self, path):
         self.path = path
 
+    def start(self):
         try:
             # Setup the map variables and insure actual dimensions match initialized forest dimensions
             with open(f"{self.path}", "r") as file:

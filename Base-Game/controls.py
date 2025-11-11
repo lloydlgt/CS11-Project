@@ -21,3 +21,8 @@ player_action_keybinds = {
     # Player pickup
     "p" : "pickup",
 }
+
+ui_keybinds = {
+    #for menus
+    "!": "reset"
+}
