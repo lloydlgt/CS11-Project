@@ -39,8 +39,6 @@ parser.add_argument("stage_file", type=str, nargs="?", default="default.txt")
 parser.add_argument("string_of_moves", type=str, nargs="?", default="")
 parser.add_argument("output_file", type=str, nargs="?", default=None)
 args = parser.parse_args()
-print(args.stage_file, args.string_of_moves, args.output_file)
-time.sleep(1)
 
 
 # Map booting
