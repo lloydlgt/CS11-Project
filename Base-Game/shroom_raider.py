@@ -1,5 +1,4 @@
 import os
-import time
 import tiles
 from argparse import ArgumentParser
 from menu import Menu, win_screen
@@ -8,11 +7,14 @@ import controls
 
 menu = Menu()
 
+# Clears the user terminal
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
+# Processes every user movement/input
 def run_input(indiv_input: str):
     global curr_stage
+
     # Player movement
     if indiv_input in controls.movement_keybinds:
         for char in curr_stage.characters:
@@ -30,10 +32,10 @@ def run_input(indiv_input: str):
         key = getattr(menu, controls.ui_keybinds[indiv_input.lower()])
         key()
         curr_stage = menu.curr_stage
-
     else:
         pass
 
+# Accepting user command-line arguments
 parser = ArgumentParser()
 parser.add_argument("stage_file", type=str, nargs="?", default="default.txt")
 parser.add_argument("string_of_moves", type=str, nargs="?", default="")
@@ -48,14 +50,22 @@ curr_stage = menu.curr_stage
 menu.curr_stage.start()
 
 
-# If user enters an output file
 if args.output_file:
+    """
+    If the user enters an output file,
+    Run the string of moves,
+    Write current stage in the output file,
+    Terminate the program
+    """
+
     won = False
+    
     for indiv_input in args.string_of_moves.lower():
         run_input(indiv_input)
         if curr_stage.score >= curr_stage.score_req:
             won = True
             break
+
     try:
         with open(args.output_file, "w") as file:
             if won:
@@ -67,20 +77,21 @@ if args.output_file:
         print(f"Successfully output to {args.output_file}.")
     except FileNotFoundError:
         print(f"Error: Output file {args.output_file} not found.") 
+        
     exit()
 else:
     pass
 
 
-# "Main"
+# "Main" or in-game part of the game
 while True:
     clear()
 
-    # Terminal displays
+    # Displays necessary game information on the terminal
     print(display(curr_stage, False))
     print(f"\N{mushroom}: {curr_stage.score}")
 
-    # Pickup prompt
+    # Prompts the user for pickup on an item tile and shows the current item holding
     if not curr_stage.inventory:
         print("Currently holding [ ]")
         for char in curr_stage.characters:
@@ -90,14 +101,14 @@ while True:
     else:
         print(f"Currently holding [{tiles.translate_tiles[curr_stage.inventory]}]")
 
-    # Player movement
+    # Player movement for each input
     for indiv_input in input("> ").lower():
         clear()
         run_input(indiv_input)
         print(display(curr_stage, False))
         print(f"\N{mushroom}: {curr_stage.score}")
 
-        # Win condition
+        # If user has reached the win condition
         if curr_stage.score >= curr_stage.score_req:
             clear()
             print(display(curr_stage, False))

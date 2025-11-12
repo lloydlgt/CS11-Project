@@ -6,6 +6,7 @@ import tiles
 
 
 class Menu:
+    # Initialize the menu and the original map when the user inputs map reset
     def __init__(self):
         self.reset = self.reset_menu
         self.prev_map = ""

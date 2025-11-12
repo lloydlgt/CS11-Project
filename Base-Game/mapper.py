@@ -52,6 +52,8 @@ class stage():
     
 
 class stage_tile:
+    # Initializes each stage tile as their own object
+
     __slots__ = ("tile_object", "tile_floor", "x_coords", "y_coords", "x_bound", "y_bound", "curr_stage")
     def __init__(self, tile_object: str, tile_floor: str, coords: tuple[int,int], curr_stage: stage):
         self.tile_object = tile_object
@@ -76,7 +78,9 @@ class stage_tile:
                 pass
 
 
-def display(curr_stage: stage, ASCII:bool):
+def display(curr_stage: stage, ASCII: bool):
+    # To display the current state of the map in one function for reusability and readability
+
     mapstr = ""
     for objlist in curr_stage.object_list:
             for obj in objlist:
