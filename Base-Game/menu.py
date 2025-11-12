@@ -5,7 +5,6 @@ from mapper import stage
 import tiles
 
 
-
 class Menu:
     def __init__(self):
         self.reset = self.reset_menu
@@ -17,8 +16,6 @@ class Menu:
         self.curr_stage.start()
 
     
-    
-
 def win_screen():
     print("Congrats, you've finished the game! have a cake :)")
     print("""                  
@@ -42,11 +39,9 @@ def win_screen():
             ,:/XMM####H/.
         
     """)
-    sys.exit()
+    exit()
 
 
-
-    
 if __name__ == "__main__":
     menu = Menu("main")
     x = getattr(menu, "main")

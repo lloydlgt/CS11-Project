@@ -3,6 +3,7 @@ import tiles
 import time
 from player import character
 
+
 class stage():
     def __init__(self, path):
         self.path = path
@@ -10,7 +11,7 @@ class stage():
     def start(self):
         try:
             # Setup the map variables and insure actual dimensions match initialized forest dimensions
-            with open(f"{self.path}", "r") as file:
+            with open(self.path, "r") as file:
                 self.file = file
                 self.read_lines = self.file.readlines()
                 self.y, self.x = (int(num) for num in self.read_lines[0].split(" "))
@@ -73,6 +74,7 @@ class stage_tile:
                 self.tile_object = None
             elif "reactive" in tiles.tile_object_tags[move_tile.tile_object]:
                 pass
+
 
 def display(curr_stage: stage, ASCII:bool):
     mapstr = ""
