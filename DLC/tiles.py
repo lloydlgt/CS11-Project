@@ -116,7 +116,7 @@ tile_special = {
 translate_tiles = {
     #tiles
     "L":"\N{adult}",
-    ".": "  ",
+    ".": "\u3000",
     "T": "\N{evergreen tree}",
     "R": "\N{rock}",
     "~": "\N{large blue square}",
@@ -164,17 +164,17 @@ translate_tiles = {
     "Z" : "\N{Ophiuchus}",
 
         #supposedly buttons/levers/gates
-    "g" : "\U00002660",
-    "G" : "\U00002716",
+    "g" : "🟡",
+    "G" : "🟨",
 
-    "h" : "\U00002665",
-    "H" : "\U00002795",
+    "h" : "🟢",
+    "H" : "🟩",
 
-    "j" : "\U00002666",
-    "J" : "\U00002796",
+    "j" : "🟣",
+    "J" : "🟪",
 
-    "k" : "\U00002663",
-    "K" : "\U00002797",
+    "k" : "🔴",
+    "K" : "🟥",
 
     "0" : "\U0001F315",
     "1" : "\U0001F316",

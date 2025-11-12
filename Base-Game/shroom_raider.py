@@ -1,19 +1,20 @@
 import os
-import sys
-import time
 import tiles
+from argparse import ArgumentParser
 from menu import Menu, win_screen
 from mapper import stage, display
-from player import character
 import controls
 
 menu = Menu()
 
+# Clears the user terminal
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
+# Processes every user movement/input
 def run_input(indiv_input: str):
     global curr_stage
+
     # Player movement
     if indiv_input in controls.movement_keybinds:
         for char in curr_stage.characters:
@@ -34,58 +35,63 @@ def run_input(indiv_input: str):
     else:
         pass
 
+# Accepting user command-line arguments
+parser = ArgumentParser()
+parser.add_argument("stage_file", type=str, nargs="?", default="default.txt")
+parser.add_argument("string_of_moves", type=str, nargs="?", default="")
+parser.add_argument("output_file", type=str, nargs="?", default=None)
+args = parser.parse_args()
+
 
 # Map booting
-args = len(sys.argv)
-if args == 1: # shroom_raider.py // Load default stage
-    menu.curr_stage = stage("default.txt")
-    menu.prev_map = "default.txt"
-    curr_stage = menu.curr_stage
-    menu.curr_stage.start()
+menu.curr_stage = stage(args.stage_file)
+menu.prev_map = args.stage_file
+curr_stage = menu.curr_stage
+menu.curr_stage.start()
 
-elif args == 2: # shroom_raider.py map.txt // Load map input stage
-    menu.curr_stage = stage(sys.argv[1])
-    menu.prev_map = sys.argv[1]
-    curr_stage = menu.curr_stage
-    menu.curr_stage.start()
 
-elif args == 4: # shroom_raider.py map.txt "wasd" output.txt // Load map input stage -> Run string of moves -> Write to output file
-    menu.curr_stage = stage(sys.argv[1])
-    menu.prev_map = sys.argv[1]
-    curr_stage = menu.curr_stage
-    menu.curr_stage.start()
+if args.output_file:
+    """
+    If the user enters an output file,
+    Run the string of moves,
+    Write current stage in the output file,
+    Terminate the program
+    """
 
     won = False
-    for indiv_input in sys.argv[2].lower():
+    
+    for indiv_input in args.string_of_moves.lower():
         run_input(indiv_input)
         if curr_stage.score >= curr_stage.score_req:
             won = True
             break
+
     try:
-        with open(f"{sys.argv[3]}", "w") as file:
+        with open(args.output_file, "w") as file:
             if won:
                 file.write("CLEAR\n")
             else:
                 file.write("NO CLEAR\n")
             file.write(str(curr_stage.y) + " " + str(curr_stage.x) + "\n")
             file.write(display(curr_stage, True))
-        print(f"Successfully output to {sys.argv[3]}.")
+        print(f"Successfully output to {args.output_file}.")
     except FileNotFoundError:
-        print(f"Error: Output file {sys.argv[3]} not found.") 
+        print(f"Error: Output file {args.output_file} not found.") 
+        
     exit()
 else:
     pass
 
 
-# "Main"
+# "Main" or in-game part of the game
 while True:
     clear()
 
-    # Terminal displays
+    # Displays necessary game information on the terminal
     print(display(curr_stage, False))
     print(f"\N{mushroom}: {curr_stage.score}")
 
-    # Pickup prompt
+    # Prompts the user for pickup on an item tile and shows the current item holding
     if not curr_stage.inventory:
         print("Currently holding [ ]")
         for char in curr_stage.characters:
@@ -95,15 +101,14 @@ while True:
     else:
         print(f"Currently holding [{tiles.translate_tiles[curr_stage.inventory]}]")
 
-    # Player movement
+    # Player movement for each input
     for indiv_input in input("> ").lower():
-        time.sleep(0.1)
         clear()
         run_input(indiv_input)
         print(display(curr_stage, False))
         print(f"\N{mushroom}: {curr_stage.score}")
 
-        # Win condition
+        # If user has reached the win condition
         if curr_stage.score >= curr_stage.score_req:
             clear()
             print(display(curr_stage, False))
