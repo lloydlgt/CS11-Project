@@ -1,8 +1,8 @@
 import os
 import sys
 import time
-from mapper import stage
 import tiles
+from mapper import stage
 
 
 
@@ -18,43 +18,80 @@ class Menu:
     
     def main_menu(self):
         os.system("cls" if os.name == "nt" else "clear")
-        print(f"""
-        ----------------------------------------
-        |                                      |
-        |      Put the fries in the bag        |
-        |                                      |
-        |                                      |
-        |                Play                  |
-        |              Controls                |
-        |                Quit                  |
-        ----------------------------------------
-        """)
+        print("""\33[91;1m
+██████╗  ██████╗  ███████╗ ████████╗ ███████╗ ███████╗ ███████╗ ██╗    
+██╔══██╗ ██╔══██╗ ██╔══██║ ╚══██╔══╝ ██╔══██║ ██╔════╝ ██╔══██║ ██║    
+██████╔╝ ██████╔╝ ██║  ██║    ██║    ██║  ██║ ██║      ██║  ██║ ██║
+██╔═══╝  ██╔══██╗ ██║  ██║    ██║    ██║  ██║ ██║      ██║  ██║ ██║
+██║      ██║  ██║ ███████║    ██║    ███████║ ╚██████╗ ███████║ ╚██████╗    
+╚═╝      ╚═╝  ╚═╝ ╚══════╝    ╚═╝    ╚══════╝  ╚═════╝ ╚══════╝  ╚═════╝   
+            ██████╗  ███████╗  ██████╗   █████╗ 
+            ╚════██╗ ██╔════╝ ██╔═████╗ ██╔══██╗
+            █████╔╝  ███████╗ ██║██╔██║ ╚█████╔╝
+            ██╔═══╝  ╚════██║ ████╔╝██║ ██╔══██╗
+            ███████╗ ███████║ ╚██████╔╝ ╚█████╔╝
+            ╚══════╝ ╚══════╝  ╚═════╝   ╚════╝ 
+\33[0m""")
+
+        print("""\33[90m───────────────────────────────────────────────────────────────
+                   PROJECT:  [███████ RECURSION SEROQUEL]
+                   STATUS :  ACTIVE
+                   SUBJECT:  ██-███████
+───────────────────────────────────────────────────────────────\33[0m""")
+
+        print("""\33[96m
+  [1] CHOOSE DESTINATION
+  [2] FOLLOW YOUR DESTINY
+  [3] LEARN YOURSELF
+  [4] TERMINATE SESSION
+\33[0m""")
+
+        print("""\33[91;1m
+WARNING: DO NOT LOSE YOURSELF.
+REMEMBER YOUR GOAL.
+\33[95;1m""")
         self.player_input = input("> ").lower()
-        if self.player_input in ("play", "p", "pl", "pla"):
+        print("\33[0m")
+        if self.player_input == "1":
             os.system("cls" if os.name == "nt" else "clear")
             self.map_selection()
-        elif self.player_input in ("controls", "c", "co", "con", "cont", "contr", "contro", "control"):
+        elif self.player_input == "3":
             self.control_menu()
-        elif self.player_input in ("quit", "q", "qu", "qui"):
+        elif self.player_input == "4":
             sys.exit()
         else:
             self.main_menu()
 
     def control_menu(self):
         os.system("cls" if os.name == "nt" else "clear")
-        print("""
-        ..................................
-        .            Controls:           .
-        .                                .
-        .         W - Move up            .
-        .         A - Move left          .
-        .         S - Move down          .
-        .         D - Move right         .
-        .         P - Pick up item       .
-        .         ! - Reset map          .
-        .                                .
-        ..................................
-        """)
+        print("""\33[97;1m
+████████████████████████████████████████████████
+█                                              █
+█              █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█              █
+█              █  CONTROL MENU  █              █
+█              █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█              █
+█                                              █
+█                                              █
+█     YOUR ACTIONS:                            █
+█     \33[0m    \33[96mW - MOVE UP     \33[97;1m                     █
+█      \33[0m   \33[96mA - MOVE LEFT   \33[97;1m                     █
+█      \33[0m   \33[96mS - MOVE DOWN   \33[97;1m                     █
+█      \33[0m   \33[96mD - MOVE RIGHT  \33[97;1m                     █
+█      \33[0m   \33[96mP - PICKUP ITEM \33[97;1m                     █
+█                                              █
+█      AVAILABLE COMMANDS:                     █
+█    \33[0m     \33[95m! - RESET MAP          \33[97;1m              █
+█     \33[0m    \33[95mM - RETURN TO MAIN MENU\33[97;1m              █
+█     \33[0m    \33[95mC - VIEW CONTROLS      \33[97;1m              █
+█                                              █
+█                                              █
+█                                              █
+█  \33[91;1mWARNING: UNAUTHORIZED ACCESS WILL BE\33[97;1m        █
+█           \33[91;1mLOGGED AND REPORTED\33[97;1m                █
+█                                              █
+█                                              █
+████████████████████████████████████████████████
+        \33[0m""")
         input("Press Enter to go back...")
         if self.prev == "main":
             self.prev = "main"
