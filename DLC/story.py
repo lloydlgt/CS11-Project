@@ -93,7 +93,7 @@ def open_sec():
         os.system("cls" if os.name == "nt" else "clear")
         booting_animation()
         temp = """[BOOT SEQUENCE INITIATED...]
-SYSTEM LOG: Mnestic dysfunction Detected on Patient [████████].\n"""
+SYSTEM LOG: Mnestic dysfunction Detected on Patient [██-███████].\n"""
         text_writer(temp, 0.03)
         time.sleep(0.5)
         temp = "\33[31mERROR:\33[0m Unknown process found at sector 13.\n\n"
@@ -175,7 +175,7 @@ def death_sec():
         
         sys.stdout.write("\n")
         time.sleep(0.5)
-        general_bootup("Initiating termination protocol", "Patient [████████] \33[92msuccessfully terminated\33[0m")
+        general_bootup("Initiating termination protocol", "Patient [██-███████] \33[92msuccessfully terminated\33[0m")
         sys.stdout.write("\n")
         time.sleep(0.5)
         corrupt()
@@ -186,7 +186,7 @@ CORE TEMPERATURE — \33[91mNORMAL\33[0m
 NEURAL ACTIVITY — \33[91mSTABALIZED\33[0m
 EMOTIONAL INDEX — \33[91mFEAR\33[0m
 
-Patient [████████] — \33[91mFAILED TO TERMINATE\33[0m\n\n""")
+Patient [██-███████] — \33[91mFAILED TO TERMINATE\33[0m\n\n""")
         
         text_writer("""\33[0mSensory feedback is a remnant—an echo of a body that no longer exists.
 Pain, fear, breath—all simulated artifacts preserved for continuity of suffering.
@@ -219,6 +219,11 @@ Projected duration: ∞\n\n""", 0.02)
             state.writelines(data)
     else:
         death_loop()
+
+def win_sec():
+    "win sequence"
+    os.system("cls" if os.name == "nt" else "clear")
+
 
 if __name__ == "__main__":
     death_sec()

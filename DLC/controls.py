@@ -1,5 +1,5 @@
 ### inputs are in lowercase
-
+import os
 movement_keybinds = {
     # move up
     "w" : (0,-1),
@@ -27,3 +27,4 @@ ui_keybinds = {
     "!": "reset"
 }
 
+print(os.listdir("maps"))
