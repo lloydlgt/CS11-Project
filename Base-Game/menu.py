@@ -6,6 +6,7 @@ import tiles
 
 
 class Menu:
+    "holds the screens"
     # Initialize the menu and the original map when the user inputs map reset
     def __init__(self):
         self.reset = self.reset_menu
@@ -13,11 +14,13 @@ class Menu:
         self.curr_stage = None
     
     def reset_menu(self):
+        "resets the map"
         self.curr_stage = stage(self.prev_map)
         self.curr_stage.start()
 
     
 def win_screen():
+    "The win screen once all mushroom has been collected"
     print("Congrats, you've finished the game! have a cake :)")
     print("""                  
             /M/              .,-=;//;-

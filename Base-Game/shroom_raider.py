@@ -13,19 +13,21 @@ def clear():
 
 # Processes every user movement/input
 def run_input(indiv_input: str):
+    """ Runs each individual input
+    Args:
+        indiv_input: Individual input
+    """
     global curr_stage
 
     # Player movement
     if indiv_input in controls.movement_keybinds:
-        for char in curr_stage.characters:
-            char.move(controls.movement_keybinds[indiv_input.lower()])
+        curr_stage.character.move(controls.movement_keybinds[indiv_input.lower()])
 
     # Player interactions
     elif indiv_input in controls.player_action_keybinds:
-        for char in curr_stage.characters:
-            if not curr_stage.inventory and char.curr_tile and "manual_pickup" in tiles.tile_object_tags[char.curr_tile]:
-                curr_stage.inventory = char.curr_tile
-                char.curr_tile = None
+        if not curr_stage.inventory and curr_stage.character.curr_tile and "manual_pickup" in tiles.tile_object_tags[curr_stage.character.curr_tile]:
+            curr_stage.inventory = curr_stage.character.curr_tile
+            curr_stage.character.curr_tile = None
 
     # Player UI
     elif indiv_input in controls.ui_keybinds:
@@ -94,19 +96,17 @@ while True:
     # Prompts the user for pickup on an item tile and shows the current item holding
     if not curr_stage.inventory:
         print("Currently holding [ ]")
-        for char in curr_stage.characters:
-            if char.curr_tile and "manual_pickup" in tiles.tile_object_tags[char.curr_tile]:
-                print(f"Press P to pick up [{tiles.translate_tiles[char.curr_tile]}]:")
-                break
+        if curr_stage.character.curr_tile and "manual_pickup" in tiles.tile_object_tags[curr_stage.character.curr_tile]:
+            print(f"Press P to pick up [{tiles.translate_tiles[curr_stage.character.curr_tile]}]:")
     else:
         print(f"Currently holding [{tiles.translate_tiles[curr_stage.inventory]}]")
 
     # Player movement for each input
     for indiv_input in input("> ").lower():
+        if indiv_input not in (controls.movement_keybinds | controls.player_action_keybinds | controls.ui_keybinds):
+            break
         clear()
         run_input(indiv_input)
-        print(display(curr_stage, False))
-        print(f"\N{mushroom}: {curr_stage.score}")
 
         # If user has reached the win condition
         if curr_stage.score >= curr_stage.score_req:
@@ -115,3 +115,8 @@ while True:
             print(f"\N{mushroom} collected: {curr_stage.score}")
             win_screen()
             exit()
+
+    print(display(curr_stage, False))
+    print(f"\N{mushroom}: {curr_stage.score}")
+
+        

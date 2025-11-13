@@ -52,7 +52,7 @@ DATA_CORRUPTION WARNING: \33[93;1mTRUE\33[0m
 VITΛL SIGNS — \33[91mN͟͞U̷͟L̴͢L̸̨\33[0m  
 CORE TEMPΞRΔTURE — \33[91mC͘͝R͜I͜͜T̶IC̶A͞͞L̵\33[0m  
 NEURAL ACTIVITY — \33[91mS̴H͢U͝T̴D͜O͞WN\33[0m  
-EMOTIONAL INDEX — \33[91mU͠N̴D͏E͢͢F͞INED̡\33[0m  
+EMOTIONAL INDEX — \33[91mU͠N̴DE͢͢F͞INED̡\33[0m  
 
 Pat͞ien̢t̷ [███̨███̛██] \33[91mte̴r͢mi͜n͞at͢io͞n̵=̷=̴fa͞il͜ed\33[0m  
 LOOP_CYCLE — 0xFF12A  

@@ -10,9 +10,16 @@ def death_screen():
 
 
 class character:
+
     # Initializes the character with its positions, boundaries, current tile, and current stage
 
     def __init__(self, location: tuple[int, int], bounds: tuple[int,int], curr_tile: str, curr_stage):
+        """
+            location: Player location as tuple (x,y)
+            bounds: Boundaries of map as tuple (x,y)
+            curr_tile: Tile that player is currently standing on
+            curr_stage: Reference to the current stage
+        """
         self.x_coords = location[0]
         self.y_coords = location[1]
         self.coords = self.x_coords, self.y_coords
@@ -22,8 +29,11 @@ class character:
         self.curr_tile = curr_tile
         self.curr_stage = curr_stage
 
-    # Main function that checks what happens when the character moves
     def move(self, movement: tuple[int,int]):
+        """ Main function that checks what happens when the character moves
+        Args:
+            movement: Movement direction as tuple (x,y)
+        """
         # Coordinates of the next position
         new_x,new_y = self.x_coords + movement[0], self.y_coords + movement[1]
 

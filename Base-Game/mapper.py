@@ -31,31 +31,43 @@ class stage():
         self.inventory = None
         self.object_list = list([0,] * self.x for y in range(self.y))
         self.curr_locs = []
-        self.characters = []
+        self.character = () 
 
         # "Load" up the main map
         for y in range(self.y):
             for x in range(self.x):
+
                 if self.listed_file[y][x] == "+":
                     self.score_req += 1
+
+                # Save the character ("Laro")'s position
                 if self.listed_file[y][x] == "L":
-                    self.curr_locs.append(([x,y], None))
+                    self.character = character((x,y),(self.x,self.y), None, self)
+
+                # Creates tile object
                 self.object_list[y][x] = stage_tile(None, ".", (x,y), self)
+
+                # If tile is on top layer, set it to top layer
                 if self.listed_file[y][x] in tiles.tile_object_tags:
                     self.object_list[y][x].tile_object = self.listed_file[y][x]
+
+                # If tile is on floor layer, set it to bottom layer
                 elif self.listed_file[y][x] in tiles.tile_floor_tags:
                     self.object_list[y][x].tile_floor = self.listed_file[y][x]
 
-        # Save the character ("Laro") positions
-        for char_loc in self.curr_locs:
-            self.characters.append(character(char_loc[0], (self.x, self.y), char_loc[1], self))
-    
+      
 
 class stage_tile:
-    # Initializes each stage tile as their own object
+    """Individual Stage Tile that holding"""
+    
+    # Optimization for memory usage by locking the class to only have these attributes and nothing else
 
     __slots__ = ("tile_object", "tile_floor", "x_coords", "y_coords", "x_bound", "y_bound", "curr_stage")
+
+    # Initializes each stage tile as their own object
     def __init__(self, tile_object: str, tile_floor: str, coords: tuple[int,int], curr_stage: stage):
+        # Tile object is the top layer of the tile
+        # Tile floor is the bottom layer of the tile     
         self.tile_object = tile_object
         self.tile_floor = tile_floor
         self.x_coords, self.y_coords = coords[0], coords[1]
@@ -64,18 +76,25 @@ class stage_tile:
         self.curr_stage = curr_stage
         
     def move(self, movement: tuple[int,int]):
+        """Moves the object currently on this tile
+        Args:
+            movement: Movement direction as a tuple (x,y)
+        """
+        # Check if movement is valid i.e. within the boundary
         if (0 <= self.y_coords + movement[1] < self.y_bound and 0 <= self.x_coords + movement[0] < self.x_bound):
+            # Sets the reference for tile to move to
             new_x,new_y = self.x_coords + movement[0], self.y_coords + movement[1]
             move_tile = self.curr_stage.object_list[new_y][new_x]
             
+            # Check if the tile object and the floor of the tile being moved to have a reaction
             if "reactive" in tiles.tile_floor_tags[move_tile.tile_floor]:
                 move_tile.tile_floor = tiles.tile_reactions[(self.tile_object, move_tile.tile_floor)]
                 self.tile_object = None
+
+            # Check if the next tile is empty and move the tile object
             elif move_tile.tile_object == None:
                 move_tile.tile_object = self.tile_object
                 self.tile_object = None
-            elif "reactive" in tiles.tile_object_tags[move_tile.tile_object]:
-                pass
 
 
 def display(curr_stage: stage, ASCII: bool):

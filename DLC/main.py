@@ -103,8 +103,8 @@ while True:
         animate(curr_stage, 0.1)
         print(f"\N{mushroom}: {curr_stage.score}")
         if curr_stage.score >= curr_stage.score_req:
-            print(moves)
-            time.sleep(10)
+            # print(moves)
+            # time.sleep(10)
             win_screen()
         curr_stage.update()
         

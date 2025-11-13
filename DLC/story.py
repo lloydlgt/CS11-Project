@@ -88,6 +88,7 @@ def Initialize():
 
 def open_sec():
     "Opening Sequence that will only be seen when you first boot up the game"
+
     if story_state.opener:
         os.system("cls" if os.name == "nt" else "clear")
         booting_animation()
@@ -126,7 +127,7 @@ Welcome to eternal limbo.\33[0m\n"""
         text_writer("\33[31mThere is no Escape \33[0m", 0.02)
         time.sleep(0.5)
         os.system("cls" if os.name == "nt" else "clear")
-        temp = ("THERE IS NO ESCAPE " * 7 + "\n") * 67
+        temp = ("THERE IS NO ESCAPE " * 7) * 67 + "\n"
         sys.stdout.write(f"\33[91m{temp}\33[0m")
         winsound.Beep(250, 1000)
         winsound.Beep(150, 1000)
@@ -139,8 +140,9 @@ Welcome to eternal limbo.\33[0m\n"""
             state.writelines(data)
 
 def death_sec():
-    global death_count
     "death sequence(unique cinematic when first death)"
+    
+    global death_count
     os.system("cls" if os.name == "nt" else "clear")
     if death_count == 0:
         text_writer("SYSTEM NOTICE: Cognitive link unstable.", 0.03)
@@ -217,14 +219,6 @@ Projected duration: ∞\n\n""", 0.02)
             state.writelines(data)
     else:
         death_loop()
-
-
-
-
-        
-
-
-
 
 if __name__ == "__main__":
     death_sec()

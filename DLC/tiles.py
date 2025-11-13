@@ -176,15 +176,15 @@ translate_tiles = {
     "k" : "🔴",
     "K" : "🟥",
 
-    "0" : "\U0001F315",
-    "1" : "\U0001F316",
-    "2" : "\U0001F317",
-    "3" : "\U0001F314",
+    "0" : "\33[43m\N{Open lock}\33[0m",
+    "1" : "\33[42m\N{Open lock}\33[0m",
+    "2" : "\33[45m\N{Open lock}\33[0m",
+    "3" : "\33[41m\N{Open lock}\33[0m",
 
-    "4" : "\U0001F311",
-    "5" : "\U0001F312",
-    "6" : "\U0001F313",
-    "7" : "\U0001F318",
+    "4" : "\33[48m\N{Lock}\33[0m",
+    "5" : "\33[42m\N{Lock}\33[0m",
+    "6" : "\33[45m\N{Lock}\33[0m",
+    "7" : "\33[41m\N{Lock}\33[0m",
     
     #dlc items
 
@@ -192,4 +192,4 @@ translate_tiles = {
 
 tiles_translate = dict((j,v) for v, j in translate_tiles.items())
 
-print("\U00000030, \U0000FE0F, \U000020E3")
+print(translate_tiles["0"])
