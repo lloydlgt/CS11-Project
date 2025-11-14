@@ -1,11 +1,12 @@
 import pytest
 from mapper import stage
+from player import input_handler
 
 MAP_ATTRIBUTES = [
     ("default.txt", "dddddddddddddddddddddddssssssssssssssssssssssssssssaaaaaaaaaaaaaaaaaaaa", (7, 9), None, "~"), 
     ("map.txt", "WtWAwfwdadwh9dawd9w9a62y2h2h2h2", (2,7), None, "."), 
     ("mapper_tests/map_1.txt", "Saaddddyst", (6, 5), "*", "."),
-    ("mapper_tests/map_2.txt", "Awaw", (0, 0), None, "."),
+    ("mapper_tests/map_2.txt", "aasdwsdadappp!Awaw", (0, 0), None, "."),
     ("mapper_tests/map_3.txt", "Ddawwed", (2, 1), None, "."),
     ("mapper_tests/map_4.txt", "Wddw", (3, 1), None, "."),
     ("mapper_tests/map_5.txt", "Wd", (2, 2), None, "."),
@@ -31,14 +32,7 @@ def map_stage(request):
 def test_start(map_stage):
     map, movement_string, current_character_location, curr_tile, tile_floor = map_stage
     map.start()
-    for indiv_input in movement_string.lower():
-        validated_input = map.character.run_input(indiv_input)
-        if not validated_input:
-            break
-        if validated_input == "dead":
-            break
-        if map.score >= map.score_req:
-            break
+    input_handler(movement_string, map)
     tile = map.object_list[current_character_location[1]][current_character_location[0]] 
     assert (map.character.x_coords, map.character.y_coords) == current_character_location
     assert map.character.curr_tile == curr_tile
