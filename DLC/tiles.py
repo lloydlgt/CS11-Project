@@ -8,8 +8,8 @@ tile_floor_tags = {
     "!" : {"can_move_to", "brittle", "interactable"},
 
     #ice
-    "I" : {"can_move_to", "slippery"},
-
+    "I" : {"can_move_to", "slippery", "breakable"},
+    "i" : {"can_move_to", "brittle"},
     #conveyors
     "^" : {"can_move_to", "conveyor"},
     "v" : {"can_move_to", "conveyor"},
@@ -58,10 +58,10 @@ tile_object_tags = {
     #obj
     "L" : {"you", "object"},
     "T" : {"interactable", "burnable","choppable", "object"},
-    "R" : {"interactable", "pushable", "object"},
+    "R" : {"interactable", "pushable", "object", "breakable"},
 
     #2nd rock for testing
-    "r" : {"interactable", "pushable", "object"},
+    "r" : {"interactable", "pushable", "object", "breakable"},
 
     #immoveable
     ""
@@ -78,16 +78,21 @@ tile_object_tags = {
     #items
     "+" : {"can_move_to", "auto_pickup", "win_condition", "item"},
     "x" : {"can_move_to", "manual_pickup", "item"},
-    "*" : {"can_move_to", "manual_pickup", "item"}
+    "*" : {"can_move_to", "manual_pickup", "item"},
+    "&" : {"can_move_to", "manual_pickup", "item"}
     
 }
 
 tile_reactions = {
-    ("R","~") : "_"
+    ("R","~") : "_",
+    ("r","~") : "_",
 }
 
 #unique interactions i just cram here lol
 tile_special = {
+    "!" : "%",
+    "I" : "~",
+    "i" : "~",
     #conveyors
     "^" : (0,-1),
     "v" : (0,1),
@@ -137,8 +142,8 @@ translate_tiles = {
     "r" : "🗿",
 
         #one way
-    "!": "\N{Broken Heart}",
-    "%": "\N{Wilted Flower}",
+    "!": "\N{Wilted Flower}",
+    "%": "🌹",
 
         #ice
     "I": "\N{large blue diamond}",
@@ -190,8 +195,9 @@ translate_tiles = {
     "7" : "\33[41m\N{Lock}\33[0m",
     
         # map
-    "#": "\N{Frame with Picture} "
-    #dlc items
+    "#": "\N{Frame with Picture} ",
+    "&": "⛏️",
+    "i": "🔹"
 
 }
 

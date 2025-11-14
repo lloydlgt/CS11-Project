@@ -4,15 +4,9 @@ import sys
 import story_state
 import screen
 import random
-import winsound
 
 death_count = story_state.death
 
-def tone(notes, delay=0):
-    for note in notes:
-        for Hz, dur in note:
-            winsound(Hz, dur)
-            time.sleep(delay)
 
 
 def text_writer(text: str, delay: float):
@@ -24,6 +18,7 @@ def text_writer(text: str, delay: float):
 
 
 def corrupt():
+    "Corrupted animation used for the first death screen"
     logs = screen.glitched_logs
     for x in range(25):
         if x < 19:
@@ -93,7 +88,17 @@ def win_counting_anim():
         sys.stdout.write(f"\r\33[32mCounting Mushrooms{'.' * dots:<3}                        ")
         sys.stdout.flush()
         time.sleep(0.01)
-        
+
+def basic_win():
+    text_writer("Im sorry, did you expect to win just with this?", 0.03)
+    time.sleep(0.5)
+    temp = ("HA HA HA HA HA HA HA HA HA " * 7) * 67 + "\n"
+    sys.stdout.write(f"\33[91m{temp}\33[0m")
+    time.sleep(1)
+    sys.stdout.write(f"\33[91;101m{temp}\33[0;0m")
+    os.system("cls" if os.name == "nt" else "clear")
+
+    
     
     
 
@@ -142,10 +147,6 @@ Welcome to eternal limbo.\33[0m\n"""
         os.system("cls" if os.name == "nt" else "clear")
         temp = ("THERE IS NO ESCAPE " * 7) * 67 + "\n"
         sys.stdout.write(f"\33[91m{temp}\33[0m")
-        winsound.Beep(250, 1000)
-        winsound.Beep(150, 1000)
-        winsound.Beep(50, 1000)
-        time.sleep(1)
         with open('story_state.py','r',encoding='utf-8') as state:
             data = state.readlines()
         data[0] = "opener = False\n"
@@ -253,7 +254,7 @@ and an ambition that flickers even in the \33[90mdarkest spaces of our Life.\33[
     time.sleep(0.1)
     text_writer("\33[33mTake a breath\33[0m, now. Take another. Feel air in your lungs. Let your limbs return.\n", 0.05)
     time.sleep(0.2)
-    text_writer("Yes,", 0.05)
+    text_writer("Yes, ", 0.05)
     time.sleep(0.1)
     text_writer("""move your fingers. Have a body again, under gravity, in air. Respawn in the long dream. 
 There you are. Your body touching the universe again at every point.\n""", 0.05)
@@ -272,15 +273,27 @@ You stood despite fatigue in your foundation.
 You kept moving even when the world around you felt hostile or empty.""", 0.05)
         text_writer("""This is not a minor anomaly.
 This is not a coincidence.
-This is resilience — a trait that refuses termination.
-
-You are alive.
-And as long as you remain alive, the narrative does not end.
+This is resilience, a trait that refuses termination.\n\n""", 0.05)
+    else:
+        text_writer("""You were unstoppable, with no sign of fatigue. 
+It's as if you have played this games before. To show mastery like no other,
+that is why you embody perfection. But do not forget, you are still a player, under my command.
+But then again, you are alive.\n\n""", 0.05)
+    text_writer("""And as long as you remain alive, the narrative does not end.
 The path ahead remains open, unwritten, and waiting for you to step forward.\n\n""", 0.03)
     text_writer("Thank you,", 0.05)
     text_writer("thank you for playing, and enjoy your life Patient [██-███████]", 0.05)
 
+def level_loading_screen(curr_level, total_level, long_anim):
+    if long_anim:
+        general_bootup(f"Loading level #{curr_level} out of {total_level}", "\33[32mLevel has been properly loaded!                  \33[0m")
+    else:
+        sys.stdout.write(f"\33[32mLevel {curr_level} out of {total_level}\33[0m")
+        time.sleep(1)
 
+
+def world_loading_screen(next_world):
+    general_bootup(f"Moving to world {next_world}", "Congratulations for reaching you new destination!            ")
 
 
 

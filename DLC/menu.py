@@ -1,6 +1,7 @@
 import os
 import sys
 from mapper import stage
+import story
 
 
 
@@ -101,8 +102,9 @@ REMEMBER YOUR GOAL.
 
 
     def map_selection(self):
-        print("")
-        os.system("dir /b /a-d DLC\maps\*.txt") # Prints all the files in the maps subfolder
+        print("""
+        """)
+        os.system("dir /b /a-d maps\*.txt") # Prints all the files in the maps subfolder
         self.chosenmap = input("Please type your map: ")
         self.curr_stage = stage(self.chosenmap)
         if not self.chosenmap:
@@ -120,34 +122,19 @@ REMEMBER YOUR GOAL.
         self.curr_stage = stage(self.prev_map)
         self.curr_stage.start()
 
-    
-    
 
-def win_screen():
-    os.system("cls" if os.name == "nt" else "clear")
-    print("Congrats, you've finished the game! have a cake :)")
-    print("""                  
-            /M/              .,-=;//;-
-        .:/= ;MH/,    ,=/+%$XH@MM#@:
-        -$##@+$###@H@MMM#######H:.    -/H#H
-    .,H@H@ X######@ -H#####@+-     -+H###@X
-    .,@##H;      +XM##M/,     =%@###@X;-
-    X%-  :M##########$.    .:%M###@%:
-    M##H,   +H@@@$/-.  ,;$M###@%,          --
-    M####M=,,---,.-HHH####M$:          ,+@##
-    @##################@/.         :%H##@$-
-    M###############H,         ;HM##M$=
-    #################.    .=$M##M$=
-    ################H..;XM##M$=          .:++
-    M###################@%=           =+@MH%
-    @#################M/.         =+H#X%=
-    =+M###############M,      ,/X#H+:,
-    .;XM###########H=   ,/X#H+:;
-        .=+HM#######M+/+HM@+=.
-            ,:/XMM####H/.
-        
-    """)
-    sys.exit()
+    def win_screen(self):
+        os.system("cls" if os.name == "nt" else "clear")
+        story.win_sec()
+        self.prev = "main"
+        self.main_menu()
+
+    def win_screen2(self):
+        os.system("cls" if os.name == "nt" else "clear")
+        story.basic_win()
+        self.prev = "main"
+        self.main_menu()
+
 
 if __name__ == "__main__":
     menu = Menu("main")

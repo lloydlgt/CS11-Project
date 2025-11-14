@@ -75,8 +75,11 @@ class character:
  
                 #one way
                 if "brittle" in self.next_tile_floor_tags:
-                    self.curr_tile = "%"
-                    self.curr_stage.object_list[self.y_coords][self.x_coords].tile_floor = "."
+                    if self.next_tile.tile_floor == "!":
+                        self.curr_tile = "%"
+                        self.curr_stage.object_list[self.y_coords][self.x_coords].tile_floor = "."
+                    elif self.next_tile.tile_floor == "i":
+                        self.curr_stage.object_list[self.y_coords][self.x_coords].tile_floor = "~"
 
                 #ice
                 if "slippery" in self.next_tile_floor_tags:
@@ -107,7 +110,10 @@ class character:
                 if self.curr_stage.inventory in {"x"}:
                     self.curr_stage.object_list[new_y][new_x].tile_object = None
                     self.curr_stage.inventory = None
-
+            if "breakable" in self.next_tile_object_tags:
+                if self.curr_stage.inventory in {"&"}:
+                    self.curr_stage.object_list[new_y][new_x].tile_object = None
+                    self.curr_stage.inventory = None
             #burn
             if "burnable" in self.next_tile_object_tags:
                 if self.curr_stage.inventory in {"*"}:
