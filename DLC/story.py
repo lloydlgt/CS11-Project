@@ -85,6 +85,17 @@ def Initialize():
     sys.stdout.write("\n")
 
 
+def win_counting_anim():
+    text_writer("\33[32mCounting Mushrooms\33[0m", 0.03)
+    for dots in range(180):
+        sys.stdout.write(f"\r\33[32mCounting Mushrooms{'.' * dots:<3}                        ")
+        sys.stdout.flush()
+        time.sleep(0.01)
+        
+    
+    
+
+
 
 def open_sec():
     "Opening Sequence that will only be seen when you first boot up the game"
@@ -222,8 +233,29 @@ Projected duration: ∞\n\n""", 0.02)
 
 def win_sec():
     "win sequence"
+    win_counting_anim()
+    #death_loop()
     os.system("cls" if os.name == "nt" else "clear")
+    sys.stdout.write("\33[32mAll Mushrooms collected!\33[0m\n\n")
+    sys.stdout.write("\33[32mCongratulations\33[0m")
+    text_writer(", you have reached the \33[35mEnd\33[0m\n\n", 0.03)
+    
+    general_bootup("Checking current status of Patient [██-███████]", "[██-███████] Has officially reached the other Side                                                                                  ")
+    text_writer("", 0.03)
+    sys.stdout.write("\n")
+    time.sleep(0.5)
+    
+    text_writer("""You. \33[36mYou are alive\33[0m. undeniably, quietly, stubbornly alive.
+A person with a future that hasn't been written yet, a dream that refuses to die, 
+and an \33[33mambition\33[0m that flickers even in the \33[90mdarkest spaces of our Life.\33[0m\n\n""", 0.05)
+    time.sleep(0.1)
+    text_writer("""Take a breath, now. Take another. Feel air in your lungs. Let your limbs return. 
+Yes, move your fingers. Have a body again, under gravity, in air. Respawn in the long dream. 
+There you are. Your body touching the universe again at every point, as though you were separate things.\n""", 0.05)
+    time.sleep(0.1)
+    text_writer("As though we were separate things.", 0.05)
+
 
 
 if __name__ == "__main__":
-    death_sec()
+    win_sec()

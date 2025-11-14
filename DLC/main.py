@@ -80,7 +80,12 @@ elif args == 4: # shroom_raider.py map.txt "asdasd" output.txt
     
 
 
-while True:
+def run_game(stage_num=0, curr_level=0):
+    global moves
+    if stage_num != 0:
+        num = stage_num
+        current = curr_level
+    
     clear()
     print(display(curr_stage, False))
     print(f"\N{mushroom}: {curr_stage.score}")
@@ -105,11 +110,63 @@ while True:
         if curr_stage.score >= curr_stage.score_req:
             # print(moves)
             # time.sleep(10)
-            win_screen()
+            if num != 0:
+                clear()
+                print(f"{current}/{num}")
+            time.sleep(3)
+            return True
         curr_stage.update()
         
 
     menu.prev = "in_game"
+
+
+if menu.storymode:
+    all_levels = os.listdir("maps/1")
+    print(all_levels)
+    for i, level in enumerate(all_levels):
+        menu.curr_stage = stage(f"1/{level}")
+        menu.curr_stage.start()
+        curr_stage = menu.curr_stage
+        while True:
+            if run_game(len(all_levels), i + 1):
+                break
+else:
+    run_game()
+            
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     """time.sleep(1)
     os.system("cls" if os.name == "nt" else "clear")

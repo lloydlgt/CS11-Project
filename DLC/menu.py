@@ -15,6 +15,8 @@ class Menu:
         self.prev = prev_screen
         self.prev_map = ""
         self.curr_stage = None
+        self.storymode = False
+        self.maps = []
     
     def main_menu(self):
         os.system("cls" if os.name == "nt" else "clear")
@@ -55,6 +57,8 @@ REMEMBER YOUR GOAL.
         if self.player_input == "1":
             os.system("cls" if os.name == "nt" else "clear")
             self.map_selection()
+        elif self.player_input == "2":
+            self.storymode = True
         elif self.player_input == "3":
             self.control_menu()
         elif self.player_input == "4":
