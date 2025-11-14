@@ -122,10 +122,11 @@ def run_game(stage_num=0, curr_level=0):
 
 
 if menu.storymode:
-    all_levels = os.listdir("maps/1")
+    world = input("put the world number here(1 or 2): ")
+    all_levels = os.listdir(f"maps/{world}")
     print(all_levels)
     for i, level in enumerate(all_levels):
-        menu.curr_stage = stage(f"1/{level}")
+        menu.curr_stage = stage(f"{world}/{level}")
         menu.curr_stage.start()
         curr_stage = menu.curr_stage
         while True:
