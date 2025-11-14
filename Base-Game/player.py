@@ -34,7 +34,7 @@ class character:
 
         # If out of bounds, do nothing
         if not (0 <= new_y < self.y_bound and 0 <= new_x < self.x_bound):
-            return None
+            return True
 
         # Checks what the next tile is and its tags (descriptions)
         next_tile = self.curr_stage.object_list[new_y][new_x]

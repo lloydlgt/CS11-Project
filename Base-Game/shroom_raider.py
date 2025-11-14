@@ -2,7 +2,6 @@ import os
 import tiles
 from argparse import ArgumentParser
 from mapper import stage, display
-import controls
 
 # Clears the user terminal
 def clear():
@@ -10,7 +9,6 @@ def clear():
 
 # Processes every user movement/input
 
-# Accepting user command-line arguments
 # Accepting user command-line arguments
 parser = ArgumentParser()
 parser.add_argument("-f", "--stage_file", type=str, default="default.txt")
@@ -36,7 +34,7 @@ if args.output_file != None:
     win = False
     
     for indiv_input in args.string_of_moves.lower():
-        run_input(indiv_input, curr_stage)
+        curr_stage.character.run_input(indiv_input)
         if curr_stage.score >= curr_stage.score_req:
             win = True
             break

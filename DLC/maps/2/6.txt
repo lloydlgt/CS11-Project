@@ -1,0 +1,14 @@
+13 13
+~T~T~T~T~T~T~
+T.TTT.TTTxT+T
+~T.T*TxT.TTT~
+T*T.TTT.T.TxT
+~T.TxT.TTTxT~
+T.TTT.T*T.TTT
+~TxT.TTT.T.T~
+TTT.T.T.TTT.T
+~T.TTT.TxT.T~
+T.T*T.TTT.TTT
+~TTT.TxT.T.T~
+xLT.TTT.T*T.T
+~x~T~T~T~T~T~
