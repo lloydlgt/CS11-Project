@@ -1,6 +1,8 @@
 import time
-import os, sys
-import story_state, screen
+import os
+import sys
+import story_state
+import screen
 import random
 import winsound
 
@@ -50,7 +52,7 @@ def booting_animation():
             sys.stdout.write(f"\rBooting.{'.' * dots:<3}")
             sys.stdout.flush()
             time.sleep(durs[i])
-    sys.stdout.write(f"\33[32m\rBoot Complete!     \n\33[0m")
+    sys.stdout.write("\33[32m\rBoot Complete!     \n\33[0m")
     sys.stdout.flush()
     os.system("cls" if os.name == "nt" else "clear")
 
@@ -79,7 +81,7 @@ def Initialize():
                 sys.stdout.write(f"\r> Initializing.{'.' * dots:<3}                        ")
                 sys.stdout.flush()
                 time.sleep(0.07)
-        sys.stdout.write(f"\33[31m\rInitialization Failed        \33[0m")
+        sys.stdout.write("\33[31m\rInitialization Failed        \33[0m")
         sys.stdout.flush()
         time.sleep(0.5)
     sys.stdout.write("\n")
@@ -113,14 +115,14 @@ SYSTEM LOG: Mnestic dysfunction Detected on Patient [██-██████�
         text_writer("This is Just a ", 0.03)
         text_writer("\33[32mdream\33[0m", 0.03)
         time.sleep(0.1)
-        sys.stdout.write(f"\rThis is \33[35mREALITY\33[0m        \n")
+        sys.stdout.write("\rThis is \33[35mREALITY\33[0m        \n")
         sys.stdout.flush()
         time.sleep(0.5)
 
         text_writer("\33[94mINITIATE:\33[0m Reclaiming memories through the FABRIC OF ", 0.03)
         text_writer("\33[31mYOUR END\33[0m", 0.03)
         time.sleep(0.1)
-        sys.stdout.write(f"\r\33[94mINITIATE:\33[0m Reclaiming memories through the FABRIC OF \33[35mREALITY\33[0m   \n")
+        sys.stdout.write("\r\33[94mINITIATE:\33[0m Reclaiming memories through the FABRIC OF \33[35mREALITY\33[0m   \n")
         sys.stdout.flush()
         time.sleep(0.5)
         Initialize()

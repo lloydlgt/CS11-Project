@@ -36,7 +36,6 @@ def clear():
 def is_in_bounds(r, c, i, j):
     return 0 <= i < r and 0 <= j < c
 
-from time import sleep
 
 zombies = []
 for _ in range(4):

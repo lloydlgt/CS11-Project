@@ -3,9 +3,8 @@ import sys
 import time
 import tiles
 import story
-from menu import Menu, win_screen
+from menu import Menu
 from mapper import display, animate, stage
-from player import character
 import controls
 
 
@@ -38,7 +37,7 @@ def run_input(indiv_input: str):
     #player actions
     elif indiv_input in controls.player_action_keybinds:
         for char in curr_stage.characters:
-            if not curr_stage.inventory and char.curr_tile != None and "manual_pickup" in tiles.tile_object_tags[char.curr_tile]:
+            if not curr_stage.inventory and char.curr_tile is not None and "manual_pickup" in tiles.tile_object_tags[char.curr_tile]:
                 curr_stage.inventory = char.curr_tile
                 char.curr_tile = None
 

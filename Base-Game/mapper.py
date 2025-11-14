@@ -6,6 +6,10 @@ class stage():
     def __init__(self, path):
         self.path = path
 
+    def reset(self):
+        "resets the map"
+        self.start()
+        
     def start(self):
         try:
             # Setup the map variables and insure actual dimensions match initialized forest dimensions
@@ -52,6 +56,7 @@ class stage():
                 # If tile is on floor layer, set it to bottom layer
                 elif self.listed_file[y][x] in tiles.tile_floor_tags:
                     self.object_list[y][x].tile_floor = self.listed_file[y][x]
+
     
 
 
@@ -91,7 +96,7 @@ class stage_tile:
                 self.tile_object = None
 
             # Check if the next tile is empty and move the tile object
-            elif move_tile.tile_object == None:
+            elif move_tile.tile_object is None:
                 move_tile.tile_object = self.tile_object
                 self.tile_object = None
 

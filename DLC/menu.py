@@ -1,7 +1,5 @@
 import os
 import sys
-import time
-import tiles
 from mapper import stage
 
 

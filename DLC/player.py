@@ -1,7 +1,5 @@
 import os
 import tiles
-import time
-import menu
 
 class character:
     def __init__(self, location: tuple[int, int], bounds: tuple[int,int], curr_tile: str, curr_stage):
@@ -19,7 +17,7 @@ class character:
     def update_next_tile(self, x: int, y: int):
         self.next_tile = self.curr_stage.object_list[y][x]
         self.next_tile_floor_tags = tiles.tile_floor_tags[self.next_tile.tile_floor]
-        if self.next_tile.tile_object != None:
+        if self.next_tile.tile_object is not None:
             self.next_tile_object_tags = tiles.tile_object_tags[self.next_tile.tile_object]
         else:
             self.next_tile_object_tags = {}
@@ -51,7 +49,7 @@ class character:
             self.x_coords, self.y_coords = new_x, new_y
             return True
             
-        elif "can_move_to" in self.next_tile_floor_tags and not "can_move_to" in self.next_tile_object_tags:
+        elif "can_move_to" in self.next_tile_floor_tags and "can_move_to" not in self.next_tile_object_tags:
             from mapper import animate
             
             #no object, just move

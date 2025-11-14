@@ -7,7 +7,6 @@ def animate(curr_stage, animation_time):
     os.system("cls" if os.name == "nt" else "clear") 
     print(display(curr_stage, False))
     time.sleep(animation_time)
-    
 
 class stage():
     def __init__(self, path):
@@ -101,12 +100,12 @@ class stage():
             for gate_x, gate_y in self.gates[gate]:
                 curr_gate = self.object_list[gate_y][gate_x]
                 #if gate is supposed to be up, attempt to bring the wall up
-                if curr_gate.state == True:
+                if curr_gate.state:
                     if not curr_gate.tile_object:
                         curr_gate.tile_object = tiles.tile_special[gate]
                     ...
                 #bring the wall down
-                elif curr_gate.state == False:
+                elif not curr_gate.state:
                     if curr_gate.tile_object == tiles.tile_special[gate]:
                         curr_gate.tile_object = None
 
@@ -210,12 +209,12 @@ def display(curr_stage: stage, ASCII:bool):
     for objlist in curr_stage.object_list:
             for obj in objlist:
                 if obj.tile_object:
-                    if ASCII == True:
+                    if ASCII:
                         mapstr += obj.tile_object
                     else:
                         mapstr += tiles.translate_tiles[obj.tile_object]
                 else:
-                    if ASCII == True:
+                    if ASCII:
                         mapstr += obj.tile_floor
                     else:
                         mapstr += tiles.translate_tiles[obj.tile_floor]

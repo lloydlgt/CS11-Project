@@ -5,6 +5,15 @@ import controls
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
+def input_handler(movement_string, curr_stage):
+     for indiv_input in movement_string.lower():
+        validated_input = curr_stage.character.run_input(indiv_input)
+        if not validated_input:
+            break
+        if validated_input == "dead":
+            break
+        if curr_stage.score >= curr_stage.score_req:
+            break
 
 class character:
 
@@ -34,7 +43,11 @@ class character:
 
         # If out of bounds, do nothing
         if not (0 <= new_y < self.y_bound and 0 <= new_x < self.x_bound):
+<<<<<<< HEAD
             return True
+=======
+            return "out of bounds"
+>>>>>>> 1414a76ac0e3fd94a4ad6d2e88fdcc3c980e9d2f
 
         # Checks what the next tile is and its tags (descriptions)
         next_tile = self.curr_stage.object_list[new_y][new_x]
@@ -134,8 +147,9 @@ class character:
             indiv_input: Individual input
         """
         if indiv_input == "!":
+            self.curr_stage.reset
             return "reset"
-        if not indiv_input in (controls.movement_keybinds | controls.player_action_keybinds):
+        if indiv_input not in (controls.movement_keybinds | controls.player_action_keybinds):
             return False
         # Player movement
         if indiv_input in controls.movement_keybinds:
@@ -149,5 +163,6 @@ class character:
                 self.curr_tile = None
 
         return True
+  
 if __name__ == "__main__":
     print("Wrong file.")

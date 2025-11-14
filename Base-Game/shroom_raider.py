@@ -23,7 +23,7 @@ prev_map = args.stage_file # saves txt file
 curr_stage.start() 
 
     
-if args.output_file != None:
+if args.output_file is not None:
     """
     If the user enters an output file,
     Run the string of moves,
@@ -34,15 +34,21 @@ if args.output_file != None:
     win = False
     
     for indiv_input in args.string_of_moves.lower():
+<<<<<<< HEAD
         curr_stage.character.run_input(indiv_input)
+=======
+        curr_stage.character.run_input(indiv_input, curr_stage)
+>>>>>>> 1414a76ac0e3fd94a4ad6d2e88fdcc3c980e9d2f
         if curr_stage.score >= curr_stage.score_req:
             win = True
             break
 
     try:
         with open(args.output_file, "w") as file:
-            if win: file.write("CLEAR\n")
-            else: file.write("NO CLEAR\n")
+            if win: 
+                file.write("CLEAR\n")
+            else: 
+                file.write("NO CLEAR\n")
             file.write(str(curr_stage.y) + " " + str(curr_stage.x) + "\n")
             file.write(display(curr_stage, True))
         print(f"Successfully output to {args.output_file}.")
@@ -52,12 +58,6 @@ if args.output_file != None:
     exit()
 else:
     pass
-
-def reset():
-    global curr_stage, prev_map
-    "resets the map"
-    curr_stage = stage(prev_map)
-    curr_stage.start()
 
 def death_screen():
     global curr_stage
@@ -117,7 +117,7 @@ def game_running():
             if not validated_input:
                 break
             if validated_input == "reset":
-                reset()
+                curr_stage.reset()
             if validated_input == "dead":
                 death_screen()
             # If user has reached the win condition
@@ -131,5 +131,4 @@ def game_running():
         print(display(curr_stage, False))
         print(f"\N{mushroom}: {curr_stage.score}")
 
-if args.stage_file:
-    game_running()
+game_running()
