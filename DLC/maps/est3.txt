@@ -7,6 +7,6 @@ T.4567.R.T
 T........T
 T.ghjk.R.T
 T........T
-T.GHJK.R.T
-TL.......T
+T.GHJKiR.T
+TL....i..T
 TTTTTTTTTT
