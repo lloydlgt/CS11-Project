@@ -103,19 +103,7 @@ REMEMBER YOUR GOAL.
 
 
     def map_selection(self):
-        print("""
-        ..................................
-        |                                |
-        |      Please type your map      |
-        |                                |
-        |      Make sure file is in      |
-        |          Maps folder           |
-        |                                |
-        |          Press Enter           |
-        |        for default map         |
-        |                                |
-        ..................................
-        """)
+        print("")
         os.system("dir /b /a-d DLC\maps\*.txt") # Prints all the files in the maps subfolder
         self.chosenmap = input("Please type your map: ")
         self.curr_stage = stage(self.chosenmap)

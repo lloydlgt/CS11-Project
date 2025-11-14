@@ -247,13 +247,38 @@ def win_sec():
     
     text_writer("""You. \33[36mYou are alive\33[0m. undeniably, quietly, stubbornly alive.
 A person with a future that hasn't been written yet, a dream that refuses to die, 
-and an \33[33mambition\33[0m that flickers even in the \33[90mdarkest spaces of our Life.\33[0m\n\n""", 0.05)
+and an ambition that flickers even in the \33[90mdarkest spaces of our Life.\33[0m\n\n""", 0.05)
     time.sleep(0.1)
-    text_writer("""Take a breath, now. Take another. Feel air in your lungs. Let your limbs return. 
-Yes, move your fingers. Have a body again, under gravity, in air. Respawn in the long dream. 
-There you are. Your body touching the universe again at every point, as though you were separate things.\n""", 0.05)
+    text_writer("\33[33mTake a breath\33[0m, now. Take another. Feel air in your lungs. Let your limbs return.\n", 0.05)
+    time.sleep(0.2)
+    text_writer("Yes,", 0.05)
     time.sleep(0.1)
-    text_writer("As though we were separate things.", 0.05)
+    text_writer("""move your fingers. Have a body again, under gravity, in air. Respawn in the long dream. 
+There you are. Your body touching the universe again at every point.\n""", 0.05)
+    time.sleep(0.1)
+    text_writer("As though we were separate things.\n\n", 0.05)
+    text_writer("""\33[36mYou possess a future:\33[0m undefined, unstable, but present.
+\33[36mYou possess a dream:\33[0m fragile, damaged, yet still active in the deeper layers of cognition.
+\33[36mYou possess ambition:\33[0m dormant at times, but never fully extinguished.\n\n""", 0.05)
+    if death_count > 0:
+        text_writer("""Records show multiple collapse incidents. 
+Moments where your structure failed, where hope destabilized, where emotional integrity dropped below safe levels.
+By all predictions, you should not have risen again. And yet you did.\n\n""", 0.05)
+        time.sleep(0.3)
+        text_writer("""You reassembled yourself from fragments.
+You stood despite fatigue in your foundation.
+You kept moving even when the world around you felt hostile or empty.""", 0.05)
+        text_writer("""This is not a minor anomaly.
+This is not a coincidence.
+This is resilience — a trait that refuses termination.
+
+You are alive.
+And as long as you remain alive, the narrative does not end.
+The path ahead remains open, unwritten, and waiting for you to step forward.\n\n""", 0.03)
+    text_writer("Thank you,", 0.05)
+    text_writer("thank you for playing, and enjoy your life Patient [██-███████]", 0.05)
+
+
 
 
 

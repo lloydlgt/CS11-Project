@@ -48,6 +48,9 @@ tile_floor_tags = {
     "1" : {"can_move_to", "door_floor"},
     "2" : {"can_move_to", "door_floor"},
     "3" : {"can_move_to", "door_floor"},
+
+    #map
+    "#" :{"can_move_to"},
 }
 
 #add reactive
@@ -186,6 +189,8 @@ translate_tiles = {
     "6" : "\33[45m\N{Lock}\33[0m",
     "7" : "\33[41m\N{Lock}\33[0m",
     
+        # map
+    "#": "\N{Frame with Picture} "
     #dlc items
 
 }
