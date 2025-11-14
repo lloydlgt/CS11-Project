@@ -1,6 +1,4 @@
-import os
 import tiles
-import time
 from player import character
 
 
@@ -30,7 +28,7 @@ class stage():
         self.score_req = 0
         self.inventory = None
         self.object_list = list([0,] * self.x for y in range(self.y))
-        self.curr_locs = []
+        self.curr_locs = [] 
         self.character = () 
 
         # "Load" up the main map
@@ -55,7 +53,6 @@ class stage():
                 elif self.listed_file[y][x] in tiles.tile_floor_tags:
                     self.object_list[y][x].tile_floor = self.listed_file[y][x]
 
-      
 
 class stage_tile:
     """Individual Stage Tile that holding"""

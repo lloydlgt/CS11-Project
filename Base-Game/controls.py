@@ -1,5 +1,3 @@
-import os
-
 movement_keybinds = {
     # Move up
     "w" : (0,-1),
@@ -24,5 +22,3 @@ ui_keybinds = {
     # For UI
     "!": "reset"
 }
-
-print(os.listdir("maps"))
