@@ -1,0 +1,7 @@
+6 7
+TTTTTTT
+T..T..T
+T.R..LT
+T.~..TT
+Tx..*.T
+TTTTTTT
