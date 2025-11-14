@@ -1,11 +1,11 @@
 10 30
 TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-T.....T......................T
-T.L..#T.........#........#...T
-TTTTTRT......................T
-T...T.T....#.........#.......T
-T...T_TTTTTTTTTT.............T
-T....#.........T........#....T
-T.........#....T..#..........T
-T..............T.............T
-TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+T.....T........~.............T
+T.L..#T.....*..T.#..R....#...T
+TTTTTRT........T~TTTTTTTTTTT~T
+T...T.T....#...RR.....T......T
+T...T~TTTTTTTTTT...#..T......T
+T.x..#T.......xT......T.#....T
+T.....T...#....T....TTT......T
+T.....T........T....~.R......T
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT 

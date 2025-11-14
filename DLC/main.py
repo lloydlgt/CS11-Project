@@ -6,6 +6,7 @@ import story
 from menu import Menu
 from mapper import display, animate, stage
 import controls
+from story import level_loading_screen, world_loading_screen
 
 
 menu = Menu("main")
@@ -60,7 +61,7 @@ elif args == 4: # shroom_raider.py map.txt "asdasd" output.txt
     won = False
     for indiv_input in sys.argv[2].lower():
         run_input(indiv_input)
-        if curr_stage.score >= curr_stage.score_req > 0:
+        if curr_stage.score >= curr_stage.score_req:
             won = True
             break
     try:
@@ -79,12 +80,8 @@ elif args == 4: # shroom_raider.py map.txt "asdasd" output.txt
     
 
 
-def run_game(stage_num=0, curr_level=0):
+def run_game(story_status=False):
     global moves
-    if stage_num != 0:
-        num = stage_num
-        current = curr_level
-    
     clear()
     print(display(curr_stage, False))
     print(f"\N{mushroom}: {curr_stage.score}")
@@ -106,14 +103,12 @@ def run_game(stage_num=0, curr_level=0):
         run_input(indiv_input)
         animate(curr_stage, 0.1)
         print(f"\N{mushroom}: {curr_stage.score}")
-        if curr_stage.score >= curr_stage.score_req > 0:
-            # print(moves)
-            # time.sleep(10)
-            if num != 0:
-                clear()
-                print(f"{current}/{num}")
-            time.sleep(3)
-            return True
+        if curr_stage.score >= curr_stage.score_req:
+            if not story_status:
+                menu.win_screen()
+                return
+            else:
+                return True
         curr_stage.update()
         
 
@@ -121,15 +116,24 @@ def run_game(stage_num=0, curr_level=0):
 
 
 if menu.storymode:
-    world = input("put the world number here(1 or 2): ")
-    all_levels = os.listdir(f"maps/{world}")
-    for i, level in enumerate(sorted(all_levels, key=len)):
-        menu.curr_stage = stage(f"{world}/{level}")
-        menu.curr_stage.start()
-        curr_stage = menu.curr_stage
-        while True:
-            if run_game(len(all_levels), i + 1):
-                break
+    level_anim = True
+    world_list = tuple(list(os.walk("maps"))[0][1])
+    for world in world_list:
+        clear()
+        all_levels = os.listdir(f"maps/{world}")
+        world_loading_screen(world)
+        for i, level in enumerate(sorted(all_levels, key=len)):
+            clear()
+            menu.curr_stage = stage(f"{world}/{level}")
+            menu.curr_stage.start()
+            curr_stage = menu.curr_stage
+            level_loading_screen(i + 1, len(all_levels), level_anim)
+            if level_anim:
+                level_anim = False  
+            while True:
+                if run_game(True):
+                    break
+    menu.win_screen()
 else:
     while True:
         run_game()
