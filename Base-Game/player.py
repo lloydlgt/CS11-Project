@@ -22,10 +22,8 @@ class character:
         """
         self.x_coords = location[0]
         self.y_coords = location[1]
-        self.coords = self.x_coords, self.y_coords
         self.x_bound = bounds[0]
         self.y_bound = bounds[1]
-        self.bounds = self.x_bound, self.y_bound
         self.curr_tile = curr_tile
         self.curr_stage = curr_stage
 
