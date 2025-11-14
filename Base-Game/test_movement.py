@@ -1,7 +1,5 @@
 import pytest
 from mapper import stage
-from player import character
-import controls
 
 MAP_ATTRIBUTES = [
     ("default.txt", "dddddddddddddddddddddddssssssssssssssssssssssssssssaaaaaaaaaaaaaaaaaaaa", (7, 9), None, "~"), 

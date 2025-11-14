@@ -2,7 +2,6 @@ import os
 import tiles
 from argparse import ArgumentParser
 from mapper import stage, display
-import controls
 
 # Clears the user terminal
 def clear():
@@ -25,7 +24,7 @@ prev_map = args.stage_file # saves txt file
 curr_stage.start() 
 
     
-if args.output_file != None:
+if args.output_file is not None:
     """
     If the user enters an output file,
     Run the string of moves,
@@ -36,15 +35,17 @@ if args.output_file != None:
     win = False
     
     for indiv_input in args.string_of_moves.lower():
-        run_input(indiv_input, curr_stage)
+        curr_stage.character.run_input(indiv_input, curr_stage)
         if curr_stage.score >= curr_stage.score_req:
             win = True
             break
 
     try:
         with open(args.output_file, "w") as file:
-            if win: file.write("CLEAR\n")
-            else: file.write("NO CLEAR\n")
+            if win: 
+                file.write("CLEAR\n")
+            else: 
+                file.write("NO CLEAR\n")
             file.write(str(curr_stage.y) + " " + str(curr_stage.x) + "\n")
             file.write(display(curr_stage, True))
         print(f"Successfully output to {args.output_file}.")
@@ -133,5 +134,4 @@ def game_running():
         print(display(curr_stage, False))
         print(f"\N{mushroom}: {curr_stage.score}")
 
-if args.stage_file:
-    game_running()
+game_running()

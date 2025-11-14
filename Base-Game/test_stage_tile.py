@@ -1,6 +1,5 @@
 import pytest
 from mapper import stage
-from player import character
 
 MAP_ATTRIBUTES = [
     ("default.txt", (6,1), "+", "."), 

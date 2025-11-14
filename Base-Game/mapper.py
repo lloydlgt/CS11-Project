@@ -91,7 +91,7 @@ class stage_tile:
                 self.tile_object = None
 
             # Check if the next tile is empty and move the tile object
-            elif move_tile.tile_object == None:
+            elif move_tile.tile_object is None:
                 move_tile.tile_object = self.tile_object
                 self.tile_object = None
 

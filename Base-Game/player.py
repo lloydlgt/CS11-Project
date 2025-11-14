@@ -135,7 +135,7 @@ class character:
         """
         if indiv_input == "!":
             return "reset"
-        if not indiv_input in (controls.movement_keybinds | controls.player_action_keybinds):
+        if indiv_input not in (controls.movement_keybinds | controls.player_action_keybinds):
             return False
         # Player movement
         if indiv_input in controls.movement_keybinds:
