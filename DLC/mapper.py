@@ -7,7 +7,6 @@ def animate(curr_stage, animation_time):
     os.system("cls" if os.name == "nt" else "clear") 
     print(display(curr_stage, False))
     time.sleep(animation_time)
-    
 
 class stage():
     def __init__(self, path):

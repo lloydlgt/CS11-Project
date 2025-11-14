@@ -5,6 +5,15 @@ import controls
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
+def input_handler(movement_string, curr_stage):
+     for indiv_input in movement_string.lower():
+        validated_input = curr_stage.character.run_input(indiv_input)
+        if not validated_input:
+            break
+        if validated_input == "dead":
+            break
+        if curr_stage.score >= curr_stage.score_req:
+            break
 
 class character:
 
@@ -134,6 +143,7 @@ class character:
             indiv_input: Individual input
         """
         if indiv_input == "!":
+            self.curr_stage.reset
             return "reset"
         if indiv_input not in (controls.movement_keybinds | controls.player_action_keybinds):
             return False
@@ -149,5 +159,6 @@ class character:
                 self.curr_tile = None
 
         return True
+  
 if __name__ == "__main__":
     print("Wrong file.")

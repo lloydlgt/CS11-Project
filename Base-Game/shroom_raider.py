@@ -56,12 +56,6 @@ if args.output_file is not None:
 else:
     pass
 
-def reset():
-    global curr_stage, prev_map
-    "resets the map"
-    curr_stage = stage(prev_map)
-    curr_stage.start()
-
 def death_screen():
     global curr_stage
     os.system("cls" if os.name == "nt" else "clear")
@@ -120,7 +114,7 @@ def game_running():
             if not validated_input:
                 break
             if validated_input == "reset":
-                reset()
+                curr_stage.reset()
             if validated_input == "dead":
                 death_screen()
             # If user has reached the win condition
