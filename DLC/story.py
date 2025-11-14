@@ -93,7 +93,17 @@ def win_counting_anim():
         sys.stdout.write(f"\r\33[32mCounting Mushrooms{'.' * dots:<3}                        ")
         sys.stdout.flush()
         time.sleep(0.01)
-        
+
+def basic_win():
+    text_writer("Im sorry, did you expect to win just with this?", 0.03)
+    time.sleep(0.5)
+    temp = ("HA HA HA HA HA HA HA HA HA " * 7) * 67 + "\n"
+    sys.stdout.write(f"\33[91m{temp}\33[0m")
+    time.sleep(1)
+    sys.stdout.write(f"\33[91;101m{temp}\33[0;0m")
+    os.system("cls" if os.name == "nt" else "clear")
+
+    
     
     
 
@@ -272,15 +282,27 @@ You stood despite fatigue in your foundation.
 You kept moving even when the world around you felt hostile or empty.""", 0.05)
         text_writer("""This is not a minor anomaly.
 This is not a coincidence.
-This is resilience — a trait that refuses termination.
-
-You are alive.
+This is resilience, a trait that refuses termination.\n\n""", 0.05)
+    else:
+        text_writer("""You were unstoppable, with no sign of fatigue. 
+It's as if you have played this games before. To show mastery like no other,
+that is why you embody perfection. But do not forget, you are still a player, under my command\n\n""", 0.05)
+    text_writer("""You are alive.
 And as long as you remain alive, the narrative does not end.
 The path ahead remains open, unwritten, and waiting for you to step forward.\n\n""", 0.03)
     text_writer("Thank you,", 0.05)
     text_writer("thank you for playing, and enjoy your life Patient [██-███████]", 0.05)
 
+def level_loading_screen(curr_level, total_level, long_anim):
+    if long_anim:
+        general_bootup(f"Loading level #{curr_level} out of {total_level}", "\33[32mLevel has been properly loaded!                  \33[0m")
+    else:
+        sys.stdout.write(f"\33[32mLevel {curr_level} out of {total_level}\33[0m")
+        time.sleep(1)
 
+
+def world_loading_screen(next_world):
+    general_bootup(f"Moving to world {next_world}", "Congratulations for reaching you new destination!            ")
 
 
 
