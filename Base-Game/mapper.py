@@ -52,6 +52,8 @@ class stage():
                 # If tile is on floor layer, set it to bottom layer
                 elif self.listed_file[y][x] in tiles.tile_floor_tags:
                     self.object_list[y][x].tile_floor = self.listed_file[y][x]
+    
+
 
 
 class stage_tile:

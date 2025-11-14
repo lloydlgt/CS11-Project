@@ -17,8 +17,3 @@ player_action_keybinds = {
     # Player pickup
     "p" : "pickup",
 }
-
-ui_keybinds = {
-    # For UI
-    "!": "reset"
-}

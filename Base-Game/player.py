@@ -1,12 +1,9 @@
 import os
 import tiles
+import controls
 
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
-
-def death_screen():
-    print("Game Over! Try again next time.")
-    exit()
 
 
 class character:
@@ -26,7 +23,7 @@ class character:
         self.y_bound = bounds[1]
         self.curr_tile = curr_tile
         self.curr_stage = curr_stage
-
+    
     def move(self, movement: tuple[int,int]):
         """ Main function that checks what happens when the character moves
         Args:
@@ -109,13 +106,8 @@ class character:
                 self.x_coords, self.y_coords = new_x, new_y
                 if "death_on_touch" in next_tile_floor_tags:
                     # If the character falls in water, display death screen and end game
-                    from mapper import display
                     self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
-                    clear()
-                    print(display(self.curr_stage, False))
-                    print(f"\N{mushroom} collected: {self.curr_stage.score}")
-                    death_screen()
-                    exit()
+                    return False
 
             # If the next tile is an item
             elif "item" in next_tile_object_tags:
@@ -134,7 +126,28 @@ class character:
                     self.curr_stage.object_list[self.y_coords][self.x_coords].tile_object = self.curr_tile
                     self.curr_tile = temp
                     self.x_coords, self.y_coords = new_x, new_y
+        return True
 
+    def run_input(self, indiv_input: str):
+        """ Runs each individual input
+        Args:
+            indiv_input: Individual input
+        """
+        if indiv_input == "!":
+            return "reset"
+        if not indiv_input in (controls.movement_keybinds | controls.player_action_keybinds):
+            return False
+        # Player movement
+        if indiv_input in controls.movement_keybinds:
+            moved = self.move(controls.movement_keybinds[indiv_input.lower()])
+            if not moved:
+                return "dead"
+        # Player interactions
+        elif indiv_input in controls.player_action_keybinds:
+            if not self.curr_stage.inventory and self.curr_tile and "manual_pickup" in tiles.tile_object_tags[self.curr_tile]:
+                self.curr_stage.inventory = self.curr_tile
+                self.curr_tile = None
 
+        return True
 if __name__ == "__main__":
     print("Wrong file.")

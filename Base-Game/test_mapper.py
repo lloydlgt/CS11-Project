@@ -35,3 +35,4 @@ def test_start(map_stage):
     assert (map.character.y_coords, map.character.x_coords) == character_pos
     assert map.score_req == score_req
 
+

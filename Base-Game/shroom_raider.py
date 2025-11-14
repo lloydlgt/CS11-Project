@@ -1,54 +1,30 @@
 import os
 import tiles
 from argparse import ArgumentParser
-from menu import Menu, win_screen
 from mapper import stage, display
 import controls
-
-menu = Menu()
 
 # Clears the user terminal
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
 # Processes every user movement/input
-def run_input(indiv_input: str):
-    """ Runs each individual input
-    Args:
-        indiv_input: Individual input
-    """
-
-    # Player movement
-    if indiv_input in controls.movement_keybinds:
-        menu.curr_stage.character.move(controls.movement_keybinds[indiv_input.lower()])
-
-    # Player interactions
-    elif indiv_input in controls.player_action_keybinds:
-        if not menu.curr_stage.inventory and menu.curr_stage.character.curr_tile and "manual_pickup" in tiles.tile_object_tags[menu.curr_stage.character.curr_tile]:
-            menu.curr_stage.inventory = menu.curr_stage.character.curr_tile
-            menu.curr_stage.character.curr_tile = None
-
-    # Player UI
-    elif indiv_input in controls.ui_keybinds:
-        key = getattr(menu, controls.ui_keybinds[indiv_input.lower()])
-        key()
-    else:
-        pass
 
 # Accepting user command-line arguments
+# Accepting user command-line arguments
 parser = ArgumentParser()
-parser.add_argument("stage_file", type=str, nargs="?", default="default.txt")
-parser.add_argument("string_of_moves", type=str, nargs="?", default="")
-parser.add_argument("output_file", type=str, nargs="?", default=None)
+parser.add_argument("-f", "--stage_file", type=str, default="default.txt")
+parser.add_argument("-m", "--string_of_moves", type=str, default="")
+parser.add_argument("-o", "--output_file", type=str, default=None)
 args = parser.parse_args()
 
 
 # Map booting
-menu.curr_stage = stage(args.stage_file) # self.path only
-menu.prev_map = args.stage_file # saves txt file
-menu.curr_stage.start() 
+curr_stage = stage(args.stage_file) # self.path only
+prev_map = args.stage_file # saves txt file
+curr_stage.start() 
 
-
+    
 if args.output_file != None:
     """
     If the user enters an output file,
@@ -60,8 +36,8 @@ if args.output_file != None:
     win = False
     
     for indiv_input in args.string_of_moves.lower():
-        run_input(indiv_input)
-        if menu.curr_stage.score >= menu.curr_stage.score_req:
+        run_input(indiv_input, curr_stage)
+        if curr_stage.score >= curr_stage.score_req:
             win = True
             break
 
@@ -69,8 +45,8 @@ if args.output_file != None:
         with open(args.output_file, "w") as file:
             if win: file.write("CLEAR\n")
             else: file.write("NO CLEAR\n")
-            file.write(str(menu.curr_stage.y) + " " + str(menu.curr_stage.x) + "\n")
-            file.write(display(menu.curr_stage, True))
+            file.write(str(curr_stage.y) + " " + str(curr_stage.x) + "\n")
+            file.write(display(curr_stage, True))
         print(f"Successfully output to {args.output_file}.")
     except FileNotFoundError:
         print(f"Error: Output file {args.output_file} not found.") 
@@ -79,37 +55,83 @@ if args.output_file != None:
 else:
     pass
 
+def reset():
+    global curr_stage, prev_map
+    "resets the map"
+    curr_stage = stage(prev_map)
+    curr_stage.start()
+
+def death_screen():
+    global curr_stage
+    os.system("cls" if os.name == "nt" else "clear")
+    print(display(curr_stage, False))
+    print(f"\N{mushroom} collected: {curr_stage.score}")
+    print("Game Over! Try again next time.")
+    exit()
+
+def win_screen():
+    "The win screen once all mushroom has been collected"
+    print("Congrats, you've finished the game! have a cake :)")
+    print("""                  
+            /M/              .,-=;//;-
+        .:/= ;MH/,    ,=/+%$XH@MM#@:
+        -$##@+$###@H@MMM#######H:.    -/H#H
+    .,H@H@ X######@ -H#####@+-     -+H###@X
+    .,@##H;      +XM##M/,     =%@###@X;-
+    X%-  :M##########$.    .:%M###@%:
+    M##H,   +H@@@$/-.  ,;$M###@%,          --
+    M####M=,,---,.-HHH####M$:          ,+@##
+    @##################@/.         :%H##@$-
+    M###############H,         ;HM##M$=
+    #################.    .=$M##M$=
+    ################H..;XM##M$=          .:++
+    M###################@%=           =+@MH%
+    @#################M/.         =+H#X%=
+    =+M###############M,      ,/X#H+:,
+    .;XM###########H=   ,/X#H+:;
+        .=+HM#######M+/+HM@+=.
+            ,:/XMM####H/.
+        
+    """)
+    exit()
 
 # "Main" or in-game part of the game
-while True:
-    clear()
-
-    # Displays necessary game information on the terminal
-    print(display(menu.curr_stage, False))
-    print(f"\N{mushroom}: {menu.curr_stage.score}")
-
-    # Prompts the user for pickup on an item tile and shows the current item holding
-    if not menu.curr_stage.inventory:
-        print("Currently holding [ ]")
-        if menu.curr_stage.character.curr_tile and "manual_pickup" in tiles.tile_object_tags[menu.curr_stage.character.curr_tile]:
-            print(f"Press P to pick up [{tiles.translate_tiles[menu.curr_stage.character.curr_tile]}]:")
-    else:
-        print(f"Currently holding [{tiles.translate_tiles[menu.curr_stage.inventory]}]")
-
-    # Player movement for each input
-    for indiv_input in input("> ").lower():
-        if indiv_input not in (controls.movement_keybinds | controls.player_action_keybinds | controls.ui_keybinds):
-            break
+def game_running():
+    while True:
         clear()
-        run_input(indiv_input)
 
-        # If user has reached the win condition
-        if menu.curr_stage.score >= menu.curr_stage.score_req:
-            clear()
-            print(display(menu.curr_stage, False))
-            print(f"\N{mushroom} collected: {menu.curr_stage.score}")
-            win_screen()
-            exit()
+        # Displays necessary game information on the terminal
+        print(display(curr_stage, False))
+        print(f"\N{mushroom}: {curr_stage.score}")
 
-    print(display(menu.curr_stage, False))
-    print(f"\N{mushroom}: {menu.curr_stage.score}")
+        # Prompts the user for pickup on an item tile and shows the current item holding
+        if not curr_stage.inventory:
+            print("Currently holding [ ]")
+            if curr_stage.character.curr_tile and "manual_pickup" in tiles.tile_object_tags[curr_stage.character.curr_tile]:
+                print(f"Press P to pick up [{tiles.translate_tiles[curr_stage.character.curr_tile]}]:")
+        else:
+            print(f"Currently holding [{tiles.translate_tiles[curr_stage.inventory]}]")
+        
+        
+        # Player movement for each input
+        for indiv_input in input("> ").lower():
+            validated_input = curr_stage.character.run_input(indiv_input)
+            if not validated_input:
+                break
+            if validated_input == "reset":
+                reset()
+            if validated_input == "dead":
+                death_screen()
+            # If user has reached the win condition
+            if curr_stage.score >= curr_stage.score_req:
+                clear()
+                print(display(curr_stage, False))
+                print(f"\N{mushroom} collected: {curr_stage.score}")
+                win_screen()
+                exit()
+        clear()
+        print(display(curr_stage, False))
+        print(f"\N{mushroom}: {curr_stage.score}")
+
+if args.stage_file:
+    game_running()
