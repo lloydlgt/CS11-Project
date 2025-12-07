@@ -12,12 +12,13 @@ from story import level_loading_screen, world_loading_screen
 menu = Menu("main")
 
 moves = ""
+reset_story = False
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
 def run_input(indiv_input: str):
     "handles the inputs of player"
-    global curr_stage
+    global curr_stage, reset_story
     #movement
     if indiv_input in controls.movement_keybinds:
         for char in curr_stage.characters:
@@ -25,9 +26,13 @@ def run_input(indiv_input: str):
             if char.dead:
                 story.death_sec()
                 char.dead = False
-                menu.prev = "main"
-                menu.main_menu()
-                curr_stage = menu.curr_stage
+                if menu.storymode:
+                    reset_story = True
+                    return
+                else:
+                    menu.prev = "main"
+                    menu.main_menu()
+                    curr_stage = menu.curr_stage
             
     #ui
     elif indiv_input in controls.ui_keybinds:
@@ -43,12 +48,8 @@ def run_input(indiv_input: str):
                 char.curr_tile = None
 
 args = len(sys.argv)
-if args == 1: # shroom_raider.py
-    story.open_sec()
-    menu.main_menu()
-    curr_stage = menu.curr_stage
 
-elif args == 2: # shroom_raider.py map.txt
+if args == 2: # shroom_raider.py map.txt
     menu.curr_stage = stage(sys.argv[1])
     menu.curr_stage.start()
     curr_stage = menu.curr_stage
@@ -110,33 +111,45 @@ def run_game(story_status=False):
             else:
                 return True
         curr_stage.update()
-        
-
     menu.prev = "in_game"
 
 
-if menu.storymode:
-    level_anim = True
-    world_list = tuple(list(os.walk("maps"))[0][1])
-    for world in world_list:
-        clear()
-        all_levels = os.listdir(f"maps/{world}")
-        world_loading_screen(world)
-        for i, level in enumerate(sorted(all_levels, key=len)):
+story.open_sec()
+while True:
+    menu.main_menu()
+    curr_stage = menu.curr_stage
+    
+    if menu.storymode:
+        reset_story = False
+        level_anim = True
+        world_list = tuple(list(os.walk("maps"))[0][1])
+        for world in world_list:
             clear()
-            menu.curr_stage = stage(f"{world}/{level}")
-            menu.curr_stage.start()
-            curr_stage = menu.curr_stage
-            level_loading_screen(i + 1, len(all_levels), level_anim)
-            if level_anim:
-                level_anim = False  
-            while True:
-                if run_game(True):
+            all_levels = os.listdir(f"maps/{world}")
+            world_loading_screen(world)
+            for i, level in enumerate(sorted(all_levels, key=len)):
+                clear()
+                menu.curr_stage = stage(f"{world}/{level}")
+                menu.curr_stage.start()
+                curr_stage = menu.curr_stage
+                level_loading_screen(i + 1, len(all_levels), level_anim)
+                if level_anim:
+                    level_anim = False  
+                while True: 
+                    if reset_story:
+                        break
+                    if run_game(True):
+                        break
+                if reset_story:
                     break
-    menu.win_screen()
-else:
-    while True:
-        run_game()
+            if reset_story:
+                break
+        if reset_story:
+            continue
+        menu.win_screen()
+    else:
+        while True:
+            run_game()
             
     
     

@@ -1,3 +1,2 @@
 opener = False
-death = 0
-current = ""
+death = 1

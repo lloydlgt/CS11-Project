@@ -18,6 +18,7 @@ class Menu:
         self.maps = []
     
     def main_menu(self):
+        self.curr_stage = None
         os.system("cls" if os.name == "nt" else "clear")
         print("""\33[91;1m
 ██████╗  ██████╗  ███████╗ ████████╗ ███████╗ ███████╗ ███████╗ ██╗    

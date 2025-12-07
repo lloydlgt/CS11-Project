@@ -18,7 +18,7 @@ def text_writer(text: str, delay: float):
 
 
 def corrupt():
-    "Corrupted animation used for the first death screen"
+    """Corrupted animation used for the first death screen"""
     logs = screen.glitched_logs
     for x in range(25):
         if x < 19:
