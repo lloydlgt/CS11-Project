@@ -106,7 +106,7 @@ def run_game(story_status=False):
         print(f"\N{mushroom}: {curr_stage.score}")
         if curr_stage.score >= curr_stage.score_req:
             if not story_status:
-                menu.win_screen()
+                menu.win_screen2()
                 return
             else:
                 return True
@@ -118,7 +118,7 @@ story.open_sec()
 while True:
     menu.main_menu()
     curr_stage = menu.curr_stage
-    
+
     if menu.storymode:
         reset_story = False
         level_anim = True
@@ -130,6 +130,7 @@ while True:
             for i, level in enumerate(sorted(all_levels, key=len)):
                 clear()
                 menu.curr_stage = stage(f"{world}/{level}")
+                menu.prev_map = f"{world}/{level}"
                 menu.curr_stage.start()
                 curr_stage = menu.curr_stage
                 level_loading_screen(i + 1, len(all_levels), level_anim)
@@ -151,7 +152,6 @@ while True:
         while True:
             run_game()
             
-    
     
     
     
