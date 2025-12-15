@@ -5,51 +5,16 @@ import story_state
 import screen
 import random
 
+
 death_count = story_state.death
 
-
-
+#templates
 def text_writer(text: str, delay: float):
     """typing effect on strings"""
     for char in text:
         sys.stdout.write(char)
         sys.stdout.flush()
         time.sleep(delay)
-
-
-def corrupt():
-    """Corrupted animation used for the first death screen"""
-    logs = screen.glitched_logs
-    for x in range(25):
-        if x < 19:
-            log = random.choice(logs)
-        else:
-            log = logs[3]
-
-        # Clear terminal and print
-        os.system("cls" if os.name == "nt" else "clear")
-        sys.stdout.write(log + "\n")
-        time.sleep(0.04)
-        
-def death_loop():
-    death_logs = screen.death_screens
-    os.system("cls" if os.name == "nt" else "clear")
-    sys.stdout.write(random.choice(death_logs))
-    sys.stdout.write("\n")
-    time.sleep(1)
-
-
-def booting_animation():
-    """Creates a booting animation for the start of the game"""
-    for i in range(10):
-        durs = (0.4, 0.4, 0.2, 0.1, 0.1, 0.07, 0.05, 0.05, 0.03, 0.01)
-        for dots in range(4):
-            sys.stdout.write(f"\rBooting.{'.' * dots:<3}")
-            sys.stdout.flush()
-            time.sleep(durs[i])
-    sys.stdout.write("\33[32m\rBoot Complete!     \n\33[0m")
-    sys.stdout.flush()
-    os.system("cls" if os.name == "nt" else "clear")
 
 def general_bootup(start: str, end: str):
     """general booting animation with constant delay"""
@@ -66,7 +31,32 @@ def general_bootup(start: str, end: str):
     sys.stdout.flush()
     time.sleep(0.5)
 
+#general aniamtions
+def booting_animation():
+    """Creates a booting animation for the start of the game"""
+    for i in range(10):
+        durs = (0.4, 0.4, 0.2, 0.1, 0.1, 0.07, 0.05, 0.05, 0.03, 0.01)
+        for dots in range(4):
+            sys.stdout.write(f"\rBooting.{'.' * dots:<3}")
+            sys.stdout.flush()
+            time.sleep(durs[i])
+    sys.stdout.write("\33[32m\rBoot Complete!     \n\33[0m")
+    sys.stdout.flush()
+    os.system("cls" if os.name == "nt" else "clear")
 
+def corrupt():
+    """Corrupted animation used for the first death screen"""
+    logs = screen.glitched_logs
+    for x in range(25):
+        if x < 19:
+            log = random.choice(logs)
+        else:
+            log = logs[3]
+
+        # Clear terminal and print
+        os.system("cls" if os.name == "nt" else "clear")
+        sys.stdout.write(log + "\n")
+        time.sleep(0.04)
 
 def Initialize():
     """Runs a Initializing animation repeatedly on the same line."""
@@ -81,32 +71,8 @@ def Initialize():
         time.sleep(0.5)
     sys.stdout.write("\n")
 
-
-def win_counting_anim():
-    text_writer("\33[32mCounting Mushrooms\33[0m", 0.03)
-    for dots in range(180):
-        sys.stdout.write(f"\r\33[32mCounting Mushrooms{'.' * dots:<3}                        ")
-        sys.stdout.flush()
-        time.sleep(0.01)
-
-def basic_win():
-    text_writer("Im sorry, did you expect to win just with this?", 0.03)
-    time.sleep(0.5)
-    temp = ("HA HA HA HA HA HA HA HA HA " * 7) * 67 + "\n"
-    sys.stdout.write(f"\33[91m{temp}\33[0m")
-    time.sleep(1)
-    sys.stdout.write(f"\33[91;101m{temp}\33[0;0m")
-    os.system("cls" if os.name == "nt" else "clear")
-
-    
-    
-    
-
-
-
 def open_sec():
     "Opening Sequence that will only be seen when you first boot up the game"
-
     if story_state.opener:
         os.system("cls" if os.name == "nt" else "clear")
         booting_animation()
@@ -155,7 +121,6 @@ Welcome to eternal limbo.\33[0m\n"""
 
 def death_sec():
     "death sequence(unique cinematic when first death)"
-    
     global death_count
     os.system("cls" if os.name == "nt" else "clear")
     if death_count == 0:
@@ -234,8 +199,35 @@ Projected duration: ∞\n\n""", 0.02)
     else:
         death_loop()
 
+def win_counting_anim():
+    """mushroom counting animation"""
+    text_writer("\33[32mCounting Mushrooms\33[0m", 0.03)
+    for dots in range(180):
+        sys.stdout.write(f"\r\33[32mCounting Mushrooms{'.' * dots:<3}                        ")
+        sys.stdout.flush()
+        time.sleep(0.01)
+
+def basic_win():
+    """win screen for level select"""
+    text_writer("Im sorry, did you expect to win just with this?", 0.03)
+    time.sleep(0.5)
+    temp = ("HA HA HA HA HA HA HA HA HA " * 7) * 67 + "\n"
+    sys.stdout.write(f"\33[91m{temp}\33[0m")
+    time.sleep(1)
+    sys.stdout.write(f"\33[91;101m{temp}\33[0;0m")
+    os.system("cls" if os.name == "nt" else "clear")
+
+def death_loop():
+    """death animation after dyingtwice or more"""
+    death_logs = screen.death_screens
+    os.system("cls" if os.name == "nt" else "clear")
+    sys.stdout.write(random.choice(death_logs))
+    sys.stdout.write("\n")
+    time.sleep(1)
+
 def win_sec():
-    "win sequence"
+    """win animation for the story mode"""
+
     win_counting_anim()
     #death_loop()
     os.system("cls" if os.name == "nt" else "clear")
@@ -247,7 +239,7 @@ def win_sec():
     text_writer("", 0.03)
     sys.stdout.write("\n")
     time.sleep(0.5)
-    
+
     text_writer("""You. \33[36mYou are alive\33[0m. undeniably, quietly, stubbornly alive.
 A person with a future that hasn't been written yet, a dream that refuses to die, 
 and an ambition that flickers even in the \33[90mdarkest spaces of our Life.\33[0m\n\n""", 0.05)
@@ -263,6 +255,7 @@ There you are. Your body touching the universe again at every point.\n""", 0.05)
     text_writer("""\33[36mYou possess a future:\33[0m undefined, unstable, but present.
 \33[36mYou possess a dream:\33[0m fragile, damaged, yet still active in the deeper layers of cognition.
 \33[36mYou possess ambition:\33[0m dormant at times, but never fully extinguished.\n\n""", 0.05)
+    
     if death_count > 0:
         text_writer("""Records show multiple collapse incidents. 
 Moments where your structure failed, where hope destabilized, where emotional integrity dropped below safe levels.
@@ -285,14 +278,17 @@ The path ahead remains open, unwritten, and waiting for you to step forward.\n\n
     text_writer("thank you for playing, and enjoy your life Patient [██-███████]", 0.05)
 
 def level_loading_screen(curr_level, total_level, long_anim):
+    """loading screen between levels for the story mode"""
+
     if long_anim:
         general_bootup(f"Loading level #{curr_level} out of {total_level}", "\33[32mLevel has been properly loaded!                  \33[0m")
     else:
         sys.stdout.write(f"\33[32mLevel {curr_level} out of {total_level}\33[0m")
         time.sleep(1)
 
-
 def world_loading_screen(next_world):
+    """loading animation between worlds in the story mode"""
+
     general_bootup(f"Moving to world {next_world}", "Congratulations for reaching you new destination!            ")
 
 

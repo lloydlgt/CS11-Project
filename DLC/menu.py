@@ -133,8 +133,6 @@ REMEMBER YOUR GOAL.
     def win_screen2(self):
         os.system("cls" if os.name == "nt" else "clear")
         story.basic_win()
-        self.prev = "main"
-        self.main_menu()
 
 
 if __name__ == "__main__":
