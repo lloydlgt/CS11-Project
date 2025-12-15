@@ -2,17 +2,24 @@ import tiles
 from player import character
 
 
-class stage():
-    """Class object for stage"""
+class stage:
+    """Stage object class
+    """
     def __init__(self, path):
         self.path = path
 
     def reset(self):
-        """resets the map"""
+        """Resets the map
+
+        :param self: self
+        """
         self.start()
-        
+
     def start(self):
-        """handles the initialization of the map"""
+        """Handles the initialization of the map
+
+        :param self: self
+        """
         try:
             # Setup the map variables and insure actual dimensions match initialized forest dimensions
             with open(self.path, "r") as file:
@@ -21,10 +28,12 @@ class stage():
                 self.y, self.x = (int(num) for num in self.read_lines[0].split(" "))
                 self.listed_file = list(x.rstrip() for x in self.read_lines[1:])
 
-                if any((self.y != len(self.listed_file), self.x != len(self.listed_file[0]))): # Insurance for grid dimensions
+                if any((self.y != len(self.listed_file), self.x != len(self.listed_file[0]))):
+                    # Insurance for grid dimensions
+
                     print(f"Error: Initialized forest dimension {self.y}, {self.x}")
-                    print(f"does not match actual forest dimension {len(self.listed_file)}, {len(self.listed_file[0])}.")
-                    exit()        
+                    print(f"doesn't match actual forest dimension {len(self.listed_file)}, {len(self.listed_file[0])}.")
+                    exit()
         except FileNotFoundError:
             # Handles inputting a non-existent stage file
             print(f"Error: Stage file {self.path} not found.")
@@ -35,8 +44,8 @@ class stage():
         self.score_req = 0
         self.inventory = None
         self.object_list = list([0,] * self.x for y in range(self.y))
-        self.curr_locs = [] 
-        self.character = () 
+        self.curr_locs = []
+        self.character = ()
 
         # "Load" up the main map
         for y in range(self.y):
@@ -47,10 +56,10 @@ class stage():
 
                 # Save the character ("Laro")'s position
                 if self.listed_file[y][x] == "L":
-                    self.character = character((x,y),(self.x,self.y), None, self)
+                    self.character = character((x, y), (self.x, self.y), None, self)
 
                 # Creates tile object
-                self.object_list[y][x] = stage_tile(None, ".", (x,y), self)
+                self.object_list[y][x] = stage_tile(None, ".", (x, y), self)
 
                 # If tile is on top layer, set it to top layer
                 if self.listed_file[y][x] in tiles.tile_object_tags:
@@ -60,38 +69,44 @@ class stage():
                 elif self.listed_file[y][x] in tiles.tile_floor_tags:
                     self.object_list[y][x].tile_floor = self.listed_file[y][x]
 
-    
-
-
 
 class stage_tile:
     """Individual Stage Tile that holds the informations of the map"""
-    
     # Optimization for memory usage by locking the class to only have these attributes and nothing else
     __slots__ = ("tile_object", "tile_floor", "x_coords", "y_coords", "x_bound", "y_bound", "curr_stage")
 
-    # Initializes each stage tile as their own object
-    def __init__(self, tile_object: str, tile_floor: str, coords: tuple[int,int], curr_stage: stage):
-        # Tile object is the top layer of the tile
-        # Tile floor is the bottom layer of the tile     
+    def __init__(self, tile_object: str, tile_floor: str, coords: tuple[int, int], curr_stage: stage):
+        """Initializes each stage tile as their own object
+
+        :param tile_object: Tile object is the top layer of the tile
+        :type tile_object: str
+        :param tile_floor: Tile floor is the bottom layer of the tile
+        :type tile_floor: str
+        :param coords: Coordinates in (x, y)
+        :type coords: tuple[int, int]
+        :param curr_stage: Reference to the current stage
+        :type curr_stage: stage
+        """
         self.tile_object = tile_object
         self.tile_floor = tile_floor
         self.x_coords, self.y_coords = coords[0], coords[1]
         self.x_bound = curr_stage.x
         self.y_bound = curr_stage.y
         self.curr_stage = curr_stage
-        
-    def move(self, movement: tuple[int,int]):
+
+    def move(self, movement: tuple[int, int]):
         """Moves the object currently on this tile
-        Args:
-            movement: Movement direction as a tuple (x,y)
+
+        :param self: self
+        :param movement: Movement direction as a tuple (x, y)
+        :type movement: tuple[int, int]
         """
         # Check if movement is valid i.e. within the boundary
         if (0 <= self.y_coords + movement[1] < self.y_bound and 0 <= self.x_coords + movement[0] < self.x_bound):
             # Sets the reference for tile to move to
-            new_x,new_y = self.x_coords + movement[0], self.y_coords + movement[1]
+            new_x, new_y = self.x_coords + movement[0], self.y_coords + movement[1]
             move_tile = self.curr_stage.object_list[new_y][new_x]
-            
+
             # Check if the tile object and the floor of the tile being moved to have a reaction
             if "reactive" in tiles.tile_floor_tags[move_tile.tile_floor]:
                 move_tile.tile_floor = tiles.tile_reactions[(self.tile_object, move_tile.tile_floor)]
@@ -104,27 +119,30 @@ class stage_tile:
 
 
 def display(curr_stage: type[stage], ASCII: bool) -> str:
-    """displays the map
-    Args:
-        curr_stage: the current stage being played
-        ASCII: bool value of whether ASCII values were given
+    """Displays the map as a single multi-line string
+
+    :param curr_stage: The current stage being played
+    :type curr_stage: type[stage]
+    :param ASCII: Bool value of whether ASCII values were given
+    :type ASCII: bool
+    :return: The map as a single multi-line string
+    :rtype: str
     """
     # To display the current state of the map in one function for reusability and readability
-
     mapstr = ""
     for objlist in curr_stage.object_list:
-            for obj in objlist:
-                if obj.tile_object:
-                    if ASCII:
-                        mapstr += obj.tile_object
-                    else:
-                        mapstr += tiles.translate_tiles[obj.tile_object]
+        for obj in objlist:
+            if obj.tile_object:
+                if ASCII:
+                    mapstr += obj.tile_object
                 else:
-                    if ASCII:
-                        mapstr += obj.tile_floor
-                    else:
-                        mapstr += tiles.translate_tiles[obj.tile_floor]
-            mapstr += "\n"
+                    mapstr += tiles.translate_tiles[obj.tile_object]
+            else:
+                if ASCII:
+                    mapstr += obj.tile_floor
+                else:
+                    mapstr += tiles.translate_tiles[obj.tile_floor]
+        mapstr += "\n"
     return mapstr
 
 

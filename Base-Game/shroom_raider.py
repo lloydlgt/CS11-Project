@@ -6,11 +6,11 @@ from mapper import stage, display
 
 MOVES_NUM = 0
 
+
 def clear():
     """Clears the user terminal"""
     os.system("cls" if os.name == "nt" else "clear")
 
-# Processes every user movement/input
 
 # Accepting user command-line arguments
 parser = ArgumentParser()
@@ -19,11 +19,18 @@ parser.add_argument("-m", "--string_of_moves", type=str, default="")
 parser.add_argument("-o", "--output_file", type=str, default=None)
 args = parser.parse_args()
 
+
 # Map booting
-curr_stage = stage(args.stage_file) # self.path only
-prev_map = args.stage_file # saves txt file
-curr_stage.start() 
-    
+curr_stage = stage(args.stage_file)
+
+
+# self.path only
+prev_map = args.stage_file
+
+
+# saves txt file
+curr_stage.start()
+
 if args.output_file is not None:
     """If the user enters an output file,
     Run the string of moves,
@@ -32,7 +39,7 @@ if args.output_file is not None:
     """
 
     win = False
-    
+
     for indiv_input in args.string_of_moves.lower():
         validated_input = curr_stage.character.run_input(indiv_input)
         if not validated_input:
@@ -47,22 +54,23 @@ if args.output_file is not None:
 
     try:
         with open(args.output_file, "w") as file:
-            if win: 
+            if win:
                 file.write("CLEAR\n")
-            else: 
+            else:
                 file.write("NO CLEAR\n")
             file.write(str(curr_stage.y) + " " + str(curr_stage.x) + "\n")
             file.write(display(curr_stage, True))
         print(f"Successfully output to {args.output_file}.")
     except FileNotFoundError:
-        print(f"Error: Output file {args.output_file} not found.") 
-        
+        print(f"Error: Output file {args.output_file} not found.")
+
     exit()
 else:
     pass
 
+
 def death_screen():
-    """death screen when the player reaches a tile with death_on_touch tag"""
+    """Death screen when the player reaches a tile with death_on_touch tag"""
     global curr_stage
     os.system("cls" if os.name == "nt" else "clear")
     print(display(curr_stage, False))
@@ -70,10 +78,11 @@ def death_screen():
     print("Game Over! Try again next time.")
     exit()
 
+
 def win_screen():
     """The win screen once all mushroom has been collected"""
     print("Congrats, you've finished the game! have a cake :)")
-    print("""                  
+    print("""
             /M/              .,-=;//;-
         .:/= ;MH/,    ,=/+%$XH@MM#@:
         -$##@+$###@H@MMM#######H:.    -/H#H
@@ -92,9 +101,9 @@ def win_screen():
     .;XM###########H=   ,/X#H+:;
         .=+HM#######M+/+HM@+=.
             ,:/XMM####H/.
-        
     """)
     exit()
+
 
 def game_running():
     """"Main" or in-game part of the game"""
@@ -110,11 +119,12 @@ def game_running():
         # Prompts the user for pickup on an item tile and shows the current item holding
         if not curr_stage.inventory:
             print("Currently holding [ ]")
-            if curr_stage.character.curr_tile and "manual_pickup" in tiles.tile_object_tags[curr_stage.character.curr_tile]:
+            if (curr_stage.character.curr_tile
+                    and "manual_pickup" in tiles.tile_object_tags[curr_stage.character.curr_tile]):
                 print(f"Press P to pick up [{tiles.translate_tiles[curr_stage.character.curr_tile]}]:")
         else:
             print(f"Currently holding [{tiles.translate_tiles[curr_stage.inventory]}]")
-        
+
         # Player movement for each input
         moves = input("> ").lower()
         for indiv_input in moves:
@@ -142,7 +152,7 @@ def game_running():
                             scores = json.load(leaderboard)
                         except json.JSONDecodeError:
                             scores = {}
-                            
+
                 if name not in scores or MOVES_NUM <= scores[name]:
                     scores[name] = MOVES_NUM
 
@@ -153,65 +163,5 @@ def game_running():
         print(display(curr_stage, False))
         print(f"\N{mushroom}: {curr_stage.score}")
 
+
 game_running()
-
-
-   
-"""time.sleep(1)
-os.system("cls" if os.name == "nt" else "clear")
-print(
-                                                                                            
-                                                                                            
-                                                                                            
-                                    ░░░▓▓▓▓▒░░░                                               
-                                ░▒██████████▓                                               
-                                ░▒████▓▓█▓░▒▒░░░░░                                            
-                                ░██▒░▒▒░▒▒▒▒▒░▒░                                             
-                                ░░▒▓▓▒▒░░▒▒▒▒▒░░                                            
-                                ░▒▒▒░░░░▒░▒▒░░░░░                                           
-                                    ░▒▒██▓░▒▒▓▓▓▓▓▓▓░                                          
-                                    ░▓▒▒░░▒▓▓▓▓▓▓▓▓▓▒░░                                       
-                                    ░▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒░░                                   
-                    ░░░░░░░░░░░ ░▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒░░                                
-                    ░▒░░░░░░░░░░░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒░                               
-                ░░░░░░░░░░░░░░░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░▒▒░░░                        
-                ░░░░░░░░░░░░░░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒░░░░░░░░░                     
-                ░░░░░░░░░░░░░░░▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒░░░░░░░░░░                    
-                ░░░░▒░░░░░░▒░▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░                   
-                ░░▒░░░░░░░▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒░░░░░░░░░                  
-                ▒░░░░░▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░                  
-                ░▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓▓▓▓▓▓█▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒░░░░░▒▒░                  
-            ░░░▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███▓▓▓▓▓██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒░                  
-        ░░▓██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████▓█████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒░░                
-        ░▓█▓▓▓▓▓▓▓██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████▓▒░░░░░▓▓▓█▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒░               
-        ░▓██████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█████▓▒░░░░░░░░░░▓██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░              
-        ░▓█▓▓▓▒▒▒▒▒▓██▓▓▓████▓▓▓▓▓▓▓▓▓█████▓░░░░▒▒░▒▒▒▒▒░░░░▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▓▓▓▓▓░             
-        ▒▓░▒▓▒░░░░░▒▒▒▒▒▓███████████████▓▓░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░▓▓▓▓▓▓▒░░▒▒▒░▒░░▓▓░░            
-        ░░▒▓▓▓▒░░░░░░░░░▒██████████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒░      ░█▒▒░░░░░░▒░░▒░ ░▒▒░            
-        ▒▓▒▓▓▓▓▒░░░░░░░░▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░      ░█▓░░░░░░░░░▒▒░░ ░░             
-        ░▓▓▓▓▓▓▓▓▓▓▒░░░░░▒▒▒▒░░░░░▓▓▓▓▓▓▓▓▓▒▒▓▓▓▓█▓▓▓▓▓▓▓▓▓▒▒░░░▓█▓▒░░░░░░▒▒▓▒░                
-        ▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▓▓███▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▓▓█▓░                  
-    ░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓░                    
-    ░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▓▓▓▓▓▓▓▓▓░                     
-    ░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒                    
-    ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒░                  
-    ▓▓█▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░                 
-    ▒█▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███▓▓▓                  
-    ░█▓▓▓▓▓▓▓▓▓▓▓████████▓▓▓▓▓▓▓▓▓█▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█████▓▓▓▓                  
-    ▓▓▓▓▓▓▓▓▓▓▓▒░░░░░▒▓█████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒░▒▓▓▓▓▒                  
-    ░▓▓▓▓▓▓▓▓▓▒░░░░░░░░░▒▒▓▓██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░▒▓▓░░                  
-        ░▓▓▓▓▓▓▓▒░░░░░░░░░░░░░▒▒▒▓█▓▓▓▓▓▓▓▓▓▓████████▓▓▓▓▓▓▓▓▓▓▓▓█▓░░░░░░░░                    
-        ░░▓▓▓▓░░░░░░░░░░░░░░░░░▒▒▓███████████▒░░▓█████████████▓▒░░░░▒░░                      
-            ░░▓▓▒▒░░░░░░░░░░░░░░░░░░▒▒▒▓▓▓▓▒░░░░  ░▒▒▓███████▓▒░░░░░░░░                        
-            ░░░░░▒▒▒▒▒▒▒▒▒▒▒▓▒░░░░░░░▒▒▒▒▒░    ░▒▒▒▒▒▒▒▒▒░░░░░░░░░                           
-                            ░░░░░░░▒▒▒▒▒▒░    ░▒▒▒▒▒▒▒▒░░░░▒░░                              
-                            ░░░░░░▒▒▒▒▒▒▒░    ░▒▒▒▒▒▒▒▒░░░░░░                               
-                                ░░░░▒▒▒▒▒▒▒░░     ░▒▒▒▒▒▒▒▒░░░░░░                              
-                            ░░░░░▒▒▒▒▒▒░        ░▒▒▒▒▒▒▒▒░░░░░░                             
-                        ░░░░░░░░░▒▒▒▒▒▒░           ░▒▒▒▒▒▒▒░░░░░░░░                          
-                        ░░░░░░░░░░▒▒▒▒▒▒░             ░▒▒▒▒▒▒▒▒░░░░░░░                         
-                        ░░░░░░░░▒▒▒▒▒▒▒▒░              ░▒▒▒▒▒▒▒▒▒▒▒▒░▒░                        )
-time.sleep(12)
-"""
-    
-        

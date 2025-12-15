@@ -2,14 +2,19 @@ import os
 import tiles
 import controls
 
+
 def clear():
+    """Clears the terminal"""
     os.system("cls" if os.name == "nt" else "clear")
 
-def input_handler(movement_string: str, curr_stage: stage):
-    """handles game imput
-    Args:
-        movement_string: the movement commands from the player represented as a string
-        curr_stage: the current stage being played
+
+def input_handler(movement_string: str, curr_stage: type):
+    """Handles game imput
+
+    :param movement_string: The movement commands from the player represented as a string
+    :type movement_string: str
+    :param curr_stage: The current stage being played
+    :type curr_stage: type
     """
     for indiv_input in movement_string.lower():
         validated_input = curr_stage.character.run_input(indiv_input)
@@ -20,14 +25,21 @@ def input_handler(movement_string: str, curr_stage: stage):
         if curr_stage.score >= curr_stage.score_req:
             break
 
+
 class character:
-    """Initializes the character with its positions, boundaries, current tile, and current stage"""
-    def __init__(self, location: tuple[int, int], bounds: tuple[int,int], curr_tile: str, curr_stage: stage):
-        """Args:
-            location: Player location as tuple (x,y)
-            bounds: Boundaries of map as tuple (x,y)
-            curr_tile: Tile that player is currently standing on
-            curr_stage: Reference to the current stage
+    """Player character class"""
+    def __init__(self, location: tuple[int, int], bounds: tuple[int, int], curr_tile: str, curr_stage: type):
+        """Initializes the character with its positions, boundaries, current tile, and current stage
+
+        :param self: self
+        :param location: Player location as tuple (x,y)
+        :type location: tuple[int, int]
+        :param bounds: Boundaries of map as tuple (x,y)
+        :type bounds: tuple[int, int]
+        :param curr_tile: Tile that player is currently standing on
+        :type curr_tile: str
+        :param curr_stage: Reference to the current stage
+        :type curr_stage: type
         """
         self.x_coords = location[0]
         self.y_coords = location[1]
@@ -35,14 +47,18 @@ class character:
         self.y_bound = bounds[1]
         self.curr_tile = curr_tile
         self.curr_stage = curr_stage
-    
-    def move(self, movement: tuple[int,int]) -> bool:
-        """ Main function that checks what happens when the character moves
-        Args:
-            movement: Movement direction as tuple (x,y)
+
+    def move(self, movement: tuple[int, int]) -> bool:
+        """Main function that checks what happens when the character moves
+
+        :param self: Description
+        :param movement: Movement direction as tuple (x,y)
+        :type movement: tuple[int, int]
+        :return: Returns a bool denoting if moving was successful
+        :rtype: bool
         """
         # Coordinates of the next position
-        new_x,new_y = self.x_coords + movement[0], self.y_coords + movement[1]
+        new_x, new_y = self.x_coords + movement[0], self.y_coords + movement[1]
 
         # If out of bounds, do nothing
         if not (0 <= new_y < self.y_bound and 0 <= new_x < self.x_bound):
@@ -64,8 +80,8 @@ class character:
             # If it's pushable, run the move function for the rock
             if "pushable" in next_tile_object_tags:
                 next_tile.move(movement)
-            
-            # If it's choppable, check if you have an axe or not 
+
+            # If it's choppable, check if you have an axe or not
             if "choppable" in next_tile_object_tags:
                 if self.curr_stage.inventory in {"x"}:
                     # "Chop" the tree down
@@ -89,15 +105,19 @@ class character:
                         # "Burns" all the trees
                         for trees in burn:
                             self.curr_stage.object_list[trees[1]][trees[0]].tile_object = None
-                        burn.clear() 
+                        burn.clear()
 
                         # Checks adjacent cells for trees
-                        for trees in temp_burn:
+                        for tree in temp_burn:
                             for direction in directions:
-                                if 0 <= trees[0] + direction[0] < self.x_bound and 0 <= trees[1] + direction[1] < self.y_bound:
-                                    if self.curr_stage.object_list[trees[1] + direction[1]][trees[0] + direction[0]].tile_object and "burnable" in tiles.tile_object_tags[self.curr_stage.object_list[trees[1] + direction[1]][trees[0] + direction[0]].tile_object]:
-                                        burn.add((trees[0] + direction[0], trees[1] + direction[1]))
-                    self.curr_stage.inventory = None            
+                                new_tree_x = tree[0] + direction[0]
+                                new_tree_y = tree[1] + direction[1]
+                                new_tree = self.curr_stage.object_list[new_tree_y][new_tree_x].tile_object
+                                if (0 <= new_tree_x < self.x_bound
+                                        and 0 <= new_tree_y < self.y_bound):
+                                    if new_tree and "burnable" in tiles.tile_object_tags[new_tree]:
+                                        burn.add((new_tree_x, new_tree_y))
+                    self.curr_stage.inventory = None
 
         next_tile = self.curr_stage.object_list[new_y][new_x]
         next_tile_floor_tags = tiles.tile_floor_tags[next_tile.tile_floor]
@@ -139,10 +159,15 @@ class character:
                     self.curr_tile = temp
                     self.x_coords, self.y_coords = new_x, new_y
         return True
+
     def run_input(self, indiv_input: str) -> bool | str:
-        """ Runs each individual input
-        Args:
-            indiv_input: Individual input
+        """Runs each individual input
+
+        :param self: self
+        :param indiv_input: Individual input
+        :type indiv_input: str
+        :return: Returns what should happen after running the input
+        :rtype: bool | str
         """
         if indiv_input == "!":
             self.curr_stage.reset
@@ -156,10 +181,13 @@ class character:
                 return "dead"
         # Player interactions
         elif indiv_input in controls.player_action_keybinds:
-            if not self.curr_stage.inventory and self.curr_tile and "manual_pickup" in tiles.tile_object_tags[self.curr_tile]:
+            if (not self.curr_stage.inventory
+                    and self.curr_tile
+                    and "manual_pickup" in tiles.tile_object_tags[self.curr_tile]):
                 self.curr_stage.inventory = self.curr_tile
                 self.curr_tile = None
         return True
-  
+
+
 if __name__ == "__main__":
     print("Wrong file.")
