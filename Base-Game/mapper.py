@@ -3,14 +3,22 @@ from player import character
 
 
 class stage():
+    """
+    Class object for stage
+    """
     def __init__(self, path):
         self.path = path
 
     def reset(self):
-        "resets the map"
+        """
+        resets the map
+        """
         self.start()
         
     def start(self):
+        """
+        handles the initialization of the map
+        """
         try:
             # Setup the map variables and insure actual dimensions match initialized forest dimensions
             with open(self.path, "r") as file:
@@ -62,10 +70,11 @@ class stage():
 
 
 class stage_tile:
-    """Individual Stage Tile that holding"""
+    """
+    Individual Stage Tile that holds the informations of the map
+    """
     
     # Optimization for memory usage by locking the class to only have these attributes and nothing else
-
     __slots__ = ("tile_object", "tile_floor", "x_coords", "y_coords", "x_bound", "y_bound", "curr_stage")
 
     # Initializes each stage tile as their own object
@@ -80,7 +89,8 @@ class stage_tile:
         self.curr_stage = curr_stage
         
     def move(self, movement: tuple[int,int]):
-        """Moves the object currently on this tile
+        """
+        Moves the object currently on this tile
         Args:
             movement: Movement direction as a tuple (x,y)
         """
@@ -102,6 +112,12 @@ class stage_tile:
 
 
 def display(curr_stage: stage, ASCII: bool):
+    """
+    displays the map
+    Args:
+        curr_stage: the current stage being played
+        ASCII: bool value of whether ASCII values were given
+    """
     # To display the current state of the map in one function for reusability and readability
 
     mapstr = ""
