@@ -2,9 +2,11 @@ import pytest
 from mapper import stage
 from player import input_handler
 
+# ("Path of map file", "String of moves", (x, y), "tile_object", "tile_floor")
+
 MAP_ATTRIBUTES = [
-    ("default.txt", "aaaaa", (2, 8), "R", "."), 
-    ("map.txt", "wwwwp!dd!s!wwwp", (2,5), None, "."), 
+    ("default.txt", "aaaaa", (2, 8), "R", "."),
+    ("map.txt", "wwwwp!dd!s!wwwp", (2, 5), None, "."),
     ("mapper_tests/map_1.txt", "w", (4, 2), None, "_"),
     ("mapper_tests/map_2.txt", "wwaasd", (1, 1), "L", "."),
     ("mapper_tests/map_3.txt", "WWwaaddsw!ssss", (0, 0), "T", "."),
@@ -22,17 +24,30 @@ MAP_ATTRIBUTES = [
     ("mapper_tests/map_15.txt", "dds", (5, 3), None, "~"),
     ]
 
+
 @pytest.fixture(params=MAP_ATTRIBUTES)
 def map_stage(request):
+    """Create an instance of the stage and return references of each stage attribute
+
+    :param request: Map from list of maps
+    :type request: _type_
+    :return: Each of the stage's attributes
+    :rtype: _type_
+    """
     map_file, movement_string, tile_to_check_coords, tile_object, tile_floor = request.param
     map = stage(map_file)
     return map, movement_string, tile_to_check_coords, tile_object, tile_floor
 
 
 def test_start(map_stage):
+    """Verifies a tile at the given coordinates after the player's movements
+
+    :param map_stage: The stage itself
+    :type map_stage: _type_
+    """
     map, movement_string, tile_to_check_coords, tile_object, tile_floor = map_stage
     map.start()
     input_handler(movement_string, map)
-    tile = map.object_list[tile_to_check_coords[1]][tile_to_check_coords[0]] 
+    tile = map.object_list[tile_to_check_coords[1]][tile_to_check_coords[0]]
     assert tile.tile_object == tile_object
     assert tile.tile_floor == tile_floor
