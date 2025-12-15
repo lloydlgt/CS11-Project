@@ -111,7 +111,7 @@ class stage_tile:
                 self.tile_object = None
 
 
-def display(curr_stage: type[stage], ASCII: bool):
+def display(curr_stage: type[stage], ASCII: bool) -> str:
     """
     displays the map
     Args:

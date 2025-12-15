@@ -1,13 +1,11 @@
 import os
 import tiles
 import controls
-from mapper import stage
-
 
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
-def input_handler(movement_string: str, curr_stage: type[stage]):
+def input_handler(movement_string: str, curr_stage: stage):
     """
     handles game imput
     Args:
@@ -27,7 +25,7 @@ class character:
     """
     Initializes the character with its positions, boundaries, current tile, and current stage
     """
-    def __init__(self, location: tuple[int, int], bounds: tuple[int,int], curr_tile: str, curr_stage: type[stage]):
+    def __init__(self, location: tuple[int, int], bounds: tuple[int,int], curr_tile: str, curr_stage: stage):
         """
         Args:
             location: Player location as tuple (x,y)
@@ -145,7 +143,6 @@ class character:
                     self.curr_tile = temp
                     self.x_coords, self.y_coords = new_x, new_y
         return True
-print("shit")
     def run_input(self, indiv_input: str) -> bool | str:
         """ Runs each individual input
         Args:
