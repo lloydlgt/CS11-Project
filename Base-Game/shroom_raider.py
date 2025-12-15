@@ -1,5 +1,6 @@
 import os
 import tiles
+import json
 from argparse import ArgumentParser
 from mapper import stage, display
 
@@ -123,15 +124,15 @@ def game_running():
         else:
             print(f"Currently holding [{tiles.translate_tiles[curr_stage.inventory]}]")
         
-        
         # Player movement for each input
         moves = input("> ").lower()
-        MOVES_NUM += len(moves)
         for indiv_input in moves:
+            MOVES_NUM += 1
             validated_input = curr_stage.character.run_input(indiv_input)
             if not validated_input:
                 break
             if validated_input == "reset":
+                MOVES_NUM = 0
                 curr_stage.reset()
             if validated_input == "dead":
                 death_screen()
@@ -140,8 +141,22 @@ def game_running():
                 clear()
                 print(display(curr_stage, False))
                 print(f"\N{mushroom} collected: {curr_stage.score}")
-                with open(f'leaderboards\\l_{curr_stage.path}','a',encoding='utf-8') as leaderboard:
-                    leaderboard.write(f"{name}: {MOVES_NUM} moves\n")
+
+                stage_path = f"leaderboards\\l_{curr_stage.path[:-4]}.json"
+                if not os.path.isfile(stage_path) or os.path.getsize(stage_path) == 0:
+                    scores = {}
+                else:
+                    with open(stage_path, "r", encoding="utf-8") as leaderboard:
+                        try:
+                            scores = json.load(leaderboard)
+                        except json.JSONDecodeError:
+                            scores = {}
+                            
+                if name not in scores or MOVES_NUM <= scores[name]:
+                    scores[name] = MOVES_NUM
+
+                with open(stage_path, "w", encoding="utf-8") as leaderboard:
+                    json.dump(scores, leaderboard, indent=4)
                 win_screen()
         clear()
         print(display(curr_stage, False))
