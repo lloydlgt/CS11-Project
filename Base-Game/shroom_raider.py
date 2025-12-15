@@ -7,9 +7,7 @@ from mapper import stage, display
 MOVES_NUM = 0
 
 def clear():
-    """
-    Clears the user terminal
-    """
+    """Clears the user terminal"""
     os.system("cls" if os.name == "nt" else "clear")
 
 # Processes every user movement/input
@@ -27,8 +25,7 @@ prev_map = args.stage_file # saves txt file
 curr_stage.start() 
     
 if args.output_file is not None:
-    """
-    If the user enters an output file,
+    """If the user enters an output file,
     Run the string of moves,
     Write current stage in the output file,
     Terminate the program
@@ -65,9 +62,7 @@ else:
     pass
 
 def death_screen():
-    """
-    death screen when the player reaches a tile with death_on_touch tag
-    """
+    """death screen when the player reaches a tile with death_on_touch tag"""
     global curr_stage
     os.system("cls" if os.name == "nt" else "clear")
     print(display(curr_stage, False))
@@ -76,9 +71,7 @@ def death_screen():
     exit()
 
 def win_screen():
-    """
-    The win screen once all mushroom has been collected
-    """
+    """The win screen once all mushroom has been collected"""
     print("Congrats, you've finished the game! have a cake :)")
     print("""                  
             /M/              .,-=;//;-
@@ -104,9 +97,7 @@ def win_screen():
     exit()
 
 def game_running():
-    """
-    "Main" or in-game part of the game
-    """
+    """"Main" or in-game part of the game"""
     global MOVES_NUM
     name = input("what is your name? ")
     while True:

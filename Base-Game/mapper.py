@@ -22,7 +22,8 @@ class stage():
                 self.listed_file = list(x.rstrip() for x in self.read_lines[1:])
 
                 if any((self.y != len(self.listed_file), self.x != len(self.listed_file[0]))): # Insurance for grid dimensions
-                    print(f"Error: Initialized forest dimension {self.y}, {self.x} does not match actual forest dimension {len(self.listed_file)}, {len(self.listed_file[0])}.")
+                    print(f"Error: Initialized forest dimension {self.y}, {self.x}")
+                    print(f"does not match actual forest dimension {len(self.listed_file)}, {len(self.listed_file[0])}.")
                     exit()        
         except FileNotFoundError:
             # Handles inputting a non-existent stage file

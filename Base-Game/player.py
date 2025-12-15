@@ -6,8 +6,7 @@ def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
 def input_handler(movement_string: str, curr_stage: stage):
-    """
-    handles game imput
+    """handles game imput
     Args:
         movement_string: the movement commands from the player represented as a string
         curr_stage: the current stage being played
@@ -22,12 +21,9 @@ def input_handler(movement_string: str, curr_stage: stage):
             break
 
 class character:
-    """
-    Initializes the character with its positions, boundaries, current tile, and current stage
-    """
+    """Initializes the character with its positions, boundaries, current tile, and current stage"""
     def __init__(self, location: tuple[int, int], bounds: tuple[int,int], curr_tile: str, curr_stage: stage):
-        """
-        Args:
+        """Args:
             location: Player location as tuple (x,y)
             bounds: Boundaries of map as tuple (x,y)
             curr_tile: Tile that player is currently standing on
