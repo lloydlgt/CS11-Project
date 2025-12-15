@@ -1,12 +1,20 @@
 import os
 import tiles
 import controls
+from mapper import stage
+
 
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
-def input_handler(movement_string, curr_stage):
-     for indiv_input in movement_string.lower():
+def input_handler(movement_string: str, curr_stage: type[stage]):
+    """
+    handles game imput
+    Args:
+        movement_string: the movement commands from the player represented as a string
+        curr_stage: the current stage being played
+    """
+    for indiv_input in movement_string.lower():
         validated_input = curr_stage.character.run_input(indiv_input)
         if not validated_input:
             break
@@ -16,11 +24,12 @@ def input_handler(movement_string, curr_stage):
             break
 
 class character:
-
-    # Initializes the character with its positions, boundaries, current tile, and current stage
-
-    def __init__(self, location: tuple[int, int], bounds: tuple[int,int], curr_tile: str, curr_stage):
+    """
+    Initializes the character with its positions, boundaries, current tile, and current stage
+    """
+    def __init__(self, location: tuple[int, int], bounds: tuple[int,int], curr_tile: str, curr_stage: type[stage]):
         """
+        Args:
             location: Player location as tuple (x,y)
             bounds: Boundaries of map as tuple (x,y)
             curr_tile: Tile that player is currently standing on
@@ -33,7 +42,7 @@ class character:
         self.curr_tile = curr_tile
         self.curr_stage = curr_stage
     
-    def move(self, movement: tuple[int,int]):
+    def move(self, movement: tuple[int,int]) -> bool:
         """ Main function that checks what happens when the character moves
         Args:
             movement: Movement direction as tuple (x,y)
@@ -43,11 +52,7 @@ class character:
 
         # If out of bounds, do nothing
         if not (0 <= new_y < self.y_bound and 0 <= new_x < self.x_bound):
-<<<<<<< HEAD
             return True
-=======
-            return "out of bounds"
->>>>>>> 1414a76ac0e3fd94a4ad6d2e88fdcc3c980e9d2f
 
         # Checks what the next tile is and its tags (descriptions)
         next_tile = self.curr_stage.object_list[new_y][new_x]
@@ -140,8 +145,8 @@ class character:
                     self.curr_tile = temp
                     self.x_coords, self.y_coords = new_x, new_y
         return True
-
-    def run_input(self, indiv_input: str):
+print("shit")
+    def run_input(self, indiv_input: str) -> bool | str:
         """ Runs each individual input
         Args:
             indiv_input: Individual input
@@ -161,7 +166,6 @@ class character:
             if not self.curr_stage.inventory and self.curr_tile and "manual_pickup" in tiles.tile_object_tags[self.curr_tile]:
                 self.curr_stage.inventory = self.curr_tile
                 self.curr_tile = None
-
         return True
   
 if __name__ == "__main__":
