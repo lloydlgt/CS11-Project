@@ -3,8 +3,11 @@ import tiles
 from argparse import ArgumentParser
 from mapper import stage, display
 
-# Clears the user terminal
+
 def clear():
+    """
+    Clears the user terminal
+    """
     os.system("cls" if os.name == "nt" else "clear")
 
 # Processes every user movement/input
@@ -60,6 +63,9 @@ else:
     pass
 
 def death_screen():
+    """
+    death screen when the player reaches a tile with death_on_touch tag
+    """
     global curr_stage
     os.system("cls" if os.name == "nt" else "clear")
     print(display(curr_stage, False))
@@ -68,7 +74,9 @@ def death_screen():
     exit()
 
 def win_screen():
-    "The win screen once all mushroom has been collected"
+    """
+    The win screen once all mushroom has been collected
+    """
     print("Congrats, you've finished the game! have a cake :)")
     print("""                  
             /M/              .,-=;//;-
@@ -93,8 +101,10 @@ def win_screen():
     """)
     exit()
 
-# "Main" or in-game part of the game
 def game_running():
+    """
+    "Main" or in-game part of the game
+    """
     while True:
         clear()
 
