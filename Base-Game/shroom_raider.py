@@ -37,11 +37,13 @@ if args.output_file is not None:
     win = False
     
     for indiv_input in args.string_of_moves.lower():
-<<<<<<< HEAD
-        curr_stage.character.run_input(indiv_input)
-=======
-        curr_stage.character.run_input(indiv_input, curr_stage)
->>>>>>> 1414a76ac0e3fd94a4ad6d2e88fdcc3c980e9d2f
+        validated_input = curr_stage.character.run_input(indiv_input)
+        if not validated_input:
+            break
+        if validated_input == "reset":
+            curr_stage.reset()
+        if validated_input == "dead":
+            break
         if curr_stage.score >= curr_stage.score_req:
             win = True
             break
