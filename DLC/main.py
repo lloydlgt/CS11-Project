@@ -23,16 +23,18 @@ def run_input(indiv_input: str):
     if indiv_input in controls.movement_keybinds:
         for char in curr_stage.characters:
             char.move(controls.movement_keybinds[indiv_input.lower()])
+
+            #death handler
             if char.dead:
-                story.death_sec()
-                char.dead = False
                 if menu.storymode:
+                    story.death_sec()
                     reset_story = True
-                    return
                 else:
+                    story.death_loop()
                     menu.prev = "main"
                     menu.main_menu()
                     curr_stage = menu.curr_stage
+                char.dead = False
             
     #ui
     elif indiv_input in controls.ui_keybinds:
@@ -84,6 +86,7 @@ def run_game(story_status=False):
     print(display(curr_stage, False))
     print(f"\N{mushroom}: {curr_stage.score}")
     menu.prev = "in_game"
+
     # Pickup prompt
     if not curr_stage.inventory:
         print("Currently holding NOTHING")
@@ -116,10 +119,13 @@ def run_story():
     reset_story = False
     level_anim = True
     world_list = tuple(list(os.walk("maps"))[0][1])
+
+    #world generation
     for world in world_list:
         clear()
         all_levels = os.listdir(f"maps/{world}")
         world_loading_screen(world)
+
         for i, level in enumerate(sorted(all_levels, key=len)):
             clear()
             menu.curr_stage = stage(f"{world}/{level}")
@@ -127,6 +133,7 @@ def run_story():
             menu.curr_stage.start()
             level_loading_screen(i + 1, len(all_levels), level_anim)
             level_anim = False
+            
             while not reset_story:
                 if run_game(True):
                     break
